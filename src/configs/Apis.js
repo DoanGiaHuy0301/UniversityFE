@@ -3,7 +3,7 @@ import VueCookies from "vue-cookies";
 
 const SERVER_CONTEXT = "";
 // const SERVER = "http://localhost:8082";
-const SERVER = "http://54.255.209.165";
+const SERVER = "https://54.255.209.165";
 
 export const endpoints = {
   subjects: `${SERVER_CONTEXT}/api/subjects/`,
