@@ -1,12 +1,6 @@
 <template>
   <div style="height: 100%;">
-    <div v-if="isLoading" style="position: absolute; width: 100%; height: 50%">
-      <div class="loader">
-        <div class="ball"></div>
-        <div class="ball"></div>
-        <div class="ball"></div>
-      </div>
-    </div>
+    <div v-if="isLoading"><Loading /></div>
     <div v-else>
       <div v-if="semesterData.length > 0">
         <h2 class="score">Thông tin điểm số</h2>
@@ -99,10 +93,14 @@
 import { ref, onMounted } from "vue";
 import { authApi, endpoints } from "@/configs/Apis";
 import { mapGetters } from "vuex";
+import Loading from "../../../components/Loading.vue";
 
 export default {
   computed: {
     ...mapGetters(["isAuth", "getUser"]),
+  },
+  components: {
+    Loading,
   },
   data() {
     return {

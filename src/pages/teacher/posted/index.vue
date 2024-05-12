@@ -1,6 +1,7 @@
 <template>
-  <div class="container-fluid" style="padding-bottom: 50px">
-    <div class="row table-container">
+   <div v-if="isLoading"><Loading /></div>
+  <div style="padding-bottom: 50px">
+    <div class="table-container">
       <table class="table">
         <thead>
           <tr>
@@ -41,7 +42,7 @@
               <div v-else>
                 <div class="post-update-and-delete">
                   <ul>
-                    <li @click="handleEdit(p)">Chỉnh sửa</li>
+                    <li @click="handleEdit(p)" class="mr-3">Chỉnh sửa</li>
                     <li @click="confirmDelete(p.id)">Xóa</li>
                   </ul>
                 </div>
@@ -59,22 +60,27 @@
 <script>
 import { authApi, endpoints } from "@/configs/Apis";
 import { mapGetters } from "vuex";
+import Loading from "../../../components/Loading.vue";
 
 export default {
   computed: {
     ...mapGetters(["isAuth", "getUser"]),
   },
-
+  components: {
+    Loading,
+  },
   data() {
     return {
       listPost: [],
       isEditMode: false,
       content: "",
       editedPost: null,
+      isLoading: false,
     };
   },
   created() {
-    this.getListPostByUser();
+    this.isLoading = true;
+    this.getListPostByUser().then(() => this.isLoading = false);
     this.deletePost();
   },
 

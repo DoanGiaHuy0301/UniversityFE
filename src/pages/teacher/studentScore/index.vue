@@ -1,4 +1,5 @@
 <template>
+   <div v-if="isLoading"><Loading /></div>
   <div class="container" style="margin-bottom: 200px">
     <div class="row">
       <form>
@@ -269,6 +270,7 @@
 import { authApi, endpoints } from "@/configs/Apis.js";
 import { mapGetters } from "vuex";
 import { useMenu } from "../../../stores/use-menu.js";
+import Loading from "../../../components/Loading.vue";
 export default {
   setup() {
     useMenu().onSelectedKeys(["teacher-studentScore"]);
@@ -308,6 +310,9 @@ export default {
   computed: {
     ...mapGetters(["isAuth", "getUser"]),
   },
+  components: {
+    Loading,
+  },
   watch: {
     selectedSubject: {
       async handler(newSubject, oldSubject) {
@@ -317,8 +322,10 @@ export default {
     },
   },
   async created() {
+    this.isLoading = true;
     await this.fetchLecturerInfo();
     await this.getClasses();
+    this.isLoading = false;
 
     this.fetchLecturerInfo().then((lecturerInfo) => {
       if (lecturerInfo && lecturerInfo.id) {

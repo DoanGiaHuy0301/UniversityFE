@@ -127,11 +127,13 @@ import { getAuth, signOut } from "firebase/auth";
 import { getFirestore, collection, getDocs } from "firebase/firestore"; // Sử dụng db từ Firebase Modular SDK
 import ChatBox from "../../../components/ChatBox.vue";
 import { db } from "../../../main";
+import Loading from "../../../components/Loading.vue";
 
 export default {
   name: "Chat",
   components: {
     ChatBox,
+    Loading,
   },
   data() {
     return {
@@ -143,6 +145,7 @@ export default {
       photoURL: localStorage.getItem("photoURL"),
       listStudents: [],
       showProfile: false,
+      isLoading: false,
     };
   },
   methods: {
@@ -200,7 +203,11 @@ export default {
   },
   created() {
     if (!localStorage.hasOwnProperty("id")) this.$router.push("/");
-    this.getUserList();
+    // this.isLoading = true;
+    this.getUserList()
+    // .then(() => {
+    //   this.isLoading = false;
+    // });
   },
 };
 </script>

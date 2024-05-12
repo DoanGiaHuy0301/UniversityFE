@@ -1,4 +1,5 @@
 <template>
+   <div v-if="isLoading"><Loading /></div>
   <div class="studentHome">
     <form @submit.prevent="handleSubmit">
       <div class="select d-md-flex s-sm-block">
@@ -99,6 +100,7 @@
 import { authApi, endpoints } from "@/configs/Apis.js";
 import { mapGetters } from "vuex";
 import { useMenu } from "../../../stores/use-menu.js";
+import Loading from "../../../components/Loading.vue";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 
@@ -108,6 +110,9 @@ export default {
   },
   computed: {
     ...mapGetters(["isAuth", "getUser"]),
+  },
+  components: {
+    Loading,
   },
   data() {
     return {
@@ -123,9 +128,11 @@ export default {
       scoreColumns: [],
       err: "",
       hasError: false,
+      isLoading: false,
     };
   },
   created() {
+    this.isLoading = true;
     this.fetchLecturerInfo();
     // this.fetchData();
 
@@ -136,6 +143,7 @@ export default {
         this.fetchSubjectsByLecturerId(lecturerId);
       }
     });
+    this.isLoading = false;
   },
   methods: {
     handleEdit() {

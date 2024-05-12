@@ -25,7 +25,8 @@
                 </div>
 
                 <p class="text-center">
-                  Science and Technology University
+                  Homless animal shelter The budgetary unit of the Capital City
+                  of Warsaw
                 </p>
 
                 <ul

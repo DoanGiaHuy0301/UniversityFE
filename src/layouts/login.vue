@@ -45,7 +45,7 @@
                   class="btn btn-block btn-primary"
                   :disabled="loading"
                 />
-                <div style="text-align: center; margin: 10px 0;">
+                <div style="text-align: center; margin: 10px 0">
                   <div
                     v-if="loading"
                     class="spinner-border text-primary"
@@ -78,7 +78,6 @@
   </div>
 </template>
 
-
 <script>
 import Apis, { endpoints, authApi } from "../configs/Apis.js";
 import VueCookies from "vue-cookies";
@@ -92,9 +91,6 @@ import {
   collection,
 } from "firebase/firestore";
 import firebase from "../services/firebase";
-
-
-
 
 export default {
   name: "Login",
@@ -126,13 +122,15 @@ export default {
     async login() {
       try {
         this.loading = true;
+        console.log(this.user.username);
         const res = await Apis.post(`${endpoints["login"]}`, {
           username: this.user.username,
           password: this.user.password,
         });
+        console.log(res.data);
         if (res.status === 400) {
           this.errorMessage = "Tài khoản hoặc mật khẩu của bạn không đúng!!";
-           this.loading = false;
+          this.loading = false;
         } else {
           this.errorMessage = "";
           VueCookies.set("token", res.data.accessToken);
@@ -188,7 +186,6 @@ export default {
                 }
               }
             }
-            
           } catch (error) {
             this.errorMessage = "Lỗi server";
             this.loading = false;
@@ -224,4 +221,3 @@ export default {
   },
 };
 </script>
-

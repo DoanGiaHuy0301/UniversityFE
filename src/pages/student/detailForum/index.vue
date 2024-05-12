@@ -1,4 +1,5 @@
 <template>
+   <div v-if="isLoading"><Loading /></div>
   <div class="container-fluid" style="padding: 0 0 100px 0">
     <div class="row">
       <div
@@ -85,7 +86,7 @@
               v-if="getUser.id === p.userId.id"
             >
               <ul>
-                <li @click="handleEdit(p)">Chỉnh sửa</li>
+                <li @click="handleEdit(p)" class="mr-3">Chỉnh sửa</li>
                 <li @click="confirmDelete(p.id)">Xóa</li>
               </ul>
             </div>
@@ -99,9 +100,13 @@
 <script>
 import Apis, { authApi, endpoints } from "@/configs/Apis";
 import { mapGetters } from "vuex";
+import Loading from "../../../components/Loading.vue";
 export default {
   computed: {
     ...mapGetters(["isAuth", "getUser"]),
+  },
+  components: {
+    Loading,
   },
   data() {
     return {
@@ -114,14 +119,16 @@ export default {
       content_comment: "",
       isEditMode: false,
       editedPost: null,
+      isLoading: false,
     };
   },
   created() {
+    this.isLoading = true;
     this.loadUser();
+    this.isLoading = false;
   },
   mounted() {
     this.postId = this.$route.params.id;
-
     this.loadProduct();
     this.loadComment();
   },

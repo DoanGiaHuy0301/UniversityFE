@@ -1,5 +1,6 @@
 <template>
   <section>
+    <div v-if="isLoading"><Loading /></div>
     <div class="d-lg-flex d-md-flex d-sm-block">
       <div class="form-group-item" style="width: 30%; margin-bottom: 20px">
         <div
@@ -194,9 +195,13 @@
 <script>
 import Apis, { authApi, endpoints } from "@/configs/Apis";
 import { mapGetters } from "vuex";
+import Loading from "../../../components/Loading.vue";
 export default {
   computed: {
     ...mapGetters(["isAuth", "getUser"]),
+  },
+  components: {
+    Loading,
   },
   data() {
     return {
@@ -212,6 +217,7 @@ export default {
       quantity: 80,
       isSuccess: false,
       isLoadSubjects: false,
+      isLoading: false,
     };
   },
   watch: {
@@ -508,17 +514,14 @@ export default {
     },
   },
   async created() {
-    console.log("isLoadSubjects", this.isLoadSubjects);
+    this.isLoading = true;
     this.getMajor();
     this.getSubject();
     this.getLatestSemester();
     if (this.semesters) {
       await this.getSubjectTemoratyCourse();
     }
-
     await this.getSubjectCourse();
-
-    console.log("this.getSubjectTemoratyCourse", this.selectedCourses);
     if (this.majors.length > 0) {
       this.getSubject();
       this.maxQuantity = this.courses.reduce(
@@ -526,6 +529,7 @@ export default {
         0
       );
     }
+    this.isLoading = false;
   },
 };
 </script>

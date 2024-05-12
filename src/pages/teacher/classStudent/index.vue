@@ -1,4 +1,5 @@
 <template>
+  <div v-if="isLoading"><Loading /></div>
   <div>
     <strong style="font-size: 20px; padding: 10px"
       >Lớp: {{ extractedId }}
@@ -43,6 +44,7 @@
 import { authApi, endpoints } from "@/configs/Apis.js";
 import { mapGetters } from "vuex";
 import { useMenu } from "@/stores/use-menu";
+import Loading from "../../../components/Loading.vue";
 
 export default {
   computed: {
@@ -57,32 +59,41 @@ export default {
   data() {
     return {
       studentList: [],
+      isLoading: false,
     };
   },
+  components: {
+    Loading,
+  },
   created() {
-    this.getStudent();
+    this.isLoading = true;
+    this.getStudent().then(() => (this.isLoading = false));
   },
   methods: {
     async getStudent() {
-      console.log(this.getUser.username);
-      const lecturerUsername = this.getUser.username;
-      const response = await authApi().get(
-        endpoints["get-lecturer-by-username"].replace(
-          "{username}",
-          lecturerUsername
-        )
-      );
+      try {
+        console.log(this.getUser.username);
+        const lecturerUsername = this.getUser.username;
+        const response = await authApi().get(
+          endpoints["get-lecturer-by-username"].replace(
+            "{username}",
+            lecturerUsername
+          )
+        );
 
-      const lecturerId = response.data.id;
-      const listStudent = await authApi().get(
-        endpoints["student-home-room-teacher"].replace(
-          "{lecturerId}",
-          lecturerId
-        )
-      );
-      console.log("listStudent.data", listStudent.data);
-      if (listStudent.data) {
-        this.studentList = listStudent.data;
+        const lecturerId = response.data.id;
+        const listStudent = await authApi().get(
+          endpoints["student-home-room-teacher"].replace(
+            "{lecturerId}",
+            lecturerId
+          )
+        );
+        console.log("listStudent.data", listStudent.data);
+        if (listStudent.data) {
+          this.studentList = listStudent.data;
+        }
+      } catch (e) {
+        console.log(e.error);
       }
     },
     formatDate(date) {

@@ -1,4 +1,5 @@
 <template>
+  <div v-if="isLoading"><Loading /></div>
   <div class="container-fluid" style="padding-bottom: 50px">
     <div class="row">
       <div class="col-12 d-flex justify-content-end">
@@ -39,12 +40,20 @@
           v-model="content"
         ></textarea>
         <div style="display: flex">
-          <button style="display: inline-block" class="btn-title btn btn-primary" @click="handlePostSubmit"
-            >Đăng</button
+          <button
+            style="display: inline-block"
+            class="btn-title btn btn-primary"
+            @click="handlePostSubmit"
           >
-          <button style="display: inline-block" class="btn-title btn btn-primary" @click="exitHandleEdit"
-            >Thoát</button
+            Đăng
+          </button>
+          <button
+            style="display: inline-block"
+            class="btn-title btn btn-primary"
+            @click="exitHandleEdit"
           >
+            Thoát
+          </button>
         </div>
       </div>
       <div class="col-12 post-container d-flex" v-else>
@@ -62,7 +71,10 @@
       </div>
 
       <div class="foroum">
-        <table class="table table-responsive-xl table-container" v-if="post.length > 0">
+        <table
+          class="table table-responsive-xl table-container"
+          v-if="post.length > 0"
+        >
           <thead>
             <tr>
               <th>Tên bài post</th>
@@ -140,9 +152,13 @@
 <script>
 import Apis, { authApi, endpoints } from "@/configs/Apis.js";
 import { useMenu } from "../../../stores/use-menu.js";
+import Loading from "../../../components/Loading.vue";
 export default {
   setup() {
     useMenu().onSelectedKeys(["student-forum"]);
+  },
+  components: {
+    Loading,
   },
   data() {
     return {
@@ -153,6 +169,7 @@ export default {
       currentPage: 1,
       postsPerPage: 4,
       searchKeyword: "",
+      isLoading: false,
     };
   },
   computed: {
@@ -184,7 +201,9 @@ export default {
     },
   },
   created() {
-    this.loadPost();
+    this.isLoading = true;
+    this.loadPost().then(() => this.isLoading = false);
+
   },
   methods: {
     handleEdit() {

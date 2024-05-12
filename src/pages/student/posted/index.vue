@@ -1,64 +1,60 @@
 <template>
-  <div class="container-fluid" style="padding-bottom: 50px">
-    <div v-if="isLoading" style="position: absolute; width: 100%; height: 50%">
-      <div class="loader">
-        <div class="ball"></div>
-        <div class="ball"></div>
-        <div class="ball"></div>
+  <div style="padding-bottom: 50px">
+    <div v-if="isLoading"><Loading /></div>
+    <div v-else>
+      <div class="table-container">
+        <table class="table">
+          <thead>
+            <tr class="table-title">
+              <th>Tên bài post</th>
+              <th>Nội dung</th>
+              <th>Thời gian đăng</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="p in listPost" :key="p.id">
+              <td>
+                <router-link
+                  :to="'/student/detailForum/' + p.id"
+                  class="post-link"
+                >
+                  {{ p.title }}
+                </router-link>
+                <div
+                  v-if="isEditMode && editedPost && editedPost.id === p.id"
+                  style="margin: 10px"
+                >
+                  <textarea
+                    class="form-control"
+                    rows="2"
+                    id="comment"
+                    name="text"
+                    :placeholder="p.content"
+                    v-model="content"
+                  ></textarea>
+                  <div class="post-update-and-delete">
+                    <ul>
+                      <li @click="updatePosted(p.id)">Lưu</li>
+                      <li @click="exitHandleEdit">Thoát</li>
+                    </ul>
+                  </div>
+                </div>
+                <div v-else>
+                  <div class="post-update-and-delete">
+                    <ul>
+                      <li @click="handleEdit(p)" class="mr-3">Chỉnh sửa</li>
+                      <li @click="confirmDelete(p.id)">Xóa</li>
+                    </ul>
+                  </div>
+                </div>
+              </td>
+              <td>{{ p.content }}</td>
+              <td>{{ formatDate(p.postTime) }}</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
-    </div>
-    <div v-else class="row">
-      <table class="table">
-        <thead>
-          <tr>
-            <th>Tên bài post</th>
-            <th>Nội dung</th>
-            <th>Thời gian đăng</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="p in listPost" :key="p.id">
-            <td>
-              <router-link
-                :to="'/student/detailForum/' + p.id"
-                class="post-link"
-              >
-                {{ p.title }}
-              </router-link>
-              <div
-                v-if="isEditMode && editedPost && editedPost.id === p.id"
-                style="margin: 10px"
-              >
-                <textarea
-                  class="form-control"
-                  rows="2"
-                  id="comment"
-                  name="text"
-                  :placeholder="p.content"
-                  v-model="content"
-                ></textarea>
-                <div class="post-update-and-delete">
-                  <ul>
-                    <li @click="updatePosted(p.id)">Lưu</li>
-                    <li @click="exitHandleEdit">Thoát</li>
-                  </ul>
-                </div>
-              </div>
-              <div v-else>
-                <div class="post-update-and-delete">
-                  <ul>
-                    <li @click="handleEdit(p)">Chỉnh sửa</li>
-                    <li @click="confirmDelete(p.id)">Xóa</li>
-                  </ul>
-                </div>
-              </div>
-            </td>
-            <td>{{ p.content }}</td>
-            <td>{{ formatDate(p.postTime) }}</td>
-          </tr>
-        </tbody>
-      </table>
     </div>
   </div>
 </template>
@@ -66,12 +62,15 @@
 <script>
 import { authApi, endpoints } from "@/configs/Apis";
 import { mapGetters } from "vuex";
+import Loading from "../../../components/Loading.vue";
 
 export default {
   computed: {
     ...mapGetters(["isAuth", "getUser"]),
   },
-
+  components: {
+    Loading,
+  },
   data() {
     return {
       listPost: [],
@@ -82,7 +81,9 @@ export default {
     };
   },
   created() {
-    this.getListPostByUser();
+    this.isLoading = true;
+    this.getListPostByUser().then(() => this.isLoading = false);
+
   },
 
   methods: {
@@ -177,44 +178,9 @@ export default {
 </script>
 
 <style scoped>
-.loader {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  transition: 0.5s linear;
+.table-title th {
+  background: #070758;
+  color: #fff;
 }
 
-.ball {
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  animation: bounce6135 1s alternate infinite;
-  transition: 0.5s linear;
-}
-
-.ball {
-  background: #000;
-}
-
-.ball:nth-child(2) {
-  animation-delay: 0.25s;
-}
-
-.ball:nth-child(3) {
-  animation-delay: 0.5s;
-}
-
-@keyframes bounce6135 {
-  from {
-    transform: scale(2);
-  }
-
-  to {
-    transform: scale(1);
-  }
-}
 </style>

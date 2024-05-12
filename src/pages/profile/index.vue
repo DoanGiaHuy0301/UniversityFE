@@ -1,4 +1,5 @@
 <template>
+   <div v-if="isLoading"><Loading /></div>
   <div style="height: 100%">
     <div class="row">
       <div class="col-lg-2 col-sm-2 d-none d-sm-flex" style="padding: 0">
@@ -338,6 +339,7 @@ import TheMenuStudent from "@/components/TheMenuStudent.vue";
 import Apis, { endpoints, authApi } from "../../configs/Apis.js";
 import { mapGetters } from "vuex";
 import ChartScore from "../../components/ChartScore.vue";
+import Loading from "../../components/Loading.vue";
 
 export default {
   components: {
@@ -346,10 +348,12 @@ export default {
     TheMenu,
     TheMenuStudent,
     ChartScore,
+    Loading,
   },
   computed: {
     ...mapGetters(["isAuth", "getUser"]),
   },
+
   data() {
     return {
       user: { email: "" },
@@ -374,11 +378,14 @@ export default {
       loaded: true,
       errorMessage: "",
       finalScore: "",
+      isLoading: false,
     };
   },
   created() {
+    this.isLoading = true;
     this.fetchUserInfo();
     this.showAcademicWarming();
+    this.isLoading = false;
   },
   watch: {
     selectSemester: function (newSemester, oldSemester) {

@@ -1,6 +1,7 @@
 <template>
   <section>
     <div class="container">
+      <div v-if="isLoading"><Loading /></div>
       <select
         class="form-control form-width"
         id="selectSemester"
@@ -18,7 +19,7 @@
         </option>
       </select>
       <div v-if="isTuitionFeeSuccess" class="table-container">
-        <table class="table" style="width: 100%; ">
+        <table class="table" style="width: 100%">
           <thead>
             <tr class="table-title">
               <th scope="col" class="text-center" style="width: 5%">STT</th>
@@ -137,10 +138,14 @@
 <script>
 import Apis, { authApi, endpoints } from "@/configs/Apis";
 import { mapGetters } from "vuex";
+import Loading from "../../../components/Loading.vue";
 
 export default {
   computed: {
     ...mapGetters(["isAuth", "getUser"]),
+  },
+  components: {
+    Loading,
   },
   data() {
     return {
@@ -150,6 +155,7 @@ export default {
       listTuitionFee: [],
       listSubjectTuitionFee: [],
       semesters: [],
+      isLoading: false,
     };
   },
   watch: {
@@ -190,6 +196,7 @@ export default {
       }
     },
     async submitTuitionFee(tuitionFeeId) {
+      this.isLoading = true;
       const res = await Apis.post(
         endpoints["payment"] + `?tuitionFeeId=${tuitionFeeId}`
       );
@@ -203,6 +210,7 @@ export default {
       } else {
         console.error("Invalid payment token received.");
       }
+      this.isLoading = false;
     },
     async getListSemester() {
       try {
@@ -226,15 +234,16 @@ export default {
         );
         this.listSubjectTuitionFee = res.data;
         this.isSubjectTuitionFeeSuccess = true;
-        console.log("getSubjectTuitionFee: ", res.status);
       } catch (error) {
         this.listSubjectTuitionFee = [];
       }
     },
   },
   async created() {
+    this.isLoading = true;
     await this.getListSemester();
     await this.getTuitionFee();
+    this.isLoading = false;
   },
 };
 </script>
