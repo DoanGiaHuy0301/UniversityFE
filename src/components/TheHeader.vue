@@ -383,6 +383,7 @@ export default {
 
 .dropdown-toggle::after {
   right: unset !important;
+  display: inline-block !important;
 }
 
 .menu2 {
