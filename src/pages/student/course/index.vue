@@ -353,7 +353,7 @@ export default {
 
           const response = await authApi().get(
             endpoints["get-education-program"] +
-              `?studentId=${studentId}&semesterId=22023&majorId=${majorId}`
+              `?studentId=${studentId}&semesterId=${semesterId}&majorId=${majorId}`
           );
           this.courses = response.data;
           console.log("education program", this.courses);
@@ -515,9 +515,9 @@ export default {
   },
   async created() {
     this.isLoading = true;
+    this.getLatestSemester();
     this.getMajor();
     this.getSubject();
-    this.getLatestSemester();
     if (this.semesters) {
       await this.getSubjectTemoratyCourse();
     }
