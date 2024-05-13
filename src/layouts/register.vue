@@ -1,6 +1,6 @@
 <template>
-  <div style="margin: 3rem">
-    <div class="container">
+  <div>
+    <div class="container mt-3 mb-3">
       <div class="row">
         <div class="col-md-6">
           <img

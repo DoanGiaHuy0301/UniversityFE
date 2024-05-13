@@ -63,11 +63,11 @@
                       Trang chủ
                     </router-link>
                   </span>
-                  <!-- <span class="registerHover">
+                  <span class="registerHover">
                     <router-link to="/register" class="nav-link">
                       Đăng ký
                     </router-link>
-                  </span> -->
+                  </span>
                 </div>
               </form>
             </div>
