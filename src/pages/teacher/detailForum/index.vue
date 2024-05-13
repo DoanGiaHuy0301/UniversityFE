@@ -74,7 +74,7 @@
             ></textarea>
             <div class="post-update-and-delete">
               <ul>
-                <li @click="updateComment(p.id)">Lưu</li>
+                <li @click="updateComment(p.id)" class="mr-3">Lưu</li>
                 <li @click="exitHandleEdit">Thoát</li>
               </ul>
             </div>
