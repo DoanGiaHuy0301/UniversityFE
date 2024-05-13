@@ -1,5 +1,5 @@
 <template>
-   <div v-if="isLoading"><Loading /></div>
+  <div v-if="isLoading"><Loading /></div>
   <div class="container" style="margin-bottom: 200px">
     <div class="row">
       <form>
@@ -98,6 +98,15 @@
               >
                 Gửi mail
               </button>
+              <div>
+                <button
+                  class="btn btn-danger btnExportPDF"
+                  @click="exportToPDF"
+                  style="margin-left: 10px"
+                >
+                  Xuất PDF
+                </button>
+              </div>
               <div style="text-align: center; margin: 0 10px">
                 <div
                   v-if="loading"
@@ -229,7 +238,10 @@
         </div>
         <div v-else>
           <div v-if="studentList.length > 0" class="table-container">
-            <table class="table table-striped table-bordered table-hover">
+            <table
+              class="table table-striped table-bordered table-hover"
+              id="table-score"
+            >
               <thead>
                 <tr class="table-title">
                   <th class="text-center">Mã số sinh viên</th>
@@ -271,6 +283,10 @@ import { authApi, endpoints } from "@/configs/Apis.js";
 import { mapGetters } from "vuex";
 import { useMenu } from "../../../stores/use-menu.js";
 import Loading from "../../../components/Loading.vue";
+import jsPDF from "jspdf";
+import "jspdf-autotable";
+import html2pdf from "html2pdf.js";
+
 export default {
   setup() {
     useMenu().onSelectedKeys(["teacher-studentScore"]);
@@ -452,7 +468,7 @@ export default {
 
         if (response.data) {
           this.studentList = response.data;
-          console.log("this.studentList = ", this.studentList)
+          console.log("this.studentList = ", this.studentList);
           this.hasError = false;
           this.notFoundMessage = false;
         }
@@ -614,14 +630,74 @@ export default {
           },
         });
 
-        console.log(res.status);
-
         if (res.status === 200) {
           alert("Lưu điểm của tất cả sinh viên thành công!");
         }
       } catch (error) {
         console.error(error);
       }
+    },
+    // async exportToPDF() {
+    //   const doc = new jsPDF();
+    //   const customFont =
+    //     "AAEAAAAKAIAAAwAgT1MvMzQ0AQb/F0AAAAJG9TLzIzODQ5AAABCAAAADYmKyozAAAAC2AAAADJjdnQgAAAAAAAACuwAAAAVjbWFwAAAAAAABAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAEAAAAYAAAAAQAAAAEAAAABAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAADAAAAQAAAAMAAAADAAAABAAAAAwAAAAQAAAABAAAAAQAAAAEAAAADAAAAAQAAAAAAAAAAAAMAAAABAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGAAAAAQAAAAEAAAABAAAABwAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAABAAAAAQAAAAEAAAABAAAABgAAAAAAAAAAAAEAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAQAAAAMAAAADAAAABQAAAAQAAAAEAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAABAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAA==";
+    //   doc.addFileToVFS("times.ttf", customFont);
+    //   doc.addFont("times.ttf", "times", "normal");
+
+    //   doc.setFont("times");
+    //   doc.text("Bảng điểm sinh viên", 10, 10);
+
+    //   const header = [
+    //     "Mã số sinh viên",
+    //     "Tên sinh viên",
+    //     "Quá trình",
+    //     "Giữa kì",
+    //     "Cuối kì",
+    //   ];
+
+    //   const data = Object.values(this.studentList).map((student) => {
+    //     const scores = student.scoreDto.map((score) => score.value); // Lấy ra chỉ điểm số từ mảng scoreDto
+    //     return [
+    //       student.studentId,
+    //       student.studentName,
+    //       ...scores, // Sử dụng toán tử spread để chèn điểm số vào dữ liệu
+    //     ];
+    //   });
+
+    //   doc.autoTable({
+    //     head: [header],
+    //     body: data,
+    //   });
+
+    //   // Lưu PDF hoặc hiển thị trong một cửa sổ mới
+    //   // Đây là một ví dụ lưu PDF với tên 'student_scores.pdf':
+    //   doc.save("student_scores.pdf");
+    // },
+    async exportToPDF() {
+      const element = document.getElementById("table-score");
+      const header = `<div style="text-align: center;">Bảng điểm sinh viên</div>`;
+
+      
+
+      // Thêm margin để làm cho header không chồng lên nội dung
+      const options = {
+        margin: [10, 5], // Độ dày margin top và bottom là 20
+        filename: "BangDiemSinhVien.pdf",
+        html2canvas: {
+          scale: 2, // Tăng tỉ lệ để có chất lượng tốt hơn
+          useCORS: true, // Sử dụng CORS để tránh lỗi trong trường hợp có các yêu cầu từ nguồn khác
+        },
+        jsPDF: {
+          format: "a4", // Định dạng trang
+        },
+      };
+
+      const container = document.createElement("div");
+      container.innerHTML = header;
+      container.appendChild(element.cloneNode(true));
+
+      // Thêm header vào HTML trước khi xuất PDF
+      html2pdf().set(options).from(container).save();
     },
   },
 };
