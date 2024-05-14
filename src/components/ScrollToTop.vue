@@ -43,7 +43,7 @@
   <style scoped>
   .btn-scroll {
     position: fixed;
-    bottom: 20%;
+    bottom: 20px;
     right: 20px;
     z-index: 99;
   }
