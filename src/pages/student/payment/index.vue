@@ -196,21 +196,26 @@ export default {
       }
     },
     async submitTuitionFee(tuitionFeeId) {
-      this.isLoading = true;
-      const res = await Apis.post(
-        endpoints["payment"] + `?tuitionFeeId=${tuitionFeeId}`
-      );
-
-      if (res.data) {
-        // Lấy token từ phản hồi
-        const paymentToken = res.data;
-
-        // Chuyển hướng người dùng đến trang PayPal
-        window.location.href = paymentToken;
-      } else {
-        console.error("Invalid payment token received.");
+      try {
+        this.isLoading = true;
+        const res = await Apis.post(
+          endpoints["payment"] + `?tuitionFeeId=${tuitionFeeId}`
+        );
+  
+        if (res.data) {
+          // Lấy token từ phản hồi
+          const paymentToken = res.data;
+  
+          // Chuyển hướng người dùng đến trang PayPal
+          // window.location.href = paymentToken;
+          window.open(paymentToken, '_blank');
+        } else {
+          console.error("Invalid payment token received.");
+        }
+        this.isLoading = false;
+      } catch (e) {
+        console.error(e.message);
       }
-      this.isLoading = false;
     },
     async getListSemester() {
       try {

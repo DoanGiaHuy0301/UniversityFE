@@ -98,15 +98,13 @@
               >
                 Gửi mail
               </button>
-              <div>
-                <button
-                  class="btn btn-danger btnExportPDF"
-                  @click="exportToPDF"
-                  style="margin-left: 10px"
-                >
-                  Xuất PDF
-                </button>
-              </div>
+              <button
+                class="btn btn-danger btnExportPDF"
+                @click="exportToPDF"
+                style="margin-left: 10px"
+              >
+                Xuất PDF
+              </button>
               <div style="text-align: center; margin: 0 10px">
                 <div
                   v-if="loading"
@@ -617,7 +615,8 @@ export default {
       const file = event.target.files[0];
       this.fileExcel = file;
     },
-    async saveScoreByFile() {
+    async saveScoreByFile(event) {
+      event.preventDefault();
       try {
         if (!this.fileExcel) {
           return alert("Vui lòng chọn file excel");
@@ -631,53 +630,15 @@ export default {
         });
 
         if (res.status === 200) {
-          alert("Lưu điểm của tất cả sinh viên thành công!");
+          alert("Lưu điểm của tất cả sinh viên thành công! Vui lòng tải lại trang.");
         }
       } catch (error) {
         console.error(error);
       }
     },
-    // async exportToPDF() {
-    //   const doc = new jsPDF();
-    //   const customFont =
-    //     "AAEAAAAKAIAAAwAgT1MvMzQ0AQb/F0AAAAJG9TLzIzODQ5AAABCAAAADYmKyozAAAAC2AAAADJjdnQgAAAAAAAACuwAAAAVjbWFwAAAAAAABAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAEAAAAYAAAAAQAAAAEAAAABAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAADAAAAQAAAAMAAAADAAAABAAAAAwAAAAQAAAABAAAAAQAAAAEAAAADAAAAAQAAAAAAAAAAAAMAAAABAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGAAAAAQAAAAEAAAABAAAABwAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAABAAAAAQAAAAEAAAABAAAABgAAAAAAAAAAAAEAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAQAAAAMAAAADAAAABQAAAAQAAAAEAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAABAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAA==";
-    //   doc.addFileToVFS("times.ttf", customFont);
-    //   doc.addFont("times.ttf", "times", "normal");
-
-    //   doc.setFont("times");
-    //   doc.text("Bảng điểm sinh viên", 10, 10);
-
-    //   const header = [
-    //     "Mã số sinh viên",
-    //     "Tên sinh viên",
-    //     "Quá trình",
-    //     "Giữa kì",
-    //     "Cuối kì",
-    //   ];
-
-    //   const data = Object.values(this.studentList).map((student) => {
-    //     const scores = student.scoreDto.map((score) => score.value); // Lấy ra chỉ điểm số từ mảng scoreDto
-    //     return [
-    //       student.studentId,
-    //       student.studentName,
-    //       ...scores, // Sử dụng toán tử spread để chèn điểm số vào dữ liệu
-    //     ];
-    //   });
-
-    //   doc.autoTable({
-    //     head: [header],
-    //     body: data,
-    //   });
-
-    //   // Lưu PDF hoặc hiển thị trong một cửa sổ mới
-    //   // Đây là một ví dụ lưu PDF với tên 'student_scores.pdf':
-    //   doc.save("student_scores.pdf");
-    // },
     async exportToPDF() {
       const element = document.getElementById("table-score");
-      const header = `<div style="text-align: center;">Bảng điểm sinh viên</div>`;
-
-      
+      const header = `<h3 style="text-align: center;">Bảng điểm sinh viên</h3>`;
 
       // Thêm margin để làm cho header không chồng lên nội dung
       const options = {
