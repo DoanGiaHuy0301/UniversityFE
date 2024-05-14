@@ -123,10 +123,10 @@
         </div>
       </form>
       <div v-if="hasError">
-        <p style="font-size: 20px; padding: 20px">{{ err }}</p>
+        <p style="font-size: 20px; padding: 0 20px">{{ err }}</p>
       </div>
       <div v-if="isEditMode && !notFoundMessage" class="form-input-score">
-        <div class="table-studentScore table-container">
+        <div class="table-container">
           <table class="table table-hover">
             <thead>
               <tr class="table-title">
@@ -174,7 +174,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="(student, index) in studentList" :key="index">
+              <tr v-for="(student, index) in displayedItems" :key="index">
                 <td style="width: 150px; text-align: center">
                   {{ student.studentId }}
                 </td>
@@ -270,6 +270,39 @@
               </tbody>
             </table>
           </div>
+          <ul class="pagination">
+            <li class="page-item">
+              <a
+                class="page-link"
+                href="#"
+                @click="previousPage"
+                :disabled="currentPage === 1"
+                >Previous</a
+              >
+            </li>
+            <li
+              class="page-item"
+              v-for="pageNumber in pageNumbers"
+              :key="pageNumber"
+            >
+              <a
+                class="page-link"
+                href="#"
+                @click="setCurrentPage(pageNumber)"
+                :class="{ active: currentPage === pageNumber }"
+                >{{ pageNumber }}</a
+              >
+            </li>
+            <li class="page-item">
+              <a
+                class="page-link"
+                href="#"
+                @click="nextPage"
+                :disabled="currentPage === pageNumbers.length"
+                >Next</a
+              >
+            </li>
+          </ul>
         </div>
       </div>
     </div>
@@ -319,10 +352,34 @@ export default {
       min: 0,
       max: 10,
       fileExcel: null,
+      currentPage: 1,
+      listPerPage: 10,
     };
   },
   computed: {
     ...mapGetters(["isAuth", "getUser"]),
+    indexOfLastPost() {
+      return this.currentPage * this.listPerPage;
+    },
+    indexOfFirstPost() {
+      return this.indexOfLastPost - this.listPerPage;
+    },
+    pageNumbers() {
+      const pageNumbers = [];
+      for (
+        let i = 1;
+        i <= Math.ceil(this.studentList.length / this.listPerPage);
+        i++
+      ) {
+        pageNumbers.push(i);
+      }
+      return pageNumbers;
+    },
+    displayedItems() {
+      const start = (this.currentPage - 1) * this.listPerPage;
+      const end = start + this.listPerPage;
+      return this.studentList.slice(start, end);
+    },
   },
   components: {
     Loading,
@@ -349,6 +406,27 @@ export default {
     });
   },
   methods: {
+    previousPage() {
+      if (this.currentPage > 1) {
+        this.currentPage--;
+      }
+      this.updateDisplayedItems();
+    },
+    nextPage() {
+      if (this.currentPage < this.pageNumbers.length) {
+        this.currentPage++;
+      }
+      this.updateDisplayedItems();
+    },
+    setCurrentPage(page) {
+      this.currentPage = page;
+      this.updateDisplayedItems();
+    },
+    updateDisplayedItems() {
+      const start = (this.currentPage - 1) * this.listPerPage;
+      const end = start + this.listPerPage;
+      this.displayedItems = this.studentList.slice(start, end);
+    },
     handleInput(student) {
       if (student.scoreDto.scoreValue3 > this.max) {
         student.scoreDto.scoreValue3 = this.max;
