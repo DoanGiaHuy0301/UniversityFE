@@ -174,7 +174,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="(student, index) in displayedItems" :key="index">
+              <tr v-for="(student, index) in studentList" :key="index">
                 <td style="width: 150px; text-align: center">
                   {{ student.studentId }}
                 </td>
@@ -251,7 +251,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="(student, index) in studentList" :key="index">
+                <tr v-for="(student, index) in displayedItems" :key="index">
                   <td class="text-center">{{ student.studentId }}</td>
                   <td class="text-center">{{ student.studentName }}</td>
                   <td class="text-center">
@@ -641,14 +641,15 @@ export default {
         const subjectId = this.selectedSubject;
         const semesterId = this.selectedSemester;
         const lecturerId = this.selectedLecturer.id;
+        const classesId = this.selectedClass.id;
 
-        if (!subjectId || !semesterId || !lecturerId) {
+        if (!subjectId || !semesterId || !lecturerId || !classesId) {
           alert("Không thể gửi mail khi chưa có danh sách!");
         }
 
         const endpoint =
           endpoints["send-mail"] +
-          `?lecturerId=${lecturerId}&subjectId=${subjectId}&semesterId=${semesterId}`;
+          `?lecturerId=${lecturerId}&classesId=${classesId}&subjectId=${subjectId}&semesterId=${semesterId}`;
 
         const response = await authApi().post(endpoint);
         if (response.status === 200) {
