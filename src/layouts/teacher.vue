@@ -1,8 +1,12 @@
 <template>
   <div style="height: 100%">
+    <ScrollToTop />
     <div class="row">
-      <div class="col-2 col-md-3 col-lg-3 col-xl-2 d-none d-md-flex sidebar-desktop" style="padding: 0">
-        <a-list bordered style="width: 100%;">
+      <div
+        class="col-2 col-md-3 col-lg-3 col-xl-2 d-none d-md-flex sidebar-desktop"
+        style="padding: 0"
+      >
+        <a-list bordered style="width: 100%">
           <TheMenu />
           <template #header>
             <div>
@@ -27,11 +31,13 @@
 import TheHeader from "../components/TheHeader.vue";
 import TheFooter from "../components/TheFooter.vue";
 import TheMenu from "../components/TheMenu.vue";
+import ScrollToTop from "../components/ScrollToTop.vue";
 export default {
   components: {
     TheHeader,
     TheFooter,
     TheMenu,
+    ScrollToTop,
   },
 };
 </script>

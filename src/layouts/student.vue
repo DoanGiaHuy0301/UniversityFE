@@ -1,5 +1,6 @@
 <template>
   <div>
+    <ScrollToTop/>
     <div class="row">
       <div
         class="col-2 col-md-3 col-lg-3 col-xl-2 d-none d-md-flex sidebar-desktop"
@@ -33,11 +34,13 @@
 import TheHeader from "../components/TheHeader.vue";
 import TheFooter from "../components/TheFooter.vue";
 import TheMenuStudent from "../components/TheMenuStudent.vue";
+import ScrollToTop from "../components/ScrollToTop.vue";
 export default {
   components: {
     TheHeader,
     TheFooter,
     TheMenuStudent,
+    ScrollToTop,
   },
 };
 </script>

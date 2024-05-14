@@ -1,5 +1,6 @@
 <template>
   <TheHeader />
+  <ScrollToTop/>
   <div id="parent">
     <div class="container">
       <h2 class="title_content">Phụ huynh</h2>
@@ -114,12 +115,14 @@
 import TheFooter from "@/components/TheFooter.vue";
 import TheHeader from "@/components/TheHeader.vue";
 import Apis, { endpoints } from "@/configs/Apis";
+import ScrollToTop from "../components/ScrollToTop.vue";
 import student from "@/routers/student";
 
 export default {
   components: {
     TheFooter,
     TheHeader,
+    ScrollToTop,
   },
   data() {
     return {
