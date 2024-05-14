@@ -389,7 +389,6 @@ export default {
       async handler(newSubject, oldSubject) {
         await this.getSemesterBySubject();
       },
-      // deep: true,
     },
   },
   async created() {
