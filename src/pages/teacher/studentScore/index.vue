@@ -396,6 +396,7 @@ export default {
     this.isLoading = true;
     await this.fetchLecturerInfo();
     await this.getClasses();
+    this.updateDisplayedItems();
     this.isLoading = false;
 
     this.fetchLecturerInfo().then((lecturerInfo) => {
