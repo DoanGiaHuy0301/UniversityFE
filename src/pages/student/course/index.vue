@@ -125,7 +125,7 @@
       </p>
     </div>
     <div>
-      <p>Danh sách môn học đã đăng kí:</p>
+      <p>Danh sách môn học đã chọn:</p>
       <div class="table-container">
         <table class="table table-hover table-bordered">
           <thead>
@@ -153,12 +153,12 @@
           </tbody>
         </table>
       </div>
-      <p>Danh sách môn học đã chọn:</p>
+      <p>Danh sách môn học đã đăng ký:</p>
       <div class="table-container">
         <table class="table table-hover table-bordered">
           <thead>
             <tr>
-              <th style="width: 5%;"></th>
+              <th style="width: 5%"></th>
               <th style="text-align: center">STT</th>
               <th>Mã môn học</th>
               <th>Tên môn học</th>
@@ -183,9 +183,36 @@
           </tbody>
         </table>
       </div>
+      <div class="table-container d-none" style="display: none">
+        <table id="table-course" class="table table-hover table-bordered">
+          <thead>
+            <tr>
+              <th style="text-align: center">STT</th>
+              <th>Mã môn học</th>
+              <th>Tên môn học</th>
+              <th>Số tín chỉ</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(course, index) in ListCourses" :key="index">
+              <td style="text-align: center">{{ index + 1 }}</td>
+              <td>{{ course.subjectId.id }}</td>
+              <td>{{ course.subjectId.name }}</td>
+              <td>{{ course.subjectId.credit }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
       <div class="d-flex justify-content-end">
         <button class="btn btn-primary" @click="submitCourses()">
           Đăng ký
+        </button>
+        <button
+          class="btn btn-danger btnExportPDF"
+          @click="exportToPDF"
+          style="margin-left: 10px"
+        >
+          Xuất PDF
         </button>
       </div>
     </div>
@@ -196,6 +223,8 @@
 import Apis, { authApi, endpoints } from "@/configs/Apis";
 import { mapGetters } from "vuex";
 import Loading from "../../../components/Loading.vue";
+import html2pdf from "html2pdf.js";
+
 export default {
   computed: {
     ...mapGetters(["isAuth", "getUser"]),
@@ -492,7 +521,6 @@ export default {
         console.log(error);
       }
     },
-
     async getSubjectCourse() {
       try {
         const username = this.getUser.username;
@@ -511,6 +539,30 @@ export default {
       } catch (error) {
         console.log(error);
       }
+    },
+    async exportToPDF() {
+      const element = document.getElementById("table-course");
+      const header = `<h3 style="text-align: center;">Danh sách môn học đã đăng ký</h3>`;
+
+      // Thêm margin để làm cho header không chồng lên nội dung
+      const options = {
+        margin: [10, 5], // Độ dày margin top và bottom là 20
+        filename: `${this.getUser.username}` + ".pdf",
+        html2canvas: {
+          scale: 2, // Tăng tỉ lệ để có chất lượng tốt hơn
+          useCORS: true, // Sử dụng CORS để tránh lỗi trong trường hợp có các yêu cầu từ nguồn khác
+        },
+        jsPDF: {
+          format: "a4", // Định dạng trang
+        },
+      };
+
+      const container = document.createElement("div");
+      container.innerHTML = header;
+      container.appendChild(element.cloneNode(true));
+
+      // Thêm header vào HTML trước khi xuất PDF
+      html2pdf().set(options).from(container).save();
     },
   },
   async created() {
