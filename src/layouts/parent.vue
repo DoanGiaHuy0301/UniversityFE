@@ -3,7 +3,7 @@
   <ScrollToTop/>
   <div id="parent">
     <div class="container">
-      <h2 class="title_content">Phụ huynh</h2>
+      <h2 class="title_content">{{ $t('message.parent') }}</h2>
       <form
         class="formParent"
         method="get"
@@ -11,54 +11,54 @@
       >
         <div class="row">
           <div class="col-lg col-sm-block mb-3">
-            <label>Mã số sinh viên</label>
+            <label>{{ $t('message.student-id') }}</label>
             <input
               v-model="student.studentId"
               type="text"
               class="form-control"
-              placeholder="Mã số sinh viên"
+              :placeholder="$t('message.student-id')"
               required
             />
           </div>
           <div class="col-lg col-sm-block mb-3">
-            <label>Họ và tên</label>
+            <label>{{ $t('message.fullname') }}</label>
             <input
               v-model="student.studentName"
               type="text"
               class="form-control"
-              placeholder="Họ và tên"
+              :placeholder="$t('message.fullname')"
               required
             />
           </div>
           <div class="col-lg col-sm-block mb-3">
-            <label>Ngày sinh</label>
+            <label>{{ $t('message.date-of-birth') }}</label>
             <input
               v-model="student.studentBirthday"
               type="date"
               class="form-control"
-              placeholder="Ngày sinh"
+              :placeholder="$t('message.date-of-birth')"
               required
             />
           </div>
         </div>
         <div class="row" style="margin-top: 20px">
           <div class="col-lg col-sm-block mb-3">
-            <label>Mã lớp</label>
+            <label>{{ $t('message.class-code') }}</label>
             <input
               v-model="student.classId"
               type="text"
               class="form-control"
-              placeholder="Mã lớp"
+              :placeholder="$t('message.class-code')"
               required
             />
           </div>
           <div class="col-lg col-sm-block mb-3">
-            <label>CCCD</label>
+            <label>{{ $t('message.CCCD') }}</label>
             <input
               v-model="student.studentIdentification"
               type="text"
               class="form-control"
-              placeholder="CCCD"
+              :placeholder="$t('message.CCCD')"
               required
             />
           </div>
@@ -69,7 +69,7 @@
         <div class="btn-search">
           <input
             type="submit"
-            value="Tra cứu"
+            :value="$t('message.find')"
             class="btn btn-block btn-primary"
             :disabled="loading"
             style="max-width: 100px"
@@ -80,11 +80,11 @@
         <thead>
           <tr>
             <th scope="col">MSSV</th>
-            <th scope="col">Họ và tên</th>
-            <th scope="col">Ngày sinh</th>
-            <th scope="col">Số CCCD</th>
-            <th scope="col">Xem điểm</th>
-            <th scope="col">Học phí</th>
+            <th scope="col">{{ $t('message.fullname') }}</th>
+            <th scope="col">{{ $t('message.date-of-birth') }}</th>
+            <th scope="col">{{ $t('message.CCCD') }}</th>
+            <th scope="col">{{ $t('message.score') }}</th>
+            <th scope="col">{{ $t('message.tuition-fee') }}</th>
           </tr>
         </thead>
         <tbody>
@@ -95,12 +95,12 @@
             <td>{{ studentList.identification }}</td>
             <td>
               <router-link :to="`/parent/scoreStudent/${studentList.id}`"
-                >Xem điểm</router-link
+                >{{ $t('message.score') }}</router-link
               >
             </td>
             <td>
               <router-link :to="`/parent/payment/${studentList.id}`"
-                >Học Phí</router-link
+                >{{ $t('message.tuition-fee') }}</router-link
               >
             </td>
           </tr>

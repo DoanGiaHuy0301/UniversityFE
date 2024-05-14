@@ -7,6 +7,7 @@ import { initializeApp } from "firebase/app";
 import { fetchFirebaseConfig } from "./services/firebase.js";
 import { getAuth } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
+import i18n from './i18n/i18n';
 // import { auth, db } from "./services/firebase.js";
 // import reducer from '@/reducers/myUseReducer.js'
 // import { provideUserContext } from '../reducers/UseContext.js'
@@ -38,4 +39,5 @@ app.use(Menu);
 app.use(List);
 app.use(Button);
 app.use(Drawer);
+app.use(i18n);
 app.mount("#app");

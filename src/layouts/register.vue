@@ -13,74 +13,74 @@
           <div class="row justify-content-center">
             <div class="col-md-8">
               <div class="mb-4">
-                <h3>Đăng ký tài khoản</h3>
+                <h3>{{ $t("message.register-account") }}</h3>
                 <div v-if="errorMessage" class="alert alert-danger">
                   {{ errorMessage }}
                 </div>
               </div>
               <form action="#" method="post" @submit.prevent="handleRegister">
                 <div class="form-group first">
-                  <label>Tài khoản</label>
+                  <label>{{ $t("message.account") }}</label>
                   <input
                     required
                     v-model="user.username"
                     @input="change($event, 'username')"
                     type="text"
                     class="form-control mt-1"
-                    placeholder="Nhập tài khoản"
+                    :placeholder="$t('message.input-account')"
                   />
                 </div>
                 <div class="form-group last mb-4">
-                  <label>Mật khẩu</label>
+                  <label>{{ $t("message.password") }}</label>
                   <input
                     required
                     v-model="user.password"
                     @input="change($event, 'password')"
                     type="password"
                     class="form-control mt-1"
-                    placeholder="Nhập mật khẩu"
+                    :placeholder="$t('message.input-password')"
                   />
                 </div>
                 <div class="form-group last mb-4">
-                  <label>Xác nhận Mật khẩu</label>
+                  <label>{{ $t("message.confirm-password") }}</label>
                   <input
                     required
                     v-model="user.confirmPass"
                     @input="change($event, 'confirmPass')"
                     type="password"
                     class="form-control mt-1"
-                    placeholder="Xác nhận mật khẩu"
+                    :placeholder="$t('message.confirm-password')"
                   />
                 </div>
                 <div class="form-group last mb-4">
-                  <label>Email</label>
+                  <label>{{ $t("message.email") }}</label>
                   <input
                     required
                     v-model="user.email"
                     @input="change($event, 'email')"
                     type="email"
                     class="form-control mt-1"
-                    placeholder="Email"
+                    :placeholder="$t('message.email')"
                   />
                 </div>
                 <div class="form-group last mb-4">
-                  <label>Avatar</label>
+                  <label>{{ $t("message.avatar") }}</label>
                   <input
                     required
                     type="file"
                     @change="handleAvatarChange"
                     accept="image/*"
                     class="form-control mt-1"
-                    placeholder="Avatar"
+                    :placeholder="$t('message.avatar')"
                   />
                   <label for="file">
-                    <span>Add an avatar</span>
+                    <span>{{ $t("message.add-avatar") }}</span>
                   </label>
                 </div>
 
                 <input
                   type="submit"
-                  value="Đăng ký"
+                  :value="$t('message.register')"
                   :disabled="loading"
                   class="btn btn-block btn-primary"
                 />
@@ -90,7 +90,7 @@
                     class="spinner-border text-primary"
                     role="status"
                   >
-                    <span class="visually-hidden">Loading...</span>
+                    <span class="visually-hidden">{{ $t("message.loading") }}...</span>
                   </div>
                 </div>
                 <div
@@ -99,12 +99,12 @@
                 >
                   <span class="registerHover" style="margin-right: 10px">
                     <router-link to="/" class="nav-link">
-                      Trang chủ
+                      {{ $t("message.home") }}
                     </router-link>
                   </span>
                   <span class="registerHover">
                     <router-link to="/login" class="nav-link">
-                      Đăng nhập
+                      {{ $t("message.login") }}
                     </router-link>
                   </span>
                 </div>
@@ -137,7 +137,7 @@ export default {
       loading: false,
     };
   },
-  
+
   methods: {
     change(event, field) {
       this.user[field] = event.target.value;
@@ -207,14 +207,16 @@ export default {
           this.email = "";
           this.password = "";
         } catch (e) {
-          this.errorMessage = error.response?.data || "Lỗi server" || error.message;
+          this.errorMessage =
+            error.response?.data || "Lỗi server" || error.message;
         }
-       
+
         this.$router.push("/login");
 
         // Your registration and Firebase code here...
       } catch (error) {
-        this.errorMessage = error.response?.data || "Lỗi server" || error.message;
+        this.errorMessage =
+          error.response?.data || "Lỗi server" || error.message;
       } finally {
         this.loading = false;
       }
@@ -230,4 +232,3 @@ export default {
   },
 };
 </script>
-

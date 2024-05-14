@@ -45,14 +45,14 @@
     :class="{ 'slide-left': !isCheckedMenu2, 'slide-right': isCheckedMenu2 }"
   >
     <div class="menu-container">
-      <h5>Trường đại học STU</h5>
+      <h5>{{ $t('message.university') }} STU</h5>
       <div class="btn-close-menu2" @click="toggleMenu2">
         <i class="fa-solid fa-xmark"></i>
       </div>
       <ul class="menu-items">
         <li class="menu-item" :class="{ active: $route.path === '/' }">
           <router-link to="/" class="router-link-hover nav-link" exact>
-            <span> Trang chủ </span>
+            <span> {{ $t('message.home') }} </span>
           </router-link>
         </li>
         <li
@@ -63,23 +63,23 @@
             to="/general-information"
             class="router-link-hover nav-link"
           >
-            <span> Giới thiệu chung </span>
+            <span> {{ $t('message.about') }} </span>
           </router-link>
         </li>
         <div class="menu-login">
           <li class="menu-item">
             <router-link to="/login" class="router-link-hover nav-link">
-              <span> Sinh viên </span>
+              <span> {{ $t('message.student') }} </span>
             </router-link>
           </li>
           <li class="menu-item">
             <router-link to="/login" class="router-link-hover nav-link">
-              <span> Giảng viên </span>
+              <span> {{ $t('message.lecturer') }} </span>
             </router-link>
           </li>
           <li class="menu-item">
             <router-link to="/parent" class="router-link-hover nav-link">
-              <span> Phụ huynh </span>
+              <span>{{ $t('message.parent') }} </span>
             </router-link>
           </li>
         </div>
@@ -98,7 +98,7 @@
         <div class="profile d-none d-md-flex d-lg-flex" v-if="isAuth === true">
           <router-link to="/profile" class="router-link-hover">
             <i class="fa-solid fa-user"></i>
-            <span style="font-size: 16px"> Hồ sơ </span>
+            <span style="font-size: 16px"> {{ $t('message.profile') }} </span>
           </router-link>
         </div>
         <div class="container-mobile" v-if="isAuth">
@@ -134,19 +134,19 @@
           <div class="parent">
             <router-link to="/login" class="router-link-hover">
               <i class="fa-solid fa-graduation-cap"></i>
-              <span> Sinh viên </span>
+              <span class="ml-2"> {{ $t('message.student') }} </span>
             </router-link>
           </div>
           <div class="parent">
             <router-link to="/login" class="router-link-hover">
               <i class="fa-solid fa-user-tie"></i>
-              <span> Giảng viên </span>
+              <span  class="ml-2"> {{ $t('message.lecturer') }} </span>
             </router-link>
           </div>
           <div class="parent">
             <router-link to="/parent" class="router-link-hover">
               <i class="fa-solid fa-hands-holding-child"></i>
-              <span> Phụ huynh </span>
+              <span  class="ml-2"> {{ $t('message.parent') }}</span>
             </router-link>
           </div>
         </div>
@@ -188,6 +188,10 @@
             </li>
           </ul>
         </div>
+        <select class="select-language" @change="changeLocale($event.target.value)">
+          <option value="vi">{{ $t('message.vietnamese') }}</option>
+          <option value="en">{{ $t('message.english') }}</option>
+        </select>
       </div>
     </div>
   </div>
@@ -220,7 +224,7 @@
                 :class="{ active: $route.path === '/' }"
                 exact
               >
-                <span> Trang chủ </span>
+                <span> {{ $t('message.home') }} </span>
               </router-link>
             </li>
             <li class="nav-item">
@@ -229,7 +233,7 @@
                 class="router-link-hover nav-link"
                 :class="{ active: $route.path === '/general-information' }"
               >
-                <span> Giới thiệu chung </span>
+                <span> {{ $t('message.about') }} </span>
               </router-link>
             </li>
           </ul>
@@ -242,14 +246,17 @@
 <script>
 import TheMenu from "@/components/TheMenu.vue";
 import TheMenuStudent from "@/components/TheMenuStudent.vue";
+import LanguageDropdown from "@/components/LanguageDropdowns.vue";
 import { authApi, endpoints } from "@/configs/Apis";
 import { mapGetters } from "vuex";
 import { getAuth, signOut } from "firebase/auth";
+
 export default {
   name: "TheHeader",
   components: {
     TheMenu,
     TheMenuStudent,
+    LanguageDropdown,
   },
   data() {
     return {
@@ -266,6 +273,9 @@ export default {
     ...mapGetters(["isAuth", "getUser"]),
   },
   methods: {
+    changeLocale(locale) {
+      this.$i18n.locale = locale;
+    },
     toggleMenu() {
       this.isChecked = !this.isChecked;
     },
@@ -334,6 +344,14 @@ export default {
 </script>
 
 <style>
+
+.select-language {
+  background: #070758;
+  color: #fff;
+  border: none;
+  font-size: 16px;
+}
+
 .header {
   position: relative;
   left: 0;
@@ -440,7 +458,6 @@ export default {
   right: 20px;
   font-size: 20px;
 }
-
 
 .slide-right {
   -webkit-animation: slide-right 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;

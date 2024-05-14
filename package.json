@@ -29,6 +29,7 @@
     "vue-carousel": "^0.18.0",
     "vue-chartjs": "^5.3.1",
     "vue-cookies": "^1.8.3",
+    "vue-i18n": "^9.13.1",
     "vue-recaptcha": "^3.0.0-alpha.6",
     "vue-router": "^4.0.3",
     "vuex": "^4.0.2",

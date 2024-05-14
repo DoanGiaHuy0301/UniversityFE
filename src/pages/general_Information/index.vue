@@ -12,17 +12,11 @@
         </div>
         <div class="sectionLayout_children_container">
           <h1 class="title_backgound">
-            <p>Giới thiệu chung</p>
+            <p>{{ $t("message.about") }}</p>
           </h1>
           <div class="content_background">
             <p>
-              Được thành lập vào năm 1990 và trở thành trường đại học công lập
-              từ năm 2006, đến nay Trường Đại học Mở Thành phố Hồ Chí Minh là
-              trường đại học đa ngành trực thuộc Bộ Giáo dục và Đào tạo, có
-              nhiệm vụ đào tạo đại học và sau đại học, với các hình thức đào tạo
-              chính quy và giáo dục thường xuyên, đào tạo các điểm vệ tinh,…nhằm
-              đáp ứng nhu cầu học tập đa dạng của xã hội, góp phần tăng cường
-              đội ngũ cán bộ khoa học-kỹ thuật cho đất nước.
+              {{ $t("message.content-general") }}
             </p>
           </div>
         </div>
@@ -30,46 +24,44 @@
     </section>
     <section class="general_1">
       <div class="container-fluid mt-3 container">
-        <h2 class="title_content">Thông tin chi tiết</h2>
+        <h2 class="title_content">{{ $t("message.Detail-information") }}</h2>
         <div class="container">
           <div class="row">
             <div class="col col-item" style="padding: 10px 24px">
               <div class="item">
-                <h5>Tên trường</h5>
+                <h5>{{ $t("message.name-of-school") }}</h5>
                 <div>
-                  <p>Tiếng Việt: Trường Đại học Mở Thành Phố Hồ Chí Minh</p>
-                  <p>Tiếng Anh: Ho Chi Minh City Open University</p>
+                  <p>{{ $t("message.vietnamese-language") }}: Trường Đại học Mở Thành Phố Hồ Chí Minh</p>
+                  <p>{{ $t("message.english-language") }}: Ho Chi Minh City Open University</p>
                 </div>
               </div>
               <div class="item">
-                <h5>Tên viết tắt của trường</h5>
+                <h5>{{ $t('message.abbreviation') }}</h5>
                 <div>
-                  <p>Tiếng Việt: Trường Đại học Mở Tp. Hồ Chí Minh</p>
-                  <p>Tiếng Anh: HCMCOU</p>
+                  <p>{{ $t("message.vietnamese-language") }}: Trường Đại học Mở Tp. Hồ Chí Minh</p>
+                  <p>{{ $t("message.english-language") }}: HCMCOU</p>
                 </div>
               </div>
               <div class="item">
-                <h5>Tên trước đây</h5>
+                <h5>{{ $t("message.previous-name") }}</h5>
                 <div>
                   <p>
-                    Viện Đào Tạo Mở Rộng TP. Hồ Chí Minh (từ năm 1990) Đại học
-                    Mở Bán Công TP. Hồ Chí Minh (từ năm 1993 đến năm 2005)
+                    {{ $t("message.content-general-2") }}
                   </p>
                 </div>
               </div>
             </div>
             <div class="col col-item" style="padding: 10px 24px">
               <div class="item">
-                <h5>Cơ quan/Bộ chủ quản</h5>
+                <h5>{{ $t("message.governing-agencies-and-ministries") }}</h5>
                 <div>
                   <p>
-                    Trường Đại học Mở TP. Hồ Chí Minh trực thuộc Bộ giáo dục và
-                    Đào tạo
+                    {{ $t("message.content-general-3") }}
                   </p>
                 </div>
               </div>
               <div class="item">
-                <h5>Địa chỉ liên lạc</h5>
+                <h5>{{ $t("message.address-contact") }}</h5>
                 <div>
                   <p>
                     Số 97 Võ Văn Tần, Phường Võ Thị Sáu, Quận 3, TP. Hồ Chí Minh

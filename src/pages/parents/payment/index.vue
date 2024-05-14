@@ -2,20 +2,20 @@
   <Home>
     <section>
       <div class="container container-fluid mb-4 mt-4">
-        <h2 class="title_content">Học phí của sinh viên</h2>
+        <h2 class="title_content">{{ $t('message.student-fee') }}</h2>
         <select
           class="form-control form-width"
           id="selectSemester"
           v-model="selectSemester"
           style="width: 40%"
         >
-          <option value="">Tổng hợp học phí tất cả học kỳ</option>
+          <option value="">{{ $t('message.total-tuition-fee') }}</option>
           <option
             v-for="(semester, index) in semesters"
             :key="index"
             :value="semester.id"
           >
-            {{ semester.name }} - Năm học:
+            {{ semester.name }} - {{ $t('message.school-year') }}:
             {{ semester.schoolYear }}
           </option>
         </select>
@@ -96,16 +96,16 @@
               <tr class="table-title">
                 <th scope="col" class="text-center" style="width: 5%">STT</th>
                 <th scope="col" class="text-center" style="width: 25%">
-                  Mã môn học
+                  {{ $t('message.code-of-subject') }}
                 </th>
                 <th scope="col" class="text-center" style="width: 20%">
-                  Tên môn học
+                  {{ $t('message.name-of-subject') }}
                 </th>
                 <th scope="col" class="text-center" style="width: 20%">
-                  Số tín chỉ
+                  {{ $t('message.credit') }}
                 </th>
                 <th scope="col" class="text-center" style="width: 15%">
-                  Số tiền
+                  {{ $t('message.fee') }}
                 </th>
               </tr>
             </thead>

@@ -641,7 +641,7 @@ export default {
         const subjectId = this.selectedSubject;
         const semesterId = this.selectedSemester;
         const lecturerId = this.selectedLecturer.id;
-        const classesId = this.selectedClass.id;
+        const classesId = this.selectedClass;
 
         if (!subjectId || !semesterId || !lecturerId || !classesId) {
           alert("Không thể gửi mail khi chưa có danh sách!");

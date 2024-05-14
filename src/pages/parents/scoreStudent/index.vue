@@ -16,11 +16,11 @@
                 <thead>
                   <tr class="table-title">
                     <th style="width: 5%">STT</th>
-                    <th style="width: 30%">Tên môn học</th>
-                    <th style="width: 10%">Số tín chỉ</th>
-                    <th style="width: 15%">Quá trình</th>
-                    <th style="width: 15%">Giữa kì</th>
-                    <th style="width: 15%">Cuối kì</th>
+                    <th style="width: 30%">{{ $t('message.name-of-subject') }}</th>
+                    <th style="width: 10%">{{ $t('message.credit') }}</th>
+                    <th style="width: 15%">{{ $t('message.process') }}</th>
+                    <th style="width: 15%">{{ $t('message.mid term') }}</th>
+                    <th style="width: 15%">{{ $t('message.final-term') }}</th>
                     <th style="width: 10%">TK</th>
                   </tr>
                 </thead>

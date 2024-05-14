@@ -3,7 +3,7 @@
     <Carousel />
     <!-- <div class="container-fluid mt-3 container"> -->
     <section class="section1">
-      <h2 class="title_content">Tìm hiểu về STU</h2>
+      <h2 class="title_content">{{ $t('message.title-home-1') }}</h2>
       <div class="container">
         <div class="row">
           <div class="col-lg-6 col-sm-12">
@@ -22,13 +22,9 @@
             </div>
           </div>
           <div class="col-lg-6 col-sm-12" style="position: relative">
-            <div class="title-1">Nơi hiện thực hóa ước mơ</div>
+            <div class="title-1">{{ $t("message.title-item-home") }}</div>
             <p class="content-body-1" style="text-align: justify">
-              Đại học Mở Thành phố Hồ Chí Minh là ngôi trường nổi tiếng với môi
-              trường học tập đa dạng, cung cấp cơ hội học về mọi lĩnh vực, từ
-              khoa học tự nhiên đến nghệ thuật, kết hợp với sự linh hoạt trong
-              học vụ và chất lượng giáo dục hàng đầu, để trang bị cho sinh viên
-              những kiến thức và kỹ năng cần thiết cho tương lai.
+              {{ $t("message.content-home") }}
             </p>
           </div>
         </div>
@@ -54,30 +50,34 @@
       </div>
     </section>
     <section class="section2">
-      <h2 class="title_content">Đôi nét về STU</h2>
+      <h2 class="title_content">{{ $t("message.title-home-2") }}</h2>
       <div class="container">
         <div class="row">
           <div class="col card-item">
-            <div class="card card0"><p class="text1">Thành lập</p></div>
-          </div>
-          <div class="col card-item">
-            <div class="card card1">
-              <p class="text2">Số lượng sinh viên</p>
+            <div class="card card0">
+              <p class="text1">{{ $t("message.establishment") }}</p>
             </div>
           </div>
           <div class="col card-item">
-            <div class="card card2"><p class="text3">Số ngành đào tạo</p></div>
+            <div class="card card1">
+              <p class="text2">{{ $t("message.number-of-student") }}</p>
+            </div>
+          </div>
+          <div class="col card-item">
+            <div class="card card2">
+              <p class="text3">{{ $t("message.numver-of-majors") }}</p>
+            </div>
           </div>
           <div class="col card-item">
             <div class="card card3">
-              <p class="text4">Sinh viên đã tốt nghiệp</p>
+              <p class="text4">{{ $t("message.graduated-students") }}</p>
             </div>
           </div>
         </div>
       </div>
     </section>
     <section class="section3">
-      <h2 class="title_content">Tầm nhìn và sứ mệnh</h2>
+      <h2 class="title_content">{{ $t("message.title-home-3") }}</h2>
       <div class="container">
         <div class="row">
           <div
@@ -96,13 +96,9 @@
             <div style="margin-bottom: 40px">
               <div class="section3-card">
                 <div class="content content1">
-                  <h5>Sứ mạng</h5>
+                  <h5>{{ $t("message.mission") }}</h5>
                   <p class="para">
-                    Trường đại học Mở thành phố Hồ Chí Minh thực hiện giáo dục
-                    mở, tọa bình đẳng cho mọi người trong tiếp cận giáo dục đại
-                    học, góp phần xây dựng xã hội học tập, nâng cao tri thức và
-                    năng lực nghề nghiệp cho người học bằng các phương thức linh
-                    hoạt, thuận tiện và hiệu quả.
+                    {{ $t("message.content-home-1") }}
                   </p>
                 </div>
               </div>
@@ -110,10 +106,9 @@
             <div style="margin-top: 40px">
               <div class="section3-card">
                 <div class="content content2">
-                  <h5>Tầm nhìn</h5>
+                  <h5>{{ $t("message.vision") }}</h5>
                   <p class="para">
-                    Trường đại học Mở thành phố Hồ Chí Minh thực hiện giáo dục
-                    mở, định hướng ứng dụng với chất lượng cao.
+                    {{ $t("message.content-home-2") }}
                   </p>
                 </div>
               </div>
@@ -122,7 +117,6 @@
         </div>
       </div>
     </section>
-    
   </Home>
 </template>
 
@@ -135,6 +129,7 @@ export default {
     Carousel,
     Home,
   },
+  methods: {},
 };
 </script>
 

@@ -5,7 +5,7 @@
             <router-link :to="{ name: 'login' }" class="router-link-hover">
                 <i class="fa-solid fa-right-to-bracket"></i>
                 <span>
-                    Đăng nhập
+                    {{ $t('message.login') }}
                 </span>
             </router-link>
         </button>

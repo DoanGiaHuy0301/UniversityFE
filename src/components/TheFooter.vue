@@ -52,17 +52,17 @@
 
               <!--Grid column-->
               <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
-                <h5 class="text-uppercase mb-4">Giới thiệu</h5>
+                <h5 class="text-uppercase mb-4">{{ this.$t('message.about-us') }}</h5>
 
                 <ul class="list-unstyled">
                   <li class="mb-2">
                     <a href="#!" class="text-white"
-                      ><i class="fa-solid fa-shield pe-3"></i>Về chúng tôi</a
+                      ><i class="fa-solid fa-shield pe-3"></i>{{ this.$t('message.about') }}</a
                     >
                   </li>
                   <li class="mb-2">
                     <a href="#!" class="text-white"
-                      ><i class="fa-solid fa-shield pe-3"></i>Liên hệ</a
+                      ><i class="fa-solid fa-shield pe-3"></i>{{ this.$t('message.contact') }}</a
                     >
                   </li>
                 </ul>
@@ -71,7 +71,7 @@
 
               <!--Grid column-->
               <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
-                <h5 class="text-uppercase mb-4">Theo dõi</h5>
+                <h5 class="text-uppercase mb-4">{{ this.$t('message.follows') }}</h5>
 
                 <ul class="list-unstyled">
                   <li class="mb-2">
@@ -95,7 +95,7 @@
 
               <!--Grid column-->
               <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
-                <h5 class="text-uppercase mb-4">Thông tin liên hệ</h5>
+                <h5 class="text-uppercase mb-4">{{ this.$t('message.contact-information') }}</h5>
 
                 <ul class="list-unstyled">
                   <li>

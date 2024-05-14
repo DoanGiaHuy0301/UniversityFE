@@ -67,27 +67,27 @@
                    <div class="row about-list">
                      <div class="col-lg-8">
                        <div class="media">
-                         <label>Tên</label>
+                         <label>{{ $t('message.fullname') }}</label>
                          <p>{{ userInfo.name }}</p>
                        </div>
                        <div class="media">
-                         <label>CCCD</label>
+                         <label>{{ $t('message.CCCD') }}</label>
                          <p>{{ userInfo.identification }}</p>
                        </div>
                        <div class="media">
-                         <label>Ngày sinh</label>
+                         <label>{{ $t('message.date-of-birth') }}</label>
                          <p>{{ formattedBirthday }}</p>
                        </div>
                        <div class="media">
-                         <label>Địa chỉ</label>
+                         <label>{{ $t('message.address') }}</label>
                          <p>{{ userInfo.address }}</p>
                        </div>
                        <div class="media">
-                         <label>E-mail</label>
+                         <label>{{ $t('message.email') }}</label>
                          <p v-if="isAuth === true">{{ getUser.email }}</p>
                        </div>
                        <div class="media">
-                         <label>Số điện thoại</label>
+                         <label>{{ $t('message.phone') }}</label>
                          <p>{{ userInfo.phone }}</p>
                        </div>
                      </div>

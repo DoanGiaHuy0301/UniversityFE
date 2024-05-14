@@ -11,9 +11,6 @@
           <div class="chevrondown"></div>
         </div>
       </div>
-      <!-- <button v-if="showScrollTopButton" @click="scrollToTop">
-        Quay lại đầu trang
-      </button> -->
     </div>
   </template>
   <script>
@@ -46,7 +43,7 @@
   <style scoped>
   .btn-scroll {
     position: fixed;
-    bottom: 20px;
+    bottom: 20%;
     right: 20px;
     z-index: 99;
   }

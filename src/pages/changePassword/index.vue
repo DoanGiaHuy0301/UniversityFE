@@ -15,7 +15,13 @@
           </div>
           <template #header>
             <!-- <div style="font-size: 20px">BẢNG ĐIỀU KHIỂN</div> -->
-            <div><img  style="width: 100%" src="../../assets/logoSchool_1.png" alt="logo" /></div>
+            <div>
+              <img
+                style="width: 100%"
+                src="../../assets/logoSchool_1.png"
+                alt="logo"
+              />
+            </div>
           </template>
         </a-list>
       </div>
@@ -40,7 +46,7 @@
                 font-size: 16px;
               "
             >
-              Thay đổi mật khẩu
+              {{ $t("message.change-password") }}
             </h5>
             <form
               class="row"
@@ -50,36 +56,42 @@
               @submit.prevent="changePasswordForStudent"
             >
               <div class="mt-3">
-                <label for="inputPassword1">Mật khẩu hiện tại</label>
+                <label for="inputPassword1">{{
+                  $t("message.current-password")
+                }}</label>
                 <input
                   type="password"
                   class="form-control"
                   id="inputPassword1"
                   required
-                  placeholder="Mật khẩu hiện tại"
+                  :placeholder="$t('message.current-password')"
                   v-model="passwordUser.oldPassword"
                 />
               </div>
               <div class="mt-3">
-                <label for="inputPassword2">Mật khẩu mới</label>
+                <label for="inputPassword2">{{
+                  $t("message.new-password")
+                }}</label>
                 <input
                   type="password"
                   class="form-control"
                   id="inputPassword2"
                   required
-                  placeholder="Mật khẩu mới"
+                  :placeholder="$t('message.new-password')"
                   v-model="passwordUser.newPassword"
                   @input="change($event, 'password')"
                 />
               </div>
               <div class="mt-3">
-                <label for="inputPassword3">Nhập lại mật khẩu</label>
+                <label for="inputPassword3">{{
+                  $t("message.confirm-password")
+                }}</label>
                 <input
                   type="password"
                   class="form-control"
                   id="inputPassword3"
                   required
-                  placeholder="Nhập lại mật khẩu"
+                  :placeholder="$t('message.confirm-password')"
                   @input="change($event, 'confirmPass')"
                   v-model="passwordUser.confirmPassword"
                 />
@@ -100,7 +112,7 @@
               </div>
               <div class="mt-5">
                 <button type="submit" class="btn btn-primary mb-3">
-                  Cập nhật
+                  {{ $t("message.update") }}
                 </button>
               </div>
             </form>
