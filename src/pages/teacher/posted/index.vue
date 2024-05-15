@@ -1,13 +1,13 @@
 <template>
-   <div v-if="isLoading"><Loading /></div>
+  <div v-if="isLoading"><Loading /></div>
   <div style="padding-bottom: 50px">
     <div class="table-container">
       <table class="table">
         <thead>
           <tr>
-            <th>Tên bài post</th>
-            <th>Nội dung</th>
-            <th>Thời gian đăng</th>
+            <th>{{ $t("message.name-post") }}</th>
+            <th>{{ $t("message.content") }}</th>
+            <th>{{ $t("message.time-post") }}</th>
             <th></th>
           </tr>
         </thead>
@@ -34,16 +34,16 @@
                 ></textarea>
                 <div class="post-update-and-delete">
                   <ul>
-                    <li @click="updatePosted(p.id)" class="mr-3">Lưu</li>
-                    <li @click="exitHandleEdit">Thoát</li>
+                    <li @click="updatePosted(p.id)" class="mr-3">{{ $t('message.save') }}</li>
+                    <li @click="exitHandleEdit">{{ $t('message.exit') }}</li>
                   </ul>
                 </div>
               </div>
               <div v-else>
                 <div class="post-update-and-delete">
                   <ul>
-                    <li @click="handleEdit(p)" class="mr-3">Chỉnh sửa</li>
-                    <li @click="confirmDelete(p.id)">Xóa</li>
+                    <li @click="handleEdit(p)" class="mr-3">{{ $t('message.edit') }}</li>
+                    <li @click="confirmDelete(p.id)">{{ $t('message.delete') }}</li>
                   </ul>
                 </div>
               </div>
@@ -80,7 +80,7 @@ export default {
   },
   created() {
     this.isLoading = true;
-    this.getListPostByUser().then(() => this.isLoading = false);
+    this.getListPostByUser().then(() => (this.isLoading = false));
     this.deletePost();
   },
 

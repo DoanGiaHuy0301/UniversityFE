@@ -2,20 +2,20 @@
   <Home>
     <section>
       <div class="container container-fluid mb-4 mt-4">
-        <h2 class="title_content">{{ $t('message.student-fee') }}</h2>
+        <h2 class="title_content">{{ $t("message.student-fee") }}</h2>
         <select
           class="form-control form-width"
           id="selectSemester"
           v-model="selectSemester"
           style="width: 40%"
         >
-          <option value="">{{ $t('message.total-tuition-fee') }}</option>
+          <option value="">{{ $t("message.total-tuition-fee") }}</option>
           <option
             v-for="(semester, index) in semesters"
             :key="index"
             :value="semester.id"
           >
-            {{ semester.name }} - {{ $t('message.school-year') }}:
+            {{ semester.name }} - {{ $t("message.school-year") }}:
             {{ semester.schoolYear }}
           </option>
         </select>
@@ -26,22 +26,22 @@
                 <tr class="table-title">
                   <th scope="col" class="text-center" style="width: 5%">STT</th>
                   <th scope="col" class="text-center" style="width: 25%">
-                    Niên học học kỳ
+                    {{ $t("message.semester-year") }}
                   </th>
                   <th scope="col" class="text-center" style="width: 20%">
-                    Học phí phải thu
+                    {{ $t("message.tuition-fees-receivable") }}
                   </th>
                   <th scope="col" class="text-center" style="width: 20%">
-                    Học phí đã thu
+                    {{ $t("message.collected-tuition-fees") }}
                   </th>
                   <th scope="col" class="text-center" style="width: 15%">
-                    Còn nợ
+                    {{ $t('message.still-in-debt') }}
                   </th>
                 </tr>
               </thead>
               <tbody>
                 <tr class="table-title-item">
-                  <th colspan="6">Thu học phí</th>
+                  <th colspan="6">{{ $t("message.collect-tuition-fees") }}</th>
                 </tr>
                 <tr v-for="(tuitionFee, index) in listTuitionFee" :key="index">
                   <th
@@ -58,7 +58,8 @@
                     style="width: 25%; vertical-align: middle"
                     class="text-center"
                   >
-                    {{ tuitionFee.semesterId.name }} - Năm học
+                    {{ tuitionFee.semesterId.name }} -
+                    {{ $t("message.school-year") }}
                     {{ tuitionFee.semesterId.schoolYear }}
                   </td>
                   <td
@@ -96,16 +97,16 @@
               <tr class="table-title">
                 <th scope="col" class="text-center" style="width: 5%">STT</th>
                 <th scope="col" class="text-center" style="width: 25%">
-                  {{ $t('message.code-of-subject') }}
+                  {{ $t("message.code-of-subject") }}
                 </th>
                 <th scope="col" class="text-center" style="width: 20%">
-                  {{ $t('message.name-of-subject') }}
+                  {{ $t("message.name-of-subject") }}
                 </th>
                 <th scope="col" class="text-center" style="width: 20%">
-                  {{ $t('message.credit') }}
+                  {{ $t("message.credit") }}
                 </th>
                 <th scope="col" class="text-center" style="width: 15%">
-                  {{ $t('message.fee') }}
+                  {{ $t("message.fee") }}
                 </th>
               </tr>
             </thead>

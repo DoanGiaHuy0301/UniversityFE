@@ -58,7 +58,7 @@
                      font-size: 16px;
                    "
                  >
-                   Thông tin cá nhân
+                   {{ $t('message.personal-information')}}
                  </h5>
                  <div
                    class="about-text go-to"
@@ -127,7 +127,7 @@
                      font-size: 16px;
                    "
                  >
-                   Thông tin khóa học
+                   {{  $t('message.course-information') }}
                  </h5>
                  <div
                    class="row about-text go-to"
@@ -139,19 +139,19 @@
                        <p>{{ userInfo.id }}</p>
                      </div>
                      <div class="media" v-if="userInfo.classesId">
-                       <label>Lớp</label>
+                       <label>{{  $t('message.class') }}</label>
                        <p>{{ userInfo.classesId.id }}</p>
                      </div>
                    </div>
                    <div class="col-md-6">
                      <div class="media">
-                       <label>Khoa</label>
+                       <label>{{  $t('message.department') }}</label>
                        <p v-if="userInfo.facultyId">
                          {{ userInfo.facultyId.name }}
                        </p>
                      </div>
                      <div class="media">
-                       <label>Chuyên ngành</label>
+                       <label>{{  $t('message.majored') }}</label>
                        <p v-if="userInfo.majorId">
                          {{ userInfo.majorId.name }}
                        </p>
@@ -183,7 +183,7 @@
                      font-size: 16px;
                    "
                  >
-                   Thông tin cá nhân
+                 {{ $t('message.personal-information')}}
                  </h5>
                  <div
                    class="about-text go-to"
@@ -195,29 +195,29 @@
                        <div class="row about-text go-to">
                          <div class="col-md-6">
                            <div class="media">
-                             <label>Tên</label>
+                             <label>{{ $t('message.fullname') }}</label>
                              <p>{{ userInfo.name }}</p>
                            </div>
                            <div class="media">
-                             <label>CCCD</label>
+                             <label>{{ $t('message.CCCD') }}</label>
                              <p>{{ userInfo.identification }}</p>
                            </div>
                            <div class="media">
-                             <label>Ngày sinh</label>
+                             <label>{{ $t('message.date-of-birth') }}</label>
                              <p>{{ formattedBirthday }}</p>
                            </div>
                          </div>
                          <div class="col-md-6">
                            <div class="media">
-                             <label>Địa chỉ</label>
+                             <label>{{ $t('message.address') }}</label>
                              <p>{{ userInfo.address }}</p>
                            </div>
                            <div class="media">
-                             <label>E-mail</label>
+                             <label>{{ $t('message.email') }}</label>
                              <p v-if="isAuth === true">{{ getUser.email }}</p>
                            </div>
                            <div class="media">
-                             <label>Số điện thoại</label>
+                             <label>{{ $t('message.phone') }}</label>
                              <p>{{ userInfo.phone }}</p>
                            </div>
                          </div>
@@ -259,7 +259,7 @@
                      font-size: 16px;
                    "
                  >
-                   Thông tin khóa học
+                 {{  $t('message.course-information') }}
                  </h5>
                  <div
                    class="row about-text go-to"
@@ -271,19 +271,19 @@
                        <p>{{ userInfo.id }}</p>
                      </div>
                      <div class="media" v-if="userInfo.classesId">
-                       <label>Lớp</label>
+                       <label> {{  $t('message.class') }}</label>
                        <p>{{ userInfo.classesId.id }}</p>
                      </div>
                    </div>
                    <div class="col-md-6">
                      <div class="media">
-                       <label>Khoa</label>
+                       <label>{{  $t('message.department') }}</label>
                        <p v-if="userInfo.facultyId">
                          {{ userInfo.facultyId.name }}
                        </p>
                      </div>
                      <div class="media">
-                       <label>Chuyên ngành</label>
+                       <label>{{  $t('message.majored') }}</label>
                        <p v-if="userInfo.majorId">
                          {{ userInfo.majorId.name }}
                        </p>
@@ -325,7 +325,7 @@
                    >
                      <div class="card-body">
                        <h2 class="card-title">90</h2>
-                       <p class="card-text">Điểm rèn luyện tích lũy</p>
+                       <p class="card-text">{{  $t('message.accumulated-training-points') }}</p>
                      </div>
                    </div>
                  </div>
@@ -349,7 +349,7 @@
                      font-size: 16px;
                    "
                  >
-                   Thông tin học tập
+                   {{ $t('message.learning-information') }}
                  </h5>
                  <div style="padding: 24px 15px">
                    <div style="margin-bottom: 20px">
@@ -361,7 +361,7 @@
                        <label
                          for="selectSemester"
                          style="width: 30%; display: flex; align-items: center"
-                         >Kết quả học tập</label
+                         >{{ $t('message.result-learning')}}</label
                        >
                        <select
                          class="form-control"
@@ -371,13 +371,13 @@
                          style="width: 40%"
                          
                        >
-                         <option value="">-- Chọn học kì --</option>
+                         <option value="">-- {{  $t('message.choose-semester') }} --</option>
                          <option
                            v-for="(semester, index) in semesters"
                            :key="index"
                            :value="semester.id"
                          >
-                           {{ semester.name }} - Năm học:
+                           {{ semester.name }} - {{ $t('message.school-year') }}:
                            {{ semester.schoolYear }}
                          </option>
                        </select>

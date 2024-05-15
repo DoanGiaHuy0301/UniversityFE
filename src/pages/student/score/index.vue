@@ -1,9 +1,9 @@
 <template>
-  <div style="height: 100%;">
+  <div style="height: 100%">
     <div v-if="isLoading"><Loading /></div>
     <div v-else>
       <div v-if="semesterData.length > 0">
-        <h2 class="score">Thông tin điểm số</h2>
+        <h2 class="score">{{ $t("message.score-information") }}</h2>
         <div
           v-for="(semester, semesterIndex) in semesterData"
           :key="semesterIndex"
@@ -17,13 +17,15 @@
             <table class="table table-striped table-bordered text-center">
               <thead>
                 <tr class="table-title">
-                  <th style="width: 5%;">STT</th>
-                  <th style="width: 30%;">Tên môn học</th>
-                  <th style="width: 10%;">Số tín chỉ</th>
-                  <th style="width: 15%;">Quá trình</th>
-                  <th style="width: 15%;">Giữa kì</th>
-                  <th style="width: 15%;">Cuối kì</th>
-                  <th style="width: 10%;">TK</th>
+                  <th style="width: 5%">STT</th>
+                  <th style="width: 30%">
+                    {{ $t("message.name-of-subject") }}
+                  </th>
+                  <th style="width: 10%">{{ $t("message.credit") }}</th>
+                  <th style="width: 15%">{{ $t("message.process") }}</th>
+                  <th style="width: 15%">{{ $t("message.mid-term") }}</th>
+                  <th style="width: 15%">{{ $t("message.final-term") }}</th>
+                  <th style="width: 10%">TK</th>
                 </tr>
               </thead>
               <tbody>
@@ -83,7 +85,7 @@
         </div>
       </div>
       <div v-else style="padding: 20px">
-        <span style="font-size: 25px">Sinh viên chưa có điểm</span>
+        <span style="font-size: 25px">{{ $t('message.no-score') }}</span>
       </div>
     </div>
   </div>
@@ -157,7 +159,7 @@ export default {
 
           semesterDataValue.push(semesterDataItem);
         }
-        
+
         this.semesterData = semesterDataValue;
         this.isLoading = false;
         console.log("semesterData", this.semesterData);

@@ -19,7 +19,7 @@
                     <th style="width: 30%">{{ $t('message.name-of-subject') }}</th>
                     <th style="width: 10%">{{ $t('message.credit') }}</th>
                     <th style="width: 15%">{{ $t('message.process') }}</th>
-                    <th style="width: 15%">{{ $t('message.mid term') }}</th>
+                    <th style="width: 15%">{{ $t('message.mid-term') }}</th>
                     <th style="width: 15%">{{ $t('message.final-term') }}</th>
                     <th style="width: 10%">TK</th>
                   </tr>
@@ -78,7 +78,7 @@
         </div>
       </div>
       <div v-else style="padding: 20px">
-        <span style="font-size: 25px">Sinh viên chưa có điểm</span>
+        <span style="font-size: 25px">{{ $t('message.no-score') }}</span>
       </div>
     </div>
   </Home>

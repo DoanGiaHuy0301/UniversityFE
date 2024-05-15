@@ -8,13 +8,13 @@
         v-model="selectSemester"
         style="width: 40%"
       >
-        <option value="">Tổng hợp học phí tất cả học kỳ</option>
+        <option value="">{{ $t("message.total-tuition-fee") }}</option>
         <option
           v-for="(semester, index) in listTuitionFee"
           :key="index"
           :value="semester.semesterId.id"
         >
-          {{ semester.semesterId.name }} - Năm học:
+          {{ semester.semesterId.name }} - {{ $t("message.school-year") }}:
           {{ semester.semesterId.schoolYear }}
         </option>
       </select>
@@ -24,21 +24,23 @@
             <tr class="table-title">
               <th scope="col" class="text-center" style="width: 5%">STT</th>
               <th scope="col" class="text-center" style="width: 25%">
-                Niên học học kỳ
+                {{ $t("message.semester-year") }}
               </th>
               <th scope="col" class="text-center" style="width: 20%">
-                Học phí phải thu
+                {{ $t("message.tuition-fees-receivable") }}
               </th>
               <th scope="col" class="text-center" style="width: 20%">
-                Học phí đã thu
+                {{ $t("message.collected-tuition-fees") }}
               </th>
-              <th scope="col" class="text-center" style="width: 15%">Còn nợ</th>
+              <th scope="col" class="text-center" style="width: 15%">
+                {{ $t("message.still-in-debt") }}
+              </th>
               <th style="width: 15%"></th>
             </tr>
           </thead>
           <tbody>
             <tr class="table-title-item">
-              <th colspan="6">Thu học phí</th>
+              <th colspan="6">{{ $t("message.collect-tuition-fees") }}</th>
             </tr>
             <tr v-for="(tuitionFee, index) in listTuitionFee" :key="index">
               <th
@@ -51,7 +53,8 @@
                 style="width: 25%; vertical-align: middle"
                 class="text-center"
               >
-                {{ tuitionFee.semesterId.name }} - Năm học
+                {{ tuitionFee.semesterId.name }} -
+                {{ $t("message.school-year") }}
                 {{ tuitionFee.semesterId.schoolYear }}
               </td>
               <td style="width: 20%; vertical-align: middle" class="text-end">
@@ -75,7 +78,7 @@
                   v-if="!tuitionFee.done"
                   @click="submitTuitionFee(tuitionFee.id)"
                 >
-                  <p>Thanh toán</p>
+                  <p>{{ $t("message.pay") }}</p>
                 </button>
               </td>
             </tr>
@@ -88,16 +91,16 @@
             <tr class="table-title">
               <th scope="col" class="text-center" style="width: 5%">STT</th>
               <th scope="col" class="text-center" style="width: 25%">
-                Mã môn học
+                {{ $t("message.code-of-subject") }}
               </th>
               <th scope="col" class="text-center" style="width: 20%">
-                Tên môn học
+                {{ $t("message.name-of-subject") }}
               </th>
               <th scope="col" class="text-center" style="width: 20%">
-                Số tín chỉ
+                {{ $t("message.credit") }}
               </th>
               <th scope="col" class="text-center" style="width: 15%">
-                Số tiền
+                {{ $t("message.fee") }}
               </th>
             </tr>
           </thead>
@@ -201,14 +204,14 @@ export default {
         const res = await Apis.post(
           endpoints["payment"] + `?tuitionFeeId=${tuitionFeeId}`
         );
-  
+
         if (res.data) {
           // Lấy token từ phản hồi
           const paymentToken = res.data;
-  
+
           // Chuyển hướng người dùng đến trang PayPal
           // window.location.href = paymentToken;
-          window.open(paymentToken, '_blank');
+          window.open(paymentToken, "_blank");
         } else {
           console.error("Invalid payment token received.");
         }

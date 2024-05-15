@@ -8,14 +8,14 @@
           :class="{ 'has-error': !selectedSubject }"
           style="margin-right: 10px"
         >
-          <label for="subjectSelect">Chọn môn học:</label>
+          <label for="subjectSelect">{{ $t('message.choose-subject') }}:</label>
           <select
             class="form-control"
             id="subjectSelect"
             v-model="selectedSubject"
             @change="handleSubjectChange"
           >
-            <option value="">Chọn môn học</option>
+            <option value="">{{ $t('message.choose-subject') }}</option>
             <option
               v-for="(subject, index) in subjectList"
               :key="index"
@@ -27,14 +27,14 @@
         </div>
 
         <div class="form-group" :class="{ 'has-error': !selectedSemester }">
-          <label for="semesterSelect">Chọn học kì:</label>
+          <label for="semesterSelect">{{ $t('message.choose-semester') }}:</label>
           <select
             class="form-control"
             id="semesterSelect"
             v-model="selectedSemester"
             @change="handleSemesterChange"
           >
-            <option value="">Chọn học kì</option>
+            <option value="">{{ $t('message.choose-semester') }}</option>
             <option
               v-for="(semester, index) in semesterList"
               :key="index"
@@ -48,12 +48,12 @@
       <div class="d-flex">
         <div style="margin-right: 10px">
           <button class="btn btn-primary btnSubmit" type="submit">
-            Tìm kiếm
+            {{ $t('message.search') }}
           </button>
         </div>
         <div>
           <button class="btn btn-danger btnExportPDF" @click="exportToPDF">
-            Xuất PDF
+            {{ $t('message.export') }} PDF
           </button>
         </div>
       </div>
@@ -66,8 +66,8 @@
         <table class="table table-striped table-bordered table-hover">
           <thead>
             <tr class="table-title">
-              <th class="text-center">Mã số sinh viên</th>
-              <th class="text-center">Tên sinh viên</th>
+              <th class="text-center">{{ $t('message.student-id') }}</th>
+              <th class="text-center">{{ $t('message.fullname') }}</th>
               <th
                 class="text-center"
                 v-for="(scoreColumn, index) in scoreColumns"

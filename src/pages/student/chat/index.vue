@@ -1,6 +1,6 @@
 <template>
   <button class="contactButton menu-btn" @click="toggleSidebar">
-  Danh sách chat
+  {{  $t('message.list-chat') }}
   <div class="iconButton">
     <svg
       height="24"
@@ -50,7 +50,7 @@
           </div>
         </div>
         <button type="button" class="btn btn-primary" @click="logout">
-          Logout
+          {{ $t('message.logout') }}
         </button>
       </div>
       <div style="height: 1px; border-bottom: 1px solid #00388b"></div>
@@ -109,9 +109,9 @@
           />
         </div>
         <div>
-          <h2 style="text-align: center">Chào {{ currentUserName }},</h2>
+          <h2 style="text-align: center">{{ $t('message.hi') }} {{ currentUserName }},</h2>
           <h3 style="text-align: center">
-            Hãy chùng mọi người trao đổi những thắc mắc nhé.
+            {{ $t('message.title-chat') }}
           </h3>
         </div>
       </div>

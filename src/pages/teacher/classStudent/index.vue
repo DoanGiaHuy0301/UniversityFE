@@ -11,11 +11,11 @@
         <table class="table table-striped table-bordered table-hover">
           <thead>
             <tr class="table-title">
-              <th style="text-align: center">Mã số sinh viên</th>
-              <th style="text-align: center">Tên sinh viên</th>
-              <th style="text-align: center">Ngày sinh</th>
-              <th style="text-align: center">Giới tính</th>
-              <th style="text-align: center">Số điện thoại</th>
+              <th class="text-center">{{ $t("message.student-id") }}</th>
+              <th class="text-center">{{ $t("message.fullname") }}</th>
+              <th class="text-center">{{ $t("message.date-of-birth") }}</th>
+              <th class="text-center">{{ $t("message.sex") }}</th>
+              <th class="text-center">{{ $t("message.phone") }}</th>
             </tr>
           </thead>
           <tbody>
@@ -34,7 +34,7 @@
         </table>
       </template>
       <template v-else>
-        <div class="text-hr-teacher">Không có lớp chủ nhiệm</div>
+        <div class="text-hr-teacher">{{ $t('message.no-homeroom-teacher') }}</div>
       </template>
     </div>
   </div>

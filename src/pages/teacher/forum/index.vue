@@ -7,7 +7,7 @@
           <input
             class="form-control me-2"
             type="search"
-            placeholder="Search"
+            :placeholder="$t('message.search')"
             v-model="searchKeyword"
           />
           <button
@@ -15,28 +15,28 @@
             style="width: 150px"
             @click="handleSearch"
           >
-            Tìm kiếm
+            {{ $t("message.search") }}
           </button>
         </form>
       </div>
 
       <div class="post-container" v-if="isEditMode">
-        <label for="comment">Tiêu đề:</label>
+        <label for="comment">{{ $t('message.title') }}:</label>
         <textarea
           class="form-control"
           rows="1"
           id="comment"
           name="text"
-          placeholder="Nhập tiêu đề bài viết"
+          :placeholder="$t('message.input-title')"
           v-model="title"
         ></textarea>
-        <label for="comment">Nội dung:</label>
+        <label for="comment">{{ $t('message.content') }}:</label>
         <textarea
           class="form-control"
           rows="5"
           id="comment"
           name="text"
-          placeholder="Nhập nội dung bài viết"
+          :placeholder="$t('message.input-content')"
           v-model="content"
         ></textarea>
         <div style="display: flex">
@@ -45,27 +45,27 @@
             class="btn-title btn btn-primary"
             @click="handlePostSubmit"
           >
-            Đăng
+          {{ $t('message.post') }}
           </button>
           <button
             style="display: inline-block"
             class="btn-title btn btn-primary"
             @click="exitHandleEdit"
           >
-            Thoát
+          {{ $t('message.exit') }}
           </button>
         </div>
       </div>
       <div class="col-12 post-container d-flex" v-else>
         <Button class="btn-title btn btn-primary" @click="handleEdit"
-          >Đăng bài viết</Button
+          >{{ $t('message.post') }}</Button
         >
         <Button class="btn-title btn btn-primary"
           ><router-link
             class="post-link"
             to="/teacher/posted/"
             style="color: #fff"
-            >Bài viết đã đăng</router-link
+            >{{ $t('message.posted') }}</router-link
           ></Button
         >
       </div>
@@ -74,8 +74,8 @@
         <table class="table table-responsive-xl" v-if="post.length > 0">
           <thead>
             <tr>
-              <th>Tên bài post</th>
-              <th>Người đăng</th>
+              <th>{{ $t('message.name-post') }}</th>
+              <th>{{ $t('message.person-post') }}</th>
             </tr>
           </thead>
           <tbody>
@@ -102,7 +102,7 @@
                   <span>
                     {{ p.userId.username }}
                   </span>
-                  <span>Thời gian: {{ formatDate(p.postTime) }}</span>
+                  <span>{{ $t('message.time') }}: {{ formatDate(p.postTime) }}</span>
                 </div>
               </td>
             </tr>

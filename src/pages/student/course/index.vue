@@ -8,7 +8,7 @@
           :class="{ 'has-error': !selectSemester }"
           style="margin-right: 10px"
         >
-          <label for="selectSemester">Học kì</label>
+          <label for="selectSemester">{{ $t('message.semester') }}</label>
           <select
             class="form-control"
             id="selectSemester"
@@ -16,7 +16,7 @@
             disabled
           >
             <option :key="index" :value="semesters.id">
-              {{ semesters.name }} - Năm học: {{ semesters.schoolYear }}
+              {{ semesters.name }} - {{ $t('message.school-year') }}: {{ semesters.schoolYear }}
             </option>
           </select>
         </div>
@@ -27,14 +27,14 @@
           :class="{ 'has-error': !selecetMajor }"
           style="margin-right: 10px"
         >
-          <label for="selecetFacuties">Đăng ký môn học</label>
+          <label for="selecetFacuties">{{ $t('message.register-for-subject') }}</label>
           <select
             class="form-control"
             id="selecetFacuties"
             v-model="selecetMajor"
             @change="getSubject"
           >
-            <option value="">-- Chọn Khoa --</option>
+            <option value="">-- {{ $t('message.choose-deparment') }} --</option>
             <option
               v-for="(major, index) in majors"
               :key="index"
@@ -47,16 +47,16 @@
       </div>
     </div>
     <div v-if="courses.length > 0">
-      <p>Danh sách môn học mở đăng ký:</p>
+      <p>{{ $t('message.list-courses') }}:</p>
       <div class="table-container">
         <table class="table table-hover table-bordered">
           <thead>
             <tr>
               <th></th>
-              <th>Mã môn học</th>
-              <th>Tên môn học</th>
-              <th>Số tín chỉ</th>
-              <th>Số lượng</th>
+              <th>{{ $t('message.code-of-subject') }}</th>
+              <th>{{ $t('message.name-of-subject') }}</th>
+              <th>{{ $t('message.credit') }}</th>
+              <th>{{ $t('message.number') }}</th>
             </tr>
           </thead>
           <tbody>
@@ -87,53 +87,53 @@
       </div>
     </div>
     <div v-else-if="courses === null">
-      <p>Danh sách môn học mở đăng ký:</p>
+      <p>{{ $t('message.list-courses') }}:</p>
       <div class="table-container">
         <table class="table table-hover table-bordered table-container">
           <thead>
             <tr>
               <th></th>
-              <th>Mã môn học</th>
-              <th>Tên môn học</th>
-              <th>Số tín chỉ</th>
-              <th>Số lượng</th>
+              <th>{{ $t('message.code-of-subject') }}</th>
+              <th>{{ $t('message.name-of-subject') }}</th>
+              <th>{{ $t('message.credit') }}</th>
+              <th>{{ $t('message.number') }}</th>
             </tr>
           </thead>
         </table>
       </div>
       <p style="text-align: center">
-        <strong>Không có môn học nào mở đăng ký cho khoa này.</strong>
+        <strong>{{ $t('message.content-no-course') }}</strong>
       </p>
     </div>
     <div v-else>
-      <p>Danh sách môn học mở đăng ký:</p>
+      <p>{{ $t('message.list-courses') }}:</p>
       <div class="table-container">
         <table class="table table-hover table-bordered">
           <thead>
             <tr>
               <th></th>
-              <th>Mã môn học</th>
-              <th>Tên môn học</th>
-              <th>Số tín chỉ</th>
-              <th>Số lượng</th>
+              <th>{{ $t('message.code-of-subject') }}</th>
+              <th>{{ $t('message.name-of-subject') }}</th>
+              <th>{{ $t('message.credit') }}</th>
+              <th>{{ $t('message.number') }}</th>
             </tr>
           </thead>
         </table>
       </div>
       <p style="text-align: center">
-        <strong>Không có môn học nào mở đăng ký cho khoa này.</strong>
+        <strong>{{ $t('message.content-no-course') }}</strong>
       </p>
     </div>
     <div>
-      <p>Danh sách môn học đã chọn:</p>
+      <p>{{ $t('message.list-selected-courses') }}:</p>
       <div class="table-container">
         <table class="table table-hover table-bordered">
           <thead>
             <tr>
               <th></th>
-              <th>Mã môn học</th>
-              <th>Tên môn học</th>
-              <th>Số tín chỉ</th>
+              <th>{{ $t('message.code-of-subject') }}</th>
+              <th>{{ $t('message.name-of-subject') }}</th>
+              <th>{{ $t('message.credit') }}</th>
             </tr>
           </thead>
           <tbody>
@@ -143,7 +143,7 @@
                   class="btn btn-danger"
                   @click="removeCourse(index, selectedCourse.id)"
                 >
-                  Xóa
+                 {{ $t('message.delete') }}
                 </button>
               </td>
               <td>{{ selectedCourse.subjectId.id }}</td>
@@ -153,16 +153,16 @@
           </tbody>
         </table>
       </div>
-      <p>Danh sách môn học đã đăng ký:</p>
+      <p>{{ $t('message.list-coursed') }}:</p>
       <div class="table-container">
         <table class="table table-hover table-bordered">
           <thead>
             <tr>
               <th style="width: 5%"></th>
               <th style="text-align: center">STT</th>
-              <th>Mã môn học</th>
-              <th>Tên môn học</th>
-              <th>Số tín chỉ</th>
+              <th>{{ $t('message.code-of-subject') }}</th>
+              <th>{{ $t('message.name-of-subject') }}</th>
+              <th>{{ $t('message.credit') }}</th>
             </tr>
           </thead>
           <tbody>
@@ -172,7 +172,7 @@
                   class="btn btn-danger"
                   @click="removeCoursed(index, course.id)"
                 >
-                  Xóa
+                {{ $t('message.delete') }}
                 </button>
               </td>
               <td style="text-align: center">{{ index + 1 }}</td>
@@ -188,9 +188,9 @@
           <thead>
             <tr>
               <th style="text-align: center">STT</th>
-              <th>Mã môn học</th>
-              <th>Tên môn học</th>
-              <th>Số tín chỉ</th>
+              <th>{{ $t('message.code-of-subject') }}</th>
+              <th>{{ $t('message.name-of-subject') }}</th>
+              <th>{{ $t('message.credit') }}</th>
             </tr>
           </thead>
           <tbody>
@@ -205,14 +205,14 @@
       </div>
       <div class="d-flex justify-content-end">
         <button class="btn btn-primary" @click="submitCourses()">
-          Đăng ký
+          {{ $t('message.register') }}
         </button>
         <button
           class="btn btn-danger btnExportPDF"
           @click="exportToPDF"
           style="margin-left: 10px"
         >
-          Xuất PDF
+        {{ $t('message.export') }} PDF
         </button>
       </div>
     </div>

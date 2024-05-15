@@ -17,14 +17,14 @@
       <form @submit.prevent="handleSubmit">
         <div class="col-12 d-flex studentScore">
           <div class="input-studentScore">
-            <label for="subjectSelect">Chọn môn học:</label>
+            <label for="subjectSelect">{{ $t('message.choose-subject') }}:</label>
             <select
               class="form-control"
               id="subjectSelect"
               v-model="selectedSubject"
               @change="handleSubjectChange"
             >
-              <option value="">Chọn môn học</option>
+              <option value="">{{ $t('message.choose-subject') }}</option>
               <option
                 v-for="(subject, index) in subjectList"
                 :key="index"
@@ -35,14 +35,14 @@
             </select>
           </div>
           <div class="input-studentScore">
-            <label for="subjectSelect">Chọn học kì:</label>
+            <label for="subjectSelect">{{ $t('message.choose-semester') }}:</label>
             <select
               class="form-control"
               id="semesterSelect"
               v-model="selectedSemester"
               @change="handleSemesterChange"
             >
-              <option value="">Chọn học kì</option>
+              <option value="">{{ $t('message.choose-semester') }}</option>
               <option
                 v-for="(semester, index) in semesterList"
                 :key="index"
@@ -53,14 +53,14 @@
             </select>
           </div>
           <div class="input-studentScore">
-            <label for="classSelect">Chọn lớp:</label>
+            <label for="classSelect">{{ $t('message.choose-class') }}:</label>
             <select
               class="form-control"
               id="classSelect"
               v-model="selectedClass"
               @change="handleClassChange"
             >
-              <option value="">Chọn lớp</option>
+              <option value="">{{ $t('message.choose-class') }}</option>
               <option
                 v-for="(clazz, index) in classList"
                 :key="index"
@@ -71,7 +71,7 @@
             </select>
           </div>
           <div class="input-studentScore">
-            <button class="btn btn-primary">Tìm kiếm</button>
+            <button class="btn btn-primary">{{ $t('message.search') }}</button>
           </div>
 
           <div v-if="isEditMode">
@@ -81,14 +81,13 @@
                 class="btn btn-primary"
                 style="margin-right: 10px"
               >
-                Thoát
-              </button>
+              {{ $t('message.exit') }}              </button>
             </div>
           </div>
           <div v-else>
             <div class="input-studentScore d-flex">
               <button @click="handleEdit" class="btn btn-primary">
-                Nhập điểm
+                {{ $t('message.input-score') }}
               </button>
               <button
                 class="btn btn-primary"
@@ -96,14 +95,14 @@
                 @click="handleSendMail"
                 :disabled="loading"
               >
-                Gửi mail
+              {{ $t('message.send-mail') }}
               </button>
               <button
                 class="btn btn-danger btnExportPDF"
                 @click="exportToPDF"
                 style="margin-left: 10px"
               >
-                Xuất PDF
+              {{ $t('message.exxport') }} PDF
               </button>
               <div style="text-align: center; margin: 0 10px">
                 <div
@@ -111,7 +110,7 @@
                   class="spinner-border text-primary"
                   role="status"
                 >
-                  <span class="visually-hidden">Loading...</span>
+                  <span class="visually-hidden">{{ $t('message.loading') }}...</span>
                 </div>
               </div>
               <div
@@ -130,8 +129,8 @@
           <table class="table table-hover">
             <thead>
               <tr class="table-title">
-                <th style="width: 150px">Mã số sinh viên</th>
-                <th style="width: 30%">Họ và tên</th>
+                <th style="width: 150px">{{ $t('message.student-id') }}</th>
+                <th style="width: 30%">{{ $t('message.fullname') }}</th>
                 <th>
                   <div class="form-check">
                     <input
@@ -141,7 +140,7 @@
                       name="optradio"
                       value="1"
                       v-model="selectedColumn"
-                    />Quá trình
+                    />{{ $t('message.process') }}
                     <label class="form-check-label" for="radio1"></label>
                   </div>
                 </th>
@@ -154,7 +153,7 @@
                       name="optradio"
                       value="2"
                       v-model="selectedColumn"
-                    />Giữa kì
+                    />{{ $t('message.mid-term') }}
                     <label class="form-check-label" for="radio2"></label>
                   </div>
                 </th>
@@ -167,7 +166,7 @@
                       name="optradio"
                       value="3"
                       v-model="selectedColumn"
-                    />Cuối kì
+                    />{{ $t('message.final-term') }}
                     <label class="form-check-label" for="radio3"></label>
                   </div>
                 </th>
@@ -223,7 +222,7 @@
           </table>
           <div class="btn-save">
             <button class="btn btn-primary" @click="saveSelectedColumnScores()">
-              Lưu
+              {{ $t('message.save') }}
             </button>
           </div>
         </div>
@@ -242,12 +241,12 @@
             >
               <thead>
                 <tr class="table-title">
-                  <th class="text-center">Mã số sinh viên</th>
-                  <th class="text-center">Tên sinh viên</th>
-                  <th class="text-center">Ngày sinh</th>
-                  <th class="text-center">Quá trình</th>
-                  <th class="text-center">Giữa kì</th>
-                  <th class="text-center">Cuối kì</th>
+                  <th class="text-center">{{ $t('message.student-id') }}</th>
+                  <th class="text-center">{{ $t('message.fullname') }}</th>
+                  <th class="text-center">{{ $t('message.date-of-birth') }}</th>
+                  <th class="text-center">{{ $t('message.process') }}</th>
+                  <th class="text-center">{{ $t('message.mid-term') }}</th>
+                  <th class="text-center">{{ $t('message.final-term') }}</th>
                 </tr>
               </thead>
               <tbody>
