@@ -241,7 +241,7 @@ const messages = {
       register: "Đăng ký",
       "register-account": "Đăng ký tài khoản",
       "input-score": "Nhập điểm sinh viên",
-      error: "Lỗi",
+      error: "Lỗi hệ thống",
       contact: "Liên hệ",
       username: "Tên đăng nhập",
       password: "Mật khẩu",
