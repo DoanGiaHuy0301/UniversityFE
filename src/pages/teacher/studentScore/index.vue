@@ -11,7 +11,7 @@
             @change="onFileChange"
             class="fileInput"
           />
-          <button class="btn btn-primary" @click="saveScoreByFile">Gửi</button>
+          <button class="btn btn-primary" @click="saveScoreByFile">{{ $t('message.send') }}</button>
         </div>
       </form>
       <form @submit.prevent="handleSubmit">
@@ -95,14 +95,14 @@
                 @click="handleSendMail"
                 :disabled="loading"
               >
-              {{ $t('message.send-mail') }}
+              {{ $t('message.send-email') }}
               </button>
               <button
                 class="btn btn-danger btnExportPDF"
                 @click="exportToPDF"
                 style="margin-left: 10px"
               >
-              {{ $t('message.exxport') }} PDF
+              {{ $t('message.export') }} PDF
               </button>
               <div style="text-align: center; margin: 0 10px">
                 <div

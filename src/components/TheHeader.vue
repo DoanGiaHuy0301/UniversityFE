@@ -45,14 +45,14 @@
     :class="{ 'slide-left': !isCheckedMenu2, 'slide-right': isCheckedMenu2 }"
   >
     <div class="menu-container">
-      <h5>{{ $t('message.university') }} STU</h5>
+      <h5>{{ $t("message.university") }} STU</h5>
       <div class="btn-close-menu2" @click="toggleMenu2">
         <i class="fa-solid fa-xmark"></i>
       </div>
       <ul class="menu-items">
         <li class="menu-item" :class="{ active: $route.path === '/' }">
           <router-link to="/" class="router-link-hover nav-link" exact>
-            <span> {{ $t('message.home') }} </span>
+            <span> {{ $t("message.home") }} </span>
           </router-link>
         </li>
         <li
@@ -63,23 +63,23 @@
             to="/general-information"
             class="router-link-hover nav-link"
           >
-            <span> {{ $t('message.about') }} </span>
+            <span> {{ $t("message.about") }} </span>
           </router-link>
         </li>
         <div class="menu-login">
           <li class="menu-item">
             <router-link to="/login" class="router-link-hover nav-link">
-              <span> {{ $t('message.student') }} </span>
+              <span> {{ $t("message.student") }} </span>
             </router-link>
           </li>
           <li class="menu-item">
             <router-link to="/login" class="router-link-hover nav-link">
-              <span> {{ $t('message.lecturer') }} </span>
+              <span> {{ $t("message.lecturer") }} </span>
             </router-link>
           </li>
           <li class="menu-item">
             <router-link to="/parent" class="router-link-hover nav-link">
-              <span>{{ $t('message.parent') }} </span>
+              <span>{{ $t("message.parent") }} </span>
             </router-link>
           </li>
         </div>
@@ -98,7 +98,7 @@
         <div class="profile d-none d-md-flex d-lg-flex" v-if="isAuth === true">
           <router-link to="/profile" class="router-link-hover">
             <i class="fa-solid fa-user"></i>
-            <span style="font-size: 16px"> {{ $t('message.profile') }} </span>
+            <span style="font-size: 16px"> {{ $t("message.profile") }} </span>
           </router-link>
         </div>
         <div class="container-mobile" v-if="isAuth">
@@ -134,19 +134,19 @@
           <div class="parent">
             <router-link to="/login" class="router-link-hover">
               <i class="fa-solid fa-graduation-cap"></i>
-              <span class="ml-2"> {{ $t('message.student') }} </span>
+              <span class="ml-2"> {{ $t("message.student") }} </span>
             </router-link>
           </div>
           <div class="parent">
             <router-link to="/login" class="router-link-hover">
               <i class="fa-solid fa-user-tie"></i>
-              <span  class="ml-2"> {{ $t('message.lecturer') }} </span>
+              <span class="ml-2"> {{ $t("message.lecturer") }} </span>
             </router-link>
           </div>
           <div class="parent">
             <router-link to="/parent" class="router-link-hover">
               <i class="fa-solid fa-hands-holding-child"></i>
-              <span  class="ml-2"> {{ $t('message.parent') }}</span>
+              <span class="ml-2"> {{ $t("message.parent") }}</span>
             </router-link>
           </div>
         </div>
@@ -171,26 +171,33 @@
                 href="#"
                 style="font-size: 16px"
               >
-                Chào, {{ userInfo.name }}
+                {{ $t("message.hi") }}, {{ userInfo.name }}
               </a>
             </div>
           </div>
           <ul class="dropdown-menu">
             <li>
-              <router-link to="/changePassword" class="dropdown-item"
-                >Thay đổi mật khẩu</router-link
-              >
+              <router-link to="/changePassword" class="dropdown-item">{{
+                $t("message.change-password")
+              }}</router-link>
             </li>
             <li>
-              <router-link to="/login" @click="logout()" class="dropdown-item"
-                >Đăng xuất</router-link
+              <router-link
+                to="/login"
+                @click="logout()"
+                class="dropdown-item"
+                >{{ $t("message.logout") }}</router-link
               >
             </li>
           </ul>
         </div>
-        <select class="select-language" @change="changeLocale($event.target.value)">
-          <option value="vi">{{ $t('message.vietnamese') }}</option>
-          <option value="en">{{ $t('message.english') }}</option>
+        <select
+          class="select-language"
+          @change="changeLocale($event.target.value)"
+          :value="currentLocale"
+        >
+          <option value="vi">{{ $t("message.vietnamese") }}</option>
+          <option value="en">{{ $t("message.english") }}</option>
         </select>
       </div>
     </div>
@@ -224,7 +231,7 @@
                 :class="{ active: $route.path === '/' }"
                 exact
               >
-                <span> {{ $t('message.home') }} </span>
+                <span> {{ $t("message.home") }} </span>
               </router-link>
             </li>
             <li class="nav-item">
@@ -233,7 +240,7 @@
                 class="router-link-hover nav-link"
                 :class="{ active: $route.path === '/general-information' }"
               >
-                <span> {{ $t('message.about') }} </span>
+                <span> {{ $t("message.about") }} </span>
               </router-link>
             </li>
           </ul>
@@ -267,6 +274,7 @@ export default {
       isLogin: false,
       isChecked: false,
       isCheckedMenu2: false,
+      currentLocale: this.getSavedLocale() || "vi",
     };
   },
   computed: {
@@ -274,7 +282,12 @@ export default {
   },
   methods: {
     changeLocale(locale) {
+      this.currentLocale = locale;
       this.$i18n.locale = locale;
+      localStorage.setItem("selectedLanguage", locale);
+    },
+    getSavedLocale() {
+      return localStorage.getItem("selectedLanguage"); // Lấy ngôn ngữ đã lưu từ localStorage
     },
     toggleMenu() {
       this.isChecked = !this.isChecked;
@@ -285,9 +298,11 @@ export default {
     async logout() {
       this.isLogin = false;
       this.$store.dispatch("logout");
+      const language = this.getSavedLocale();
       const auth = getAuth();
       await signOut(auth);
       localStorage.clear();
+      localStorage.setItem('selectedLanguage', language); 
     },
     async fetchUserInfo() {
       let endpoint = "";
@@ -339,12 +354,16 @@ export default {
     if (!this.isLogin) {
       window.addEventListener("scroll", this.handleScroll);
     }
+
+    const savedLocale = this.getSavedLocale();
+    if (savedLocale) {
+      this.$i18n.locale = savedLocale;
+    }
   },
 };
 </script>
 
 <style>
-
 .select-language {
   background: #070758;
   color: #fff;

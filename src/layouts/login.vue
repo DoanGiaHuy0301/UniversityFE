@@ -41,7 +41,7 @@
                 </div>
                 <input
                   type="submit"
-                  value="Đăng nhập"
+                  :value="$t('message.login')"
                   class="btn btn-block btn-primary"
                   :disabled="loading"
                 />

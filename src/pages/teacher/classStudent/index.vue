@@ -2,7 +2,7 @@
   <div v-if="isLoading"><Loading /></div>
   <div>
     <strong style="font-size: 20px; padding: 10px"
-      >Lớp: {{ extractedId }}
+      >{{ $t('message.class') }}: {{ extractedId }}
     </strong>
   </div>
   <div class="table col-12">
