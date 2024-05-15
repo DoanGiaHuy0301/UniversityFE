@@ -78,7 +78,7 @@
           </div>
           <div>
             <p>
-              {{ semester.accumulates.scoreColumnName }}:
+              {{ $t('message.accumulate-score-of-semester') }}:
               {{ semester.accumulates.scoreValue }}
             </p>
           </div>

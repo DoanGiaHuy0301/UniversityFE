@@ -98,7 +98,7 @@
         <div class="profile d-none d-md-flex d-lg-flex" v-if="isAuth === true">
           <router-link to="/profile" class="router-link-hover">
             <i class="fa-solid fa-user"></i>
-            <span style="font-size: 16px"> {{ $t("message.profile") }} </span>
+            <span class="ml-2" style="font-size: 16px"> {{ $t("message.profile") }} </span>
           </router-link>
         </div>
         <div class="container-mobile" v-if="isAuth">
@@ -274,7 +274,7 @@ export default {
       isLogin: false,
       isChecked: false,
       isCheckedMenu2: false,
-      currentLocale: this.getSavedLocale() || "vi",
+      currentLocale: this.getSavedLocale(),
     };
   },
   computed: {
@@ -287,7 +287,10 @@ export default {
       localStorage.setItem("selectedLanguage", locale);
     },
     getSavedLocale() {
-      return localStorage.getItem("selectedLanguage"); // Lấy ngôn ngữ đã lưu từ localStorage
+      if (localStorage.getItem("selectedLanguage") != null) {
+        return localStorage.getItem("selectedLanguage"); 
+      }
+      return "vi";
     },
     toggleMenu() {
       this.isChecked = !this.isChecked;
@@ -297,8 +300,8 @@ export default {
     },
     async logout() {
       this.isLogin = false;
-      this.$store.dispatch("logout");
       const language = this.getSavedLocale();
+      this.$store.dispatch("logout");
       const auth = getAuth();
       await signOut(auth);
       localStorage.clear();
@@ -360,6 +363,9 @@ export default {
       this.$i18n.locale = savedLocale;
     }
   },
+  created() {
+    // this.changeLocale();
+  }
 };
 </script>
 

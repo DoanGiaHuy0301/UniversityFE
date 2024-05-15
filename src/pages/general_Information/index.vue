@@ -64,7 +64,7 @@
                 <h5>{{ $t("message.address-contact") }}</h5>
                 <div>
                   <p>
-                    Số 97 Võ Văn Tần, Phường Võ Thị Sáu, Quận 3, TP. Hồ Chí Minh
+                    {{ $t('message.content-address') }}
                   </p>
                   <p>Điện thoại: (028) 3930 0210</p>
                   <p>Fax: (028) 3930 0083</p>

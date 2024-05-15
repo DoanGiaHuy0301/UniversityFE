@@ -100,8 +100,7 @@
                 <ul class="list-unstyled">
                   <li>
                     <p>
-                      <i class="fas fa-map-marker-alt pe-2"></i> 35 – 37 Hồ Hảo
-                      Hớn, Phường Cô Giang, Quận 1, TP. HCM.
+                      <i class="fas fa-map-marker-alt pe-2"></i>  {{ $t('message.content-address') }}
                     </p>
                   </li>
                   <li>

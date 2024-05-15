@@ -105,6 +105,7 @@ const messages = {
       "class-code": "Class code",
       CCCD: "CCCD",
       address: "Address",
+      'address-contact': "Address contact",
       sex: "Sex",
       find: "Search",
       account: "Account",
@@ -148,6 +149,8 @@ const messages = {
       delete: "Delete",
       export: "Export",
       'send-email': "Send Email",
+      'content-address': '97 Vo Van Tan Road, Ward Vo Thi Sau, District 3',
+      'accumulate-score-of-semester': "Accumulate score of semester",
     },
   },
   vi: {
@@ -295,6 +298,8 @@ const messages = {
       delete: "Xóa",
       export: "Xuất",
       'send-main': "Gửi mail",
+      'content-address': 'Số 97 Võ Văn Tần, Phường Võ Thị Sáu, Quận 3, TP. Hồ Chí Minh',
+      'accumulate-score-of-semester': "Điểm tích lũy học kỳ",
     },
   },
 };

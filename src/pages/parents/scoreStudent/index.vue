@@ -2,7 +2,7 @@
   <Home>
     <div class="container-fluid mb-4 mt-4" style="min-height: 80vh">
       <div v-if="semesters.length > 0">
-        <h2 class="title_content">Điểm số sinh viên</h2>
+        <h2 class="title_content">{{ $t("message.score-information") }}</h2>
         <div class="container">
           <div
             v-for="(semester, semesterIndex) in semesters"
