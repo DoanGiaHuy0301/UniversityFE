@@ -187,7 +187,7 @@ export default {
               }
             }
           } catch (error) {
-            this.errorMessage = "Lỗi server";
+            // this.errorMessage = "Lỗi server";
             this.loading = false;
           }
 
