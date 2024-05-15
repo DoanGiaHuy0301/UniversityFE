@@ -378,11 +378,11 @@ export default {
         if (this.selecetMajor) {
           const majorId = this.selecetMajor;
           const semesterId = this.semesters.id;
-          const studentId = this.getUser.username;
+          // const studentId = this.getUser.username;
 
           const response = await authApi().get(
             endpoints["get-education-program"] +
-              `?studentId=${studentId}&semesterId=${semesterId}&majorId=${majorId}`
+              `?semesterId=${semesterId}&majorId=${majorId}`
           );
           this.courses = response.data;
           console.log("education program", this.courses);
