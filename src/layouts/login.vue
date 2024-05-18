@@ -13,14 +13,14 @@
           <div class="row justify-content-center">
             <div class="col-md-8">
               <div class="mb-4">
-                <h3>{{ $t('message.login') }}</h3>
+                <h3>{{ $t("message.login") }}</h3>
                 <div v-if="errorMessage" class="alert alert-danger">
                   {{ errorMessage }}
                 </div>
               </div>
               <form action="#" method="post" @submit.prevent="login">
                 <div class="form-group first">
-                  <label for="username">{{ $t('message.username') }}</label>
+                  <label for="username">{{ $t("message.username") }}</label>
                   <input
                     type="text"
                     class="form-control"
@@ -30,7 +30,7 @@
                   />
                 </div>
                 <div class="form-group last mb-4">
-                  <label for="password">{{ $t('message.password') }}</label>
+                  <label for="password">{{ $t("message.password") }}</label>
                   <input
                     type="password"
                     class="form-control"
@@ -51,7 +51,9 @@
                     class="spinner-border text-primary"
                     role="status"
                   >
-                    <span class="visually-hidden">{{ $t('message.loading') }}...</span>
+                    <span class="visually-hidden"
+                      >{{ $t("message.loading") }}...</span
+                    >
                   </div>
                 </div>
                 <div
@@ -60,12 +62,12 @@
                 >
                   <span class="registerHover" style="margin-right: 10px">
                     <router-link to="/" class="nav-link">
-                      {{ $t('message.home') }}
+                      {{ $t("message.home") }}
                     </router-link>
                   </span>
                   <span class="registerHover">
                     <router-link to="/register" class="nav-link">
-                      {{ $t('message.register') }}
+                      {{ $t("message.register") }}
                     </router-link>
                   </span>
                 </div>
@@ -133,6 +135,16 @@ export default {
           this.loading = false;
         } else {
           this.errorMessage = "";
+          // VueCookies.set(
+          //   "token",
+          //   res.data.accessToken,
+          //   res.data.expires_in / 60
+          // ); // res.data.expires_in là thời gian hết hạn tính bằng giây
+          // localStorage.setItem(
+          //   "expires_at",
+          //   JSON.stringify(new Date().getTime() + res.data.expires_in * 1000)
+          // );
+
           VueCookies.set("token", res.data.accessToken);
 
           let { data } = await authApi().get(endpoints["current-user"]);

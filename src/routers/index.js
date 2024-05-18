@@ -7,10 +7,19 @@ import store from "@/stores/myStore";
 import register from "./register.js";
 import parent from "./parents.js";
 
+
 const routes = [
   {
     path: "/",
     component: () => import("../pages/home/index.vue"),
+    // beforeEnter: (to, from, next) => {
+    //   // Kiểm tra trạng thái đăng nhập từ store Vuex
+    //   if (store.getters.isAuth) {
+    //     next(); 
+    //   } else {
+    //     next("/"); 
+    //   }
+    // },
   },
   {
     path: "/general-information",

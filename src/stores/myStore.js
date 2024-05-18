@@ -10,7 +10,11 @@ const state = {
 
 const getters = {
     isAuth: state => state.isAuth,
-    getUser: state => state.user
+    getUser: state => state.user,
+    // isTokenExpired: () => {
+    //     const expiresAt = JSON.parse(localStorage.getItem('expires_at'));
+    //     return new Date().getTime() > expiresAt;
+    // }
 };
 
 const mutations = {
@@ -33,6 +37,11 @@ const actions = {
         cookie.remove('token');
         cookie.remove('user');
     },
+    // checkToken({ getters, dispatch }) {
+    //     if (getters.isTokenExpired) {
+    //         dispatch('logout');
+    //     }
+    // }
 };
 
 const store = new createStore({
