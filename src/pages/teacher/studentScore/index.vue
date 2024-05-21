@@ -12,6 +12,9 @@
             class="fileInput"
           />
           <button class="btn btn-primary" @click="saveScoreByFile">Gửi</button>
+          <button class="btn btn-primary" @click="downloadExcel">
+            Download Excel
+          </button>
         </div>
       </form>
       <form @submit.prevent="handleSubmit">
@@ -317,6 +320,7 @@ import Loading from "../../../components/Loading.vue";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 import html2pdf from "html2pdf.js";
+// import urlExcel from "@/assets/fileScore/InputScoreData.xlsx";
 
 export default {
   setup() {
@@ -406,6 +410,20 @@ export default {
     });
   },
   methods: {
+    downloadExcel(event) {
+      event.preventDefault();
+      // Đường dẫn tới file Excel trong thư mục assets
+      const excelFilePath = `${process.env.BASE_URL}assets/fileScore/InputScoreData.xlsx`;
+      console.log(excelFilePath);
+
+      // Tạo một đối tượng <a> ẩn và thiết lập các thuộc tính
+      const link = document.createElement("a");
+      link.href = excelFilePath;
+      link.download = "InputScoreData.xlsx";
+
+      // Tự động kích hoạt sự kiện click để bắt đầu quá trình tải xuống
+      link.click();
+    },
     previousPage() {
       if (this.currentPage > 1) {
         this.currentPage--;
@@ -709,7 +727,9 @@ export default {
         });
 
         if (res.status === 200) {
-          alert("Lưu điểm của tất cả sinh viên thành công! Vui lòng tải lại trang.");
+          alert(
+            "Lưu điểm của tất cả sinh viên thành công! Vui lòng tải lại trang."
+          );
         }
       } catch (error) {
         console.error(error);
