@@ -11,20 +11,27 @@
             @change="onFileChange"
             class="fileInput"
           />
-          <button class="btn btn-primary" @click="saveScoreByFile">{{ $t('message.send') }}</button>
+          <button class="btn btn-primary" @click="saveScoreByFile">
+            {{ $t("message.send") }}
+          </button>
+          <!-- <button class="btn btn-primary ml-3" @click="downloadExcel">
+            Download Excel
+          </button> -->
         </div>
       </form>
       <form @submit.prevent="handleSubmit">
         <div class="col-12 d-flex studentScore">
           <div class="input-studentScore">
-            <label for="subjectSelect">{{ $t('message.choose-subject') }}:</label>
+            <label for="subjectSelect"
+              >{{ $t("message.choose-subject") }}:</label
+            >
             <select
               class="form-control"
               id="subjectSelect"
               v-model="selectedSubject"
               @change="handleSubjectChange"
             >
-              <option value="">{{ $t('message.choose-subject') }}</option>
+              <option value="">{{ $t("message.choose-subject") }}</option>
               <option
                 v-for="(subject, index) in subjectList"
                 :key="index"
@@ -35,14 +42,16 @@
             </select>
           </div>
           <div class="input-studentScore">
-            <label for="subjectSelect">{{ $t('message.choose-semester') }}:</label>
+            <label for="subjectSelect"
+              >{{ $t("message.choose-semester") }}:</label
+            >
             <select
               class="form-control"
               id="semesterSelect"
               v-model="selectedSemester"
               @change="handleSemesterChange"
             >
-              <option value="">{{ $t('message.choose-semester') }}</option>
+              <option value="">{{ $t("message.choose-semester") }}</option>
               <option
                 v-for="(semester, index) in semesterList"
                 :key="index"
@@ -53,14 +62,14 @@
             </select>
           </div>
           <div class="input-studentScore">
-            <label for="classSelect">{{ $t('message.choose-class') }}:</label>
+            <label for="classSelect">{{ $t("message.choose-class") }}:</label>
             <select
               class="form-control"
               id="classSelect"
               v-model="selectedClass"
               @change="handleClassChange"
             >
-              <option value="">{{ $t('message.choose-class') }}</option>
+              <option value="">{{ $t("message.choose-class") }}</option>
               <option
                 v-for="(clazz, index) in classList"
                 :key="index"
@@ -71,7 +80,7 @@
             </select>
           </div>
           <div class="input-studentScore">
-            <button class="btn btn-primary">{{ $t('message.search') }}</button>
+            <button class="btn btn-primary">{{ $t("message.search") }}</button>
           </div>
 
           <div v-if="isEditMode">
@@ -81,13 +90,14 @@
                 class="btn btn-primary"
                 style="margin-right: 10px"
               >
-              {{ $t('message.exit') }}              </button>
+                {{ $t("message.exit") }}
+              </button>
             </div>
           </div>
           <div v-else>
             <div class="input-studentScore d-flex">
               <button @click="handleEdit" class="btn btn-primary">
-                {{ $t('message.input-score') }}
+                {{ $t("message.input-score") }}
               </button>
               <button
                 class="btn btn-primary"
@@ -95,14 +105,14 @@
                 @click="handleSendMail"
                 :disabled="loading"
               >
-              {{ $t('message.send-email') }}
+                {{ $t("message.send-email") }}
               </button>
               <button
                 class="btn btn-danger btnExportPDF"
                 @click="exportToPDF"
                 style="margin-left: 10px"
               >
-              {{ $t('message.export') }} PDF
+                {{ $t("message.export") }} PDF
               </button>
               <div style="text-align: center; margin: 0 10px">
                 <div
@@ -110,7 +120,9 @@
                   class="spinner-border text-primary"
                   role="status"
                 >
-                  <span class="visually-hidden">{{ $t('message.loading') }}...</span>
+                  <span class="visually-hidden"
+                    >{{ $t("message.loading") }}...</span
+                  >
                 </div>
               </div>
               <div
@@ -129,8 +141,8 @@
           <table class="table table-hover">
             <thead>
               <tr class="table-title">
-                <th style="width: 150px">{{ $t('message.student-id') }}</th>
-                <th style="width: 30%">{{ $t('message.fullname') }}</th>
+                <th style="width: 150px">{{ $t("message.student-id") }}</th>
+                <th style="width: 30%">{{ $t("message.fullname") }}</th>
                 <th>
                   <div class="form-check">
                     <input
@@ -140,7 +152,7 @@
                       name="optradio"
                       value="1"
                       v-model="selectedColumn"
-                    />{{ $t('message.process') }}
+                    />{{ $t("message.process") }}
                     <label class="form-check-label" for="radio1"></label>
                   </div>
                 </th>
@@ -153,7 +165,7 @@
                       name="optradio"
                       value="2"
                       v-model="selectedColumn"
-                    />{{ $t('message.mid-term') }}
+                    />{{ $t("message.mid-term") }}
                     <label class="form-check-label" for="radio2"></label>
                   </div>
                 </th>
@@ -166,7 +178,7 @@
                       name="optradio"
                       value="3"
                       v-model="selectedColumn"
-                    />{{ $t('message.final-term') }}
+                    />{{ $t("message.final-term") }}
                     <label class="form-check-label" for="radio3"></label>
                   </div>
                 </th>
@@ -222,7 +234,7 @@
           </table>
           <div class="btn-save">
             <button class="btn btn-primary" @click="saveSelectedColumnScores()">
-              {{ $t('message.save') }}
+              {{ $t("message.save") }}
             </button>
           </div>
         </div>
@@ -241,12 +253,12 @@
             >
               <thead>
                 <tr class="table-title">
-                  <th class="text-center">{{ $t('message.student-id') }}</th>
-                  <th class="text-center">{{ $t('message.fullname') }}</th>
-                  <th class="text-center">{{ $t('message.date-of-birth') }}</th>
-                  <th class="text-center">{{ $t('message.process') }}</th>
-                  <th class="text-center">{{ $t('message.mid-term') }}</th>
-                  <th class="text-center">{{ $t('message.final-term') }}</th>
+                  <th class="text-center">{{ $t("message.student-id") }}</th>
+                  <th class="text-center">{{ $t("message.fullname") }}</th>
+                  <th class="text-center">{{ $t("message.date-of-birth") }}</th>
+                  <th class="text-center">{{ $t("message.process") }}</th>
+                  <th class="text-center">{{ $t("message.mid-term") }}</th>
+                  <th class="text-center">{{ $t("message.final-term") }}</th>
                 </tr>
               </thead>
               <tbody>
@@ -329,10 +341,13 @@ export default {
       hasError: false,
       loading: false,
       selectedColumn: "option1",
-      selectedSubject: "",
       errorMessage: "",
+      selectedSubject: "",
       selectedClass: "",
       selectedSemester: "",
+      // selectedSubject: localStorage.getItem("selectedSubject") || "",
+      // selectedSemester: localStorage.getItem("selectedSemester") || "",
+      // selectedClass: localStorage.getItem("selectedClass") || "",
       selectedLecturer: {},
       subjectList: [],
       studentList: [],
@@ -405,6 +420,20 @@ export default {
     });
   },
   methods: {
+    // downloadExcel(event) {
+    //   event.preventDefault();
+    //   // Đường dẫn tới file Excel trong thư mục assets
+    //   const excelFilePath = `${process.env.BASE_URL}assets/InputScoreData.xlsx`;
+    //   console.log(excelFilePath);
+
+    //   // Tạo một đối tượng <a> ẩn và thiết lập các thuộc tính
+    //   const link = document.createElement("a");
+    //   link.href = excelFilePath;
+    //   link.download = "InputScoreData.xlsx";
+
+    //   // Tự động kích hoạt sự kiện click để bắt đầu quá trình tải xuống
+    //   link.click();
+    // },
     previousPage() {
       if (this.currentPage > 1) {
         this.currentPage--;
@@ -453,12 +482,15 @@ export default {
     },
     handleSubjectChange(event) {
       this.selectedSubject = event.target.value;
+      // localStorage.setItem('selectedSubject', this.selectedSubject)
     },
     handleSemesterChange(event) {
       this.selectedSemester = event.target.value;
+      // localStorage.setItem('selectedSemester', this.selectedSemester);
     },
     handleClassChange(event) {
       this.selectedClass = event.target.value;
+      // localStorage.setItem('selectedClass', this.selectedClass);        
     },
     getScoreValue(scoreDto, columnName) {
       const score = scoreDto.find(
@@ -708,7 +740,9 @@ export default {
         });
 
         if (res.status === 200) {
-          alert("Lưu điểm của tất cả sinh viên thành công! Vui lòng tải lại trang.");
+          alert(
+            "Lưu điểm của tất cả sinh viên thành công! Vui lòng tải lại trang."
+          );
         }
       } catch (error) {
         console.error(error);

@@ -8,9 +8,6 @@ import { fetchFirebaseConfig } from "./services/firebase.js";
 import { getAuth } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 import i18n from './i18n/i18n';
-// import { auth, db } from "./services/firebase.js";
-// import reducer from '@/reducers/myUseReducer.js'
-// import { provideUserContext } from '../reducers/UseContext.js'
 
 import axios from "axios";
 window.axios = axios;
@@ -31,7 +28,6 @@ export const db = getFirestore(appFirebase);
 
 const app = createApp(App);
 const pinia = createPinia();
-// const provide = provideUserContext();
 app.use(pinia);
 app.use(router);
 app.use(store);

@@ -255,21 +255,19 @@ export default {
         await this.saveTemporaryCourse();
         await this.getSubjectTemoratyCourse();
 
-        console.log(1);
+        // console.log(1);
       },
       deep: true, // Đảm bảo theo dõi sâu vào các phần tử của mảng
     },
     courses: {
       async handler(newCourse, oldCourse) {
-        console.log(1);
         this.checkedSubjectedCourse();
       },
       deep: true,
     },
     isSuccess: {
       async handler(newSuccess, oldSuccess) {
-        console.log(2);
-        await this.getSubjectTemoratyCourse();
+        this.selectedCourses = [];
         await this.getSubjectCourse();
         this.isSuccess = false;
       },
@@ -326,23 +324,15 @@ export default {
           course.id === removedCourse.subjectId.id &&
           course.group === removedCourse.group
       );
-
-      console.log("matchingCourse", matchingCourse);
       // // Cập nhật lại giá trị "Còn lại" cho môn học mở đăng ký tương ứng
       if (matchingCourse) {
         matchingCourse.isSelected = false;
         matchingCourse.remaining += 1;
       }
-
-      // console.log(studentSubjectId);
       await this.deleteCourse(studentSubjectId);
     },
     async removeCoursed(index, studentSubjectId) {
       const removedCourse = this.ListCourses.splice(index, 1)[0];
-
-      // this.selectedTemporaryCourses = this.selectedTemporaryCourses.filter(
-      //   (course) => course.id !== removedCourse.subjectId.id
-      // );
 
       // // Tìm môn học mở đăng ký tương ứng dựa trên mã và nhóm
       const matchingCourse = this.courses.find(
@@ -351,14 +341,12 @@ export default {
           course.group === removedCourse.group
       );
 
-      console.log("matchingCourse", matchingCourse);
       // // Cập nhật lại giá trị "Còn lại" cho môn học mở đăng ký tương ứng
       if (matchingCourse) {
         matchingCourse.isSelected = false;
         matchingCourse.remaining += 1;
       }
 
-      // console.log(studentSubjectId);
       await this.deleteCourse(studentSubjectId);
     },
     async deleteCourse(studentSubjectId) {
@@ -385,7 +373,6 @@ export default {
               `?semesterId=${semesterId}&majorId=${majorId}`
           );
           this.courses = response.data;
-          console.log("education program", this.courses);
           this.isLoadSubjects = true;
         } else {
           console.error("Please select a faculty before fetching subjects.");
@@ -494,7 +481,6 @@ export default {
             }
           );
           await Promise.all(promises);
-          console.log("Lưu tạm thành công");
         } catch (error) {
           console.log(error);
         }

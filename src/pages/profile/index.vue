@@ -465,6 +465,7 @@ export default {
    this.fetchUserInfo();
    this.showAcademicWarming();
    this.isLoading = false;
+   console.log("getTime", new Date().getTime());
  },
  watch: {
    selectSemester: function (newSemester, oldSemester) {

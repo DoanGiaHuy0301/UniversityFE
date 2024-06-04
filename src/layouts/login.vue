@@ -135,17 +135,17 @@ export default {
           this.loading = false;
         } else {
           this.errorMessage = "";
-          // VueCookies.set(
-          //   "token",
-          //   res.data.accessToken,
-          //   res.data.expires_in / 60
-          // ); // res.data.expires_in là thời gian hết hạn tính bằng giây
-          // localStorage.setItem(
-          //   "expires_at",
-          //   JSON.stringify(new Date().getTime() + res.data.expires_in * 1000)
-          // );
+          VueCookies.set(
+            "token",
+            res.data.accessToken,
+            res.data.accessTokenExpiration 
+          ); 
+          localStorage.setItem(
+            "expires_at",
+            JSON.stringify(new Date().getTime() + res.data.accessTokenExpiration*1)
+          );
 
-          VueCookies.set("token", res.data.accessToken);
+          // VueCookies.set("token", res.data.accessToken);
 
           let { data } = await authApi().get(endpoints["current-user"]);
           VueCookies.set("user", data);

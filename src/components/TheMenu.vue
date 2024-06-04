@@ -14,12 +14,12 @@
         <span class="sider"> {{ $t('message.input-score') }} </span>
       </router-link>
     </a-menu-item>
-    <a-menu-item key="teacher-student" @click="hideMenu">
+    <!-- <a-menu-item key="teacher-student" @click="hideMenu">
       <router-link :to="{ name: 'teacher-student' }" class="router-link-hover">
         <i class="fa-solid fa-users"></i>
         <span class="sider"> {{ $t('message.student') }} </span>
       </router-link>
-    </a-menu-item>
+    </a-menu-item> -->
     <a-menu-item key="teacher-forum" @click="hideMenu">
       <router-link :to="{ name: 'teacher-forum' }" class="router-link-hover">
         <i class="fa-solid fa-book"></i>

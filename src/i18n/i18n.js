@@ -297,7 +297,7 @@ const messages = {
       "content-no-course": "Không có môn học nào mở đăng ký cho khoa này.",
       delete: "Xóa",
       export: "Xuất",
-      'send-main': "Gửi mail",
+      'send-email': "Gửi mail",
       'content-address': 'Số 97 Võ Văn Tần, Phường Võ Thị Sáu, Quận 3, TP. Hồ Chí Minh',
       'accumulate-score-of-semester': "Điểm tích lũy học kỳ",
     },
