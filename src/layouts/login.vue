@@ -124,12 +124,12 @@ export default {
     async login() {
       try {
         this.loading = true;
-        console.log(this.user.username);
+        // console.log(this.user.username);
         const res = await Apis.post(`${endpoints["login"]}`, {
           username: this.user.username,
           password: this.user.password,
         });
-        console.log(res.data);
+        // console.log(res.data);
         if (res.status === 400) {
           this.errorMessage = "Tài khoản hoặc mật khẩu của bạn không đúng!!";
           this.loading = false;
@@ -151,7 +151,7 @@ export default {
           VueCookies.set("user", data);
 
           await this.$store.dispatch("login", data);
-          console.log("res.data", this.user);
+          // console.log("res.data", this.user);
 
           try {
             const u = await this.getUserByUsername(this.user.username);
