@@ -17,7 +17,6 @@
   </div>
 </button>
 
-  <!-- <button class="menu-btn " >Menu</button> -->
   <div class="wrapper">
     <!-- Sidebar  -->
     <nav style="color: white" id="sidebar">
