@@ -343,11 +343,8 @@ export default {
       selectedColumn: "option1",
       errorMessage: "",
       selectedSubject: "",
-      selectedClass: "",
       selectedSemester: "",
-      // selectedSubject: localStorage.getItem("selectedSubject") || "",
-      // selectedSemester: localStorage.getItem("selectedSemester") || "",
-      // selectedClass: localStorage.getItem("selectedClass") || "",
+      selectedClass: "",
       selectedLecturer: {},
       subjectList: [],
       studentList: [],
@@ -418,6 +415,19 @@ export default {
         this.fetchSubjectsByLecturerId(lecturerId);
       }
     });
+    if (
+      localStorage.getItem("selectedSubject") != null &&
+      localStorage.getItem("selectedSemester") != null &&
+      localStorage.getItem("selectedClass") != null
+    ) {
+      this.selectedSubject = localStorage.getItem("selectedSubject");
+      this.selectedSemester = localStorage.getItem("selectedSemester");
+      this.selectedClass = localStorage.getItem("selectedClass");
+
+      if (this.selectedSubject && this.selectedSemester && this.selectedClass) {
+        this.handleSubmit(event); 
+      }
+    }
   },
   methods: {
     // downloadExcel(event) {
@@ -482,15 +492,15 @@ export default {
     },
     handleSubjectChange(event) {
       this.selectedSubject = event.target.value;
-      // localStorage.setItem('selectedSubject', this.selectedSubject)
+      localStorage.setItem("selectedSubject", this.selectedSubject);
     },
     handleSemesterChange(event) {
       this.selectedSemester = event.target.value;
-      // localStorage.setItem('selectedSemester', this.selectedSemester);
+      localStorage.setItem("selectedSemester", this.selectedSemester);
     },
     handleClassChange(event) {
       this.selectedClass = event.target.value;
-      // localStorage.setItem('selectedClass', this.selectedClass);        
+      localStorage.setItem("selectedClass", this.selectedClass);
     },
     getScoreValue(scoreDto, columnName) {
       const score = scoreDto.find(
@@ -738,11 +748,15 @@ export default {
             "Content-Type": "multipart/form-data",
           },
         });
-
-        if (res.status === 200) {
+        console.log(res);
+        if (res.status === 201) {
           alert(
             "Lưu điểm của tất cả sinh viên thành công! Vui lòng tải lại trang."
           );
+          localStorage.setItem("selectedSubject", res.data.subjectId);
+          localStorage.setItem("selectedSemester", res.data.semesterId);
+          localStorage.setItem("selectedClass", res.data.classId);
+          window.location.reload();
         }
       } catch (error) {
         console.error(error);

@@ -8,7 +8,7 @@
           :class="{ 'has-error': !selectSemester }"
           style="margin-right: 10px"
         >
-          <label for="selectSemester">{{ $t('message.semester') }}</label>
+          <label for="selectSemester">{{ $t("message.semester") }}</label>
           <select
             class="form-control"
             id="selectSemester"
@@ -16,25 +16,28 @@
             disabled
           >
             <option :key="index" :value="semesters.id">
-              {{ semesters.name }} - {{ $t('message.school-year') }}: {{ semesters.schoolYear }}
+              {{ semesters.name }} - {{ $t("message.school-year") }}:
+              {{ semesters.schoolYear }}
             </option>
           </select>
         </div>
       </div>
-      <div class="form-group-item" style="width: 50%; margin-bottom: 20px">
+      <div class="form-group-item" style="width: 30%; margin-bottom: 20px">
         <div
           class="form-group"
           :class="{ 'has-error': !selecetMajor }"
           style="margin-right: 10px"
         >
-          <label for="selecetFacuties">{{ $t('message.register-for-subject') }}</label>
+          <label for="selecetFacuties">{{
+            $t("message.register-for-subject")
+          }}</label>
           <select
             class="form-control"
             id="selecetFacuties"
             v-model="selecetMajor"
             @change="getSubject"
           >
-            <option value="">-- {{ $t('message.choose-deparment') }} --</option>
+            <option value="">-- {{ $t("message.choose-deparment") }} --</option>
             <option
               v-for="(major, index) in majors"
               :key="index"
@@ -45,18 +48,35 @@
           </select>
         </div>
       </div>
+      <div class="form-group-item search-course">
+        <div class="form-group d-flex">
+          <input
+            class="form-control me-2"
+            type="search"
+            placeholder="Search"
+            v-model="searchKeyword"
+          />
+          <button
+            class="btn btn-primary"
+            style="width: 150px"
+            @click="handleSearch"
+          >
+            {{ $t("message.search") }}
+          </button>
+        </div>
+      </div>
     </div>
     <div v-if="courses.length > 0">
-      <p>{{ $t('message.list-courses') }}:</p>
+      <p>{{ $t("message.list-courses") }}:</p>
       <div class="table-container">
         <table class="table table-hover table-bordered">
           <thead>
             <tr>
               <th></th>
-              <th>{{ $t('message.code-of-subject') }}</th>
-              <th>{{ $t('message.name-of-subject') }}</th>
-              <th>{{ $t('message.credit') }}</th>
-              <th>{{ $t('message.number') }}</th>
+              <th>{{ $t("message.code-of-subject") }}</th>
+              <th>{{ $t("message.name-of-subject") }}</th>
+              <th>{{ $t("message.credit") }}</th>
+              <th>{{ $t("message.number") }}</th>
             </tr>
           </thead>
           <tbody>
@@ -87,53 +107,53 @@
       </div>
     </div>
     <div v-else-if="courses === null">
-      <p>{{ $t('message.list-courses') }}:</p>
+      <p>{{ $t("message.list-courses") }}:</p>
       <div class="table-container">
         <table class="table table-hover table-bordered table-container">
           <thead>
             <tr>
               <th></th>
-              <th>{{ $t('message.code-of-subject') }}</th>
-              <th>{{ $t('message.name-of-subject') }}</th>
-              <th>{{ $t('message.credit') }}</th>
-              <th>{{ $t('message.number') }}</th>
+              <th>{{ $t("message.code-of-subject") }}</th>
+              <th>{{ $t("message.name-of-subject") }}</th>
+              <th>{{ $t("message.credit") }}</th>
+              <th>{{ $t("message.number") }}</th>
             </tr>
           </thead>
         </table>
       </div>
       <p style="text-align: center">
-        <strong>{{ $t('message.content-no-course') }}</strong>
+        <strong>{{ $t("message.content-no-course") }}</strong>
       </p>
     </div>
     <div v-else>
-      <p>{{ $t('message.list-courses') }}:</p>
+      <p>{{ $t("message.list-courses") }}:</p>
       <div class="table-container">
         <table class="table table-hover table-bordered">
           <thead>
             <tr>
               <th></th>
-              <th>{{ $t('message.code-of-subject') }}</th>
-              <th>{{ $t('message.name-of-subject') }}</th>
-              <th>{{ $t('message.credit') }}</th>
-              <th>{{ $t('message.number') }}</th>
+              <th>{{ $t("message.code-of-subject") }}</th>
+              <th>{{ $t("message.name-of-subject") }}</th>
+              <th>{{ $t("message.credit") }}</th>
+              <th>{{ $t("message.number") }}</th>
             </tr>
           </thead>
         </table>
       </div>
       <p style="text-align: center">
-        <strong>{{ $t('message.content-no-course') }}</strong>
+        <strong>{{ $t("message.content-no-course") }}</strong>
       </p>
     </div>
     <div>
-      <p>{{ $t('message.list-selected-courses') }}:</p>
+      <p>{{ $t("message.list-selected-courses") }}:</p>
       <div class="table-container">
         <table class="table table-hover table-bordered">
           <thead>
             <tr>
               <th></th>
-              <th>{{ $t('message.code-of-subject') }}</th>
-              <th>{{ $t('message.name-of-subject') }}</th>
-              <th>{{ $t('message.credit') }}</th>
+              <th>{{ $t("message.code-of-subject") }}</th>
+              <th>{{ $t("message.name-of-subject") }}</th>
+              <th>{{ $t("message.credit") }}</th>
             </tr>
           </thead>
           <tbody>
@@ -143,7 +163,7 @@
                   class="btn btn-danger"
                   @click="removeCourse(index, selectedCourse.id)"
                 >
-                 {{ $t('message.delete') }}
+                  {{ $t("message.delete") }}
                 </button>
               </td>
               <td>{{ selectedCourse.subjectId.id }}</td>
@@ -153,16 +173,16 @@
           </tbody>
         </table>
       </div>
-      <p>{{ $t('message.list-coursed') }}:</p>
+      <p>{{ $t("message.list-coursed") }}:</p>
       <div class="table-container">
         <table class="table table-hover table-bordered">
           <thead>
             <tr>
               <th style="width: 5%"></th>
               <th style="text-align: center">STT</th>
-              <th>{{ $t('message.code-of-subject') }}</th>
-              <th>{{ $t('message.name-of-subject') }}</th>
-              <th>{{ $t('message.credit') }}</th>
+              <th>{{ $t("message.code-of-subject") }}</th>
+              <th>{{ $t("message.name-of-subject") }}</th>
+              <th>{{ $t("message.credit") }}</th>
             </tr>
           </thead>
           <tbody>
@@ -172,7 +192,7 @@
                   class="btn btn-danger"
                   @click="removeCoursed(index, course.id)"
                 >
-                {{ $t('message.delete') }}
+                  {{ $t("message.delete") }}
                 </button>
               </td>
               <td style="text-align: center">{{ index + 1 }}</td>
@@ -188,9 +208,9 @@
           <thead>
             <tr>
               <th style="text-align: center">STT</th>
-              <th>{{ $t('message.code-of-subject') }}</th>
-              <th>{{ $t('message.name-of-subject') }}</th>
-              <th>{{ $t('message.credit') }}</th>
+              <th>{{ $t("message.code-of-subject") }}</th>
+              <th>{{ $t("message.name-of-subject") }}</th>
+              <th>{{ $t("message.credit") }}</th>
             </tr>
           </thead>
           <tbody>
@@ -205,14 +225,14 @@
       </div>
       <div class="d-flex justify-content-end">
         <button class="btn btn-primary" @click="submitCourses()">
-          {{ $t('message.register') }}
+          {{ $t("message.register") }}
         </button>
         <button
           class="btn btn-danger btnExportPDF"
           @click="exportToPDF"
           style="margin-left: 10px"
         >
-        {{ $t('message.export') }} PDF
+          {{ $t("message.export") }} PDF
         </button>
       </div>
     </div>
@@ -573,9 +593,16 @@ export default {
 </script>
 
 <style scoped>
+.search-course {
+  margin: 30px 0 0 100px;
+}
 @media (max-width: 767px) {
   .form-group-item {
     width: 100% !important;
   }
+  .search-course {
+    margin: 0;
+  }
+
 }
 </style>
