@@ -151,6 +151,7 @@ const messages = {
       'send-email': "Send Email",
       'content-address': '97 Vo Van Tan Road, Ward Vo Thi Sau, District 3',
       'accumulate-score-of-semester': "Accumulate score of semester",
+      'choose-subject': "Choose Subject",
     },
   },
   vi: {
@@ -300,6 +301,7 @@ const messages = {
       'send-email': "Gửi mail",
       'content-address': 'Số 97 Võ Văn Tần, Phường Võ Thị Sáu, Quận 3, TP. Hồ Chí Minh',
       'accumulate-score-of-semester': "Điểm tích lũy học kỳ",
+      'choose-subject': "Chọn môn học",
     },
   },
 };

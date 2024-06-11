@@ -48,7 +48,24 @@
           </select>
         </div>
       </div>
-      <div class="form-group-item search-course">
+      <div class="form-group-item" style="width: 30%; margin-bottom: 20px">
+        <div class="form-group" style="margin-right: 10px">
+          <label>{{ $t("message.choose-subject") }}</label>
+          <multiselect
+            v-model="selectedCourseOption"
+            :options="formattedCourses"
+            :searchable="true"
+            :close-on-select="true"
+            :show-labels="true"
+            placeholder="Search to Select"
+            label="label"
+            track-by="value"
+            width="100%"
+           
+          ></multiselect>
+        </div>
+      </div>
+      <!-- <div class="form-group-item search-course">
         <div class="form-group d-flex">
           <input
             class="form-control me-2"
@@ -64,7 +81,7 @@
             {{ $t("message.search") }}
           </button>
         </div>
-      </div>
+      </div> -->
     </div>
     <div v-if="courses.length > 0">
       <p>{{ $t("message.list-courses") }}:</p>
@@ -244,13 +261,21 @@ import Apis, { authApi, endpoints } from "@/configs/Apis";
 import { mapGetters } from "vuex";
 import Loading from "../../../components/Loading.vue";
 import html2pdf from "html2pdf.js";
+import Multiselect from "vue-multiselect";
 
 export default {
   computed: {
     ...mapGetters(["isAuth", "getUser"]),
+    formattedCourses() {
+      return this.coursesOption.map((course) => ({
+        value: course.id,
+        label: course.name,
+      }));
+    },
   },
   components: {
     Loading,
+    Multiselect,
   },
   data() {
     return {
@@ -266,16 +291,19 @@ export default {
       quantity: 80,
       isSuccess: false,
       isLoadSubjects: false,
+      isSaveCourses: false,
       isLoading: false,
+      selectedCourseOption: null,
+      coursesOption: [],
     };
   },
   watch: {
     selectedTemporaryCourses: {
       async handler(newValue, oldValue) {
-        await this.saveTemporaryCourse();
+        if (!this.isSaveCourses) {
+          await this.saveTemporaryCourse();
+        }
         await this.getSubjectTemoratyCourse();
-
-        // console.log(1);
       },
       deep: true, // Đảm bảo theo dõi sâu vào các phần tử của mảng
     },
@@ -292,6 +320,12 @@ export default {
         this.isSuccess = false;
       },
       deep: true,
+    },
+    selectedCourseOption(newVal, oldVal) {
+      if (newVal !== oldVal) {
+        this.courses = [];
+        this.getSubjectById();
+      }
     },
   },
   methods: {
@@ -323,12 +357,12 @@ export default {
         console.log(error.message);
       }
     },
-    // Phương thức được gọi khi checkbox thay đổi trạng thái
     toggleCourse(event, rowData, index) {
       if (!rowData.isSelected) {
         rowData.isSelected = true;
         this.selectedTemporaryCourses.push(rowData);
         this.remaining -= 1;
+        this.isSaveCourses = false;
       }
     },
     async removeCourse(index, studentSubjectId) {
@@ -379,6 +413,24 @@ export default {
         );
       } catch (error) {
         console.error("Error submitting post:", error);
+      }
+    },
+    async getSubjectById() {
+      try {
+        const subjectId = this.selectedCourseOption.value;
+        const res = await authApi().get(endpoints["get-subject-by-id"] + `?subjectId=${subjectId}`);
+        this.courses.push(res.data);
+        console.log("courses", this.courses);
+      } catch (e) {
+        console.log(e.error);
+      }
+    },
+    async getAllSubject() {
+      try {
+        const res = await authApi().get(endpoints["subjects"]);
+        this.coursesOption = res.data;
+      } catch (e) {
+        console.log(e.error);
       }
     },
     async getSubject() {
@@ -457,6 +509,7 @@ export default {
 
           alert("Đăng ký môn học thành công!");
           this.isSuccess = true;
+          this.isSaveCourses = true;
         } catch (error) {
           console.log(error);
         }
@@ -573,6 +626,7 @@ export default {
   },
   async created() {
     this.isLoading = true;
+    this.getAllSubject();
     this.getLatestSemester();
     this.getMajor();
     this.getSubject();
@@ -587,6 +641,7 @@ export default {
         0
       );
     }
+    this.getSubjectById();
     this.isLoading = false;
   },
 };
@@ -596,6 +651,7 @@ export default {
 .search-course {
   margin: 30px 0 0 100px;
 }
+
 @media (max-width: 767px) {
   .form-group-item {
     width: 100% !important;
@@ -603,6 +659,5 @@ export default {
   .search-course {
     margin: 0;
   }
-
 }
 </style>

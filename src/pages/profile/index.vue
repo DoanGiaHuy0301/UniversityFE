@@ -511,7 +511,7 @@ export default {
          endpoints["get-semesters"] + `?studentId=${studentId}`
        );
        this.semesters = res.data;
-       console.log("semesters: ", this.semesters);
+      
      } catch (error) {
        console.log(error);
      }

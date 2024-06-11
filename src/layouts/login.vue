@@ -124,12 +124,10 @@ export default {
     async login() {
       try {
         this.loading = true;
-        // console.log(this.user.username);
         const res = await Apis.post(`${endpoints["login"]}`, {
           username: this.user.username,
           password: this.user.password,
         });
-        // console.log(res.data);
         if (res.status === 400) {
           this.errorMessage = "Tài khoản hoặc mật khẩu của bạn không đúng!!";
           this.loading = false;
@@ -138,26 +136,23 @@ export default {
           VueCookies.set(
             "token",
             res.data.accessToken,
-            res.data.accessTokenExpiration 
-          ); 
+            res.data.accessTokenExpiration
+          );
           localStorage.setItem(
             "expires_at",
-            JSON.stringify(new Date().getTime() + res.data.accessTokenExpiration*1)
+            JSON.stringify(
+              new Date().getTime() + res.data.accessTokenExpiration * 1
+            )
           );
 
           // VueCookies.set("token", res.data.accessToken);
 
           let { data } = await authApi().get(endpoints["current-user"]);
           VueCookies.set("user", data);
-
           await this.$store.dispatch("login", data);
-          // console.log("res.data", this.user);
-
           try {
             const u = await this.getUserByUsername(this.user.username);
-
             if (u) {
-              // const studentUsername = u.username;
               const userEmail = u.email;
 
               const auth = getAuth(firebase); // Sử dụng auth từ Firebase Modular SDK
@@ -166,7 +161,6 @@ export default {
                 userEmail,
                 this.user.password
               );
-              // console.log("res.user", res.user);
               const user = res.user;
 
               if (user) {
@@ -176,7 +170,6 @@ export default {
                   collection(db, "users"),
                   where("id", "==", user.uid)
                 );
-                // console.log("user.uid", user.uid);
 
                 const querySnapshot = await getDocs(q);
 
@@ -199,7 +192,6 @@ export default {
               }
             }
           } catch (error) {
-            // this.errorMessage = "Lỗi server";
             this.loading = false;
           }
 

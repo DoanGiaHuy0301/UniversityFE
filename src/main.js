@@ -19,6 +19,7 @@ import "./static/fontawesome-free-6.4.2-web/css/all.min.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/css/bootstrap-utilities.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.js";
+import 'vue-multiselect/dist/vue-multiselect.css';
 
 const firebaseConfig = await fetchFirebaseConfig();
 const appFirebase = initializeApp(firebaseConfig);

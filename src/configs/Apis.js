@@ -62,7 +62,8 @@ export const endpoints = {
   "get-tuition-fee": `${SERVER_CONTEXT}/api/tuition_fee/student/`,
   "get-subjects-tuition-fee": `${SERVER_CONTEXT}/api/subjects/tuition-fee/`,
   "get-education-program": `${SERVER_CONTEXT}/api/subjects/education-program/`,
-  "payment": `${SERVER_CONTEXT}/pay`
+  "get-subject-by-id": `${SERVER_CONTEXT}/api/subjects/subjectId/`,
+  "payment": `${SERVER_CONTEXT}/pay`,
 };
 
 export const authApi = () => {

@@ -14,9 +14,13 @@
           <button class="btn btn-primary" @click="saveScoreByFile">
             {{ $t("message.send") }}
           </button>
-          <!-- <button class="btn btn-primary ml-3" @click="downloadExcel">
-            Download Excel
-          </button> -->
+          <div>
+            <a
+              href="https://drive.google.com/drive/folders/1iEEbkxbBzNrF_KPAMKMWMXccedcqZBZ-?usp=sharing"
+              target="_blank"
+              >Nhấn vào đây để tải tệp</a
+            >
+          </div>
         </div>
       </form>
       <form @submit.prevent="handleSubmit">
@@ -338,6 +342,7 @@ export default {
       err: "",
       notFoundMessage: true,
       isEditMode: false,
+      isDisapled: true,
       hasError: false,
       loading: false,
       selectedColumn: "option1",
@@ -408,7 +413,6 @@ export default {
     await this.getClasses();
     this.updateDisplayedItems();
     this.isLoading = false;
-
     this.fetchLecturerInfo().then((lecturerInfo) => {
       if (lecturerInfo && lecturerInfo.id) {
         const lecturerId = lecturerInfo.id;
@@ -425,25 +429,11 @@ export default {
       this.selectedClass = localStorage.getItem("selectedClass");
 
       if (this.selectedSubject && this.selectedSemester && this.selectedClass) {
-        this.handleSubmit(event); 
+        this.handleSubmit(event);
       }
     }
   },
   methods: {
-    // downloadExcel(event) {
-    //   event.preventDefault();
-    //   // Đường dẫn tới file Excel trong thư mục assets
-    //   const excelFilePath = `${process.env.BASE_URL}assets/InputScoreData.xlsx`;
-    //   console.log(excelFilePath);
-
-    //   // Tạo một đối tượng <a> ẩn và thiết lập các thuộc tính
-    //   const link = document.createElement("a");
-    //   link.href = excelFilePath;
-    //   link.download = "InputScoreData.xlsx";
-
-    //   // Tự động kích hoạt sự kiện click để bắt đầu quá trình tải xuống
-    //   link.click();
-    // },
     previousPage() {
       if (this.currentPage > 1) {
         this.currentPage--;
@@ -588,6 +578,7 @@ export default {
           console.log("this.studentList = ", this.studentList);
           this.hasError = false;
           this.notFoundMessage = false;
+          this.isDisapled = false;
         }
       } catch (error) {
         console.error(error);

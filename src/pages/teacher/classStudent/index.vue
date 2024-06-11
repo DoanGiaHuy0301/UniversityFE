@@ -53,7 +53,7 @@ export default {
       if (this.studentList.length > 0 && this.studentList[0].classesId) {
         return this.studentList[0].classesId.id || "N/A";
       }
-      return "N/A";
+      return "...";
     },
   },
   data() {
@@ -72,7 +72,6 @@ export default {
   methods: {
     async getStudent() {
       try {
-        console.log(this.getUser.username);
         const lecturerUsername = this.getUser.username;
         const response = await authApi().get(
           endpoints["get-lecturer-by-username"].replace(
@@ -88,7 +87,6 @@ export default {
             lecturerId
           )
         );
-        console.log("listStudent.data", listStudent.data);
         if (listStudent.data) {
           this.studentList = listStudent.data;
         }
