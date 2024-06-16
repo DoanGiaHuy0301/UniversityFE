@@ -580,7 +580,6 @@ export default {
 
         if (response.data) {
           this.studentList = response.data;
-          console.log("this.studentList = ", this.studentList);
           this.hasError = false;
           this.notFoundMessage = false;
           this.isDisapled = false;
@@ -706,8 +705,6 @@ export default {
       try {
         const response = await authApi().get(endpoints["classes"]);
         this.classList = response.data;
-        console.log("this.classList", this.classList);
-        console.log("response.data", response);
       } catch (error) {
         console.error(error);
       }
@@ -744,7 +741,6 @@ export default {
             "Content-Type": "multipart/form-data",
           },
         });
-        console.log(res);
         if (res.status === 201) {
           alert(
             "Lưu điểm của tất cả sinh viên thành công! Vui lòng tải lại trang."

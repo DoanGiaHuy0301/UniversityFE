@@ -465,7 +465,6 @@ export default {
    this.fetchUserInfo();
    this.showAcademicWarming();
    this.isLoading = false;
-   console.log("getTime", new Date().getTime());
  },
  watch: {
    selectSemester: function (newSemester, oldSemester) {
@@ -489,7 +488,6 @@ export default {
        endpoint.replace("{username}", this.getUser.username)
      );
      this.userInfo = response.data;
-     console.log("this.userInfo", this.userInfo);
      if (this.userInfo) {
        this.getListSemester();
        this.fetchFinalScore();
@@ -536,7 +534,6 @@ export default {
            endpoints["score-list"] +
            `?studentId=${userId}&semesterId=${semesterId}`;
          const scoreResponse = await authApi().get(scoreEndpoint);
-         console.log("scoreResponse", scoreResponse.data);
 
          // Lọc ra các label có giá trị điểm tổng kết không null
          const filteredScores = scoreResponse.data.filter((item) =>
@@ -573,7 +570,7 @@ export default {
          endpoints["get-final-accumulate"] + `?studentId=${studentId}`
        );
        this.finalScore = res.data;
-       // console.log("this.finalScore", res);
+
      } catch (e) {
        this.errorMessage = "Lỗi server";
        console.log(e);

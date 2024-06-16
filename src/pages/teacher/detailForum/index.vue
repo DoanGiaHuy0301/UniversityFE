@@ -39,7 +39,7 @@
           v-model="content"
         ></textarea>
         <div v-if="isBadWordsComment" style="font-size: 16px; color: red">
-          Có từ bị cấm trong bình luận
+          {{ $t('message.forbidden-comment') }}
         </div>
         <div v-else></div>
         <Button
@@ -214,7 +214,7 @@ export default {
           replaceRegex: /\w/g,
         });
         if (filter.isProfane(this.content_comment)) {
-          alert("Không được bình luận từ cấm");
+          alert(this.$t('message.forbidden-no-comment'));
         } else {
           const response = await authApi().put(
             endpoints["update-comment"].replace("{commentId}", commentId),

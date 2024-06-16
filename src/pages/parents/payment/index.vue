@@ -188,11 +188,9 @@ export default {
     async getTuitionFee() {
       try {
         const studentId = this.$route.params.id;
-        console.log(studentId);
         const res = await Apis.get(
           endpoints["get-tuition-fee"] + `?studentId=${studentId}`
         );
-        console.log("tuition fee:", res.data);
         this.listTuitionFee = res.data;
         this.isTuitionFeeSuccess = true;
       } catch (e) {
@@ -206,7 +204,6 @@ export default {
           endpoints["get-semesters"] + `?studentId=${studentId}`
         );
         this.semesters = res.data;
-        console.log("semesters: ", this.semesters);
       } catch (error) {
         console.log(error);
       }
@@ -221,7 +218,6 @@ export default {
         );
         this.listSubjectTuitionFee = res.data;
         this.isSubjectTuitionFeeSuccess = true;
-        console.log("getSubjectTuitionFee: ", res.status);
       } catch (error) {
         this.listSubjectTuitionFee = [];
       }

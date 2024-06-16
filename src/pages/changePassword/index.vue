@@ -180,7 +180,6 @@ export default {
         endpoint.replace("{username}", this.getUser.username)
       );
       this.userInfo = response.data;
-      console.log("this.userInfo", this.userInfo);
       if (response.data.birthday) {
         const birthdayTimestamp = response.data.birthday;
         const birthdayDate = new Date(birthdayTimestamp);
@@ -209,7 +208,6 @@ export default {
               `?oldPassword=${this.passwordUser.oldPassword}&newPassword=${this.passwordUser.newPassword}`
           );
           this.message = res.data;
-          console.log("put password: " + res.data);
           this.notiCheck = true;
           this.passwordUser.oldPassword = "";
           this.passwordUser.newPassword = "";

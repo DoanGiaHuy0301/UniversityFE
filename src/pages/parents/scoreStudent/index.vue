@@ -114,7 +114,6 @@ export default {
         const semesterResponse = await Apis.get(
           endpoints["semester-student"] + `?studentId=${studentId}`
         );
-        console.log("semesterResponse", semesterResponse);
         this.semesters = semesterResponse.data.sort((a, b) => {
           return new Date(b.fromDate) - new Date(a.fromDate);
         });
@@ -132,7 +131,6 @@ export default {
           scoreListsValue.push(scoreResponse.data);
         }
         this.scoreLists = scoreListsValue;
-        console.log("scoreListsValue", scoreListsValue);
       } catch (err) {
         err.value = true;
       }

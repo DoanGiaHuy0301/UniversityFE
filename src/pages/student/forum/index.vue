@@ -30,7 +30,7 @@
           :placeholder="$t('message.input-title')"
           v-model="title"
         ></textarea>
-        <div v-if="isBadWordsTitle" style="font-size: 16px; color: red;">Có từ bị cấm trong tiêu đề</div>
+        <div v-if="isBadWordsTitle" style="font-size: 16px; color: red;">{{ $t('message.forbidden-title') }}</div>
         <div v-else></div>
         <label for="comment">{{ $t("message.content") }}:</label>
         <textarea
@@ -41,7 +41,7 @@
           :placeholder="$t('message.input-content')"
           v-model="content"
         ></textarea>
-        <div v-if="isBadWordsContent" style="font-size: 16px; color: red;">Có từ bị cấm trong nội dung</div>
+        <div v-if="isBadWordsContent" style="font-size: 16px; color: red;">{{ $t('message.forbidden-content') }}</div>
         <div v-else></div>
         <div style="display: flex">
           <button
@@ -228,7 +228,7 @@ export default {
           params: { kw: this.searchKeyword },
         });
         this.post = response.data.reverse();
-        console.log(this.post);
+        // console.log(this.post);
       } catch (error) {
         console.error("Error loading posts:", error);
       }
@@ -249,14 +249,10 @@ export default {
         });
         if (filter.isProfane(this.title)) {
           this.isBadWordsTitle = true;
-          // console.log("this.isBadWordsContent",  this.isBadWordsTitle)
-          // alert("Your comment contains inappropriate language.");
           return;
         } else if(filter.isProfane(this.content)) {
           this.isBadWordsTitle = false;
           this.isBadWordsContent = true;
-          // console.log("this.isBadWordsContent",  this.isBadWordsTitle)
-          // console.log("this.isBadWordsContent", this.isBadWordsContent)
           return;
         } else {
           this.isBadWordsTitle = false;

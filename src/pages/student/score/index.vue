@@ -162,7 +162,7 @@ export default {
 
         this.semesterData = semesterDataValue;
         this.isLoading = false;
-        console.log("semesterData", this.semesterData);
+        // console.log("semesterData", this.semesterData);
       } catch (err) {
         this.isLoading = false;
         err.value = true;

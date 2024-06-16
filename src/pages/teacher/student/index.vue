@@ -1,5 +1,5 @@
 <template>
-   <div v-if="isLoading"><Loading /></div>
+  <div v-if="isLoading"><Loading /></div>
   <div class="studentHome">
     <form @submit.prevent="handleSubmit">
       <div class="select d-md-flex s-sm-block">
@@ -8,14 +8,14 @@
           :class="{ 'has-error': !selectedSubject }"
           style="margin-right: 10px"
         >
-          <label for="subjectSelect">{{ $t('message.choose-subject') }}:</label>
+          <label for="subjectSelect">{{ $t("message.choose-subject") }}:</label>
           <select
             class="form-control"
             id="subjectSelect"
             v-model="selectedSubject"
             @change="handleSubjectChange"
           >
-            <option value="">{{ $t('message.choose-subject') }}</option>
+            <option value="">{{ $t("message.choose-subject") }}</option>
             <option
               v-for="(subject, index) in subjectList"
               :key="index"
@@ -27,14 +27,16 @@
         </div>
 
         <div class="form-group" :class="{ 'has-error': !selectedSemester }">
-          <label for="semesterSelect">{{ $t('message.choose-semester') }}:</label>
+          <label for="semesterSelect"
+            >{{ $t("message.choose-semester") }}:</label
+          >
           <select
             class="form-control"
             id="semesterSelect"
             v-model="selectedSemester"
             @change="handleSemesterChange"
           >
-            <option value="">{{ $t('message.choose-semester') }}</option>
+            <option value="">{{ $t("message.choose-semester") }}</option>
             <option
               v-for="(semester, index) in semesterList"
               :key="index"
@@ -48,12 +50,12 @@
       <div class="d-flex">
         <div style="margin-right: 10px">
           <button class="btn btn-primary btnSubmit" type="submit">
-            {{ $t('message.search') }}
+            {{ $t("message.search") }}
           </button>
         </div>
         <div>
           <button class="btn btn-danger btnExportPDF" @click="exportToPDF">
-            {{ $t('message.export') }} PDF
+            {{ $t("message.export") }} PDF
           </button>
         </div>
       </div>
@@ -66,8 +68,8 @@
         <table class="table table-striped table-bordered table-hover">
           <thead>
             <tr class="table-title">
-              <th class="text-center">{{ $t('message.student-id') }}</th>
-              <th class="text-center">{{ $t('message.fullname') }}</th>
+              <th class="text-center">{{ $t("message.student-id") }}</th>
+              <th class="text-center">{{ $t("message.fullname") }}</th>
               <th
                 class="text-center"
                 v-for="(scoreColumn, index) in scoreColumns"
@@ -162,10 +164,8 @@ export default {
             lecturerUsername
           )
         );
-        console.log("get-lecturer-by-username", response.data);
         this.selectedLecturer = response.data;
 
-        console.log("this.selectedLecturer", this.selectedLecturer);
         return response.data;
       } catch (error) {
         console.error(err);
@@ -180,15 +180,13 @@ export default {
             lecturerId
           )
         );
-        console.log("get-subject-by-lecturerId", response.data);
+
         this.subjectList = response.data;
 
         const endpoint = endpoints["semester"] + `?lecturerId=${lecturerId}`;
 
         const semesterResponse = await authApi().get(endpoint);
         this.semesterList = semesterResponse.data;
-
-        console.log("Semester info:", semesterResponse.data);
       } catch (error) {
         console.error(error);
         console.log(error);
@@ -197,7 +195,6 @@ export default {
     },
     handleSubjectChange(event) {
       this.selectedSubject = event.target.value;
-      console.log(event.target.value);
     },
     handleSemesterChange(event) {
       this.selectedSemester = event.target.value;
@@ -214,25 +211,20 @@ export default {
         const subjectId = this.selectedSubject;
         const lecturerId = this.selectedLecturer.id;
         const semesterId = this.selectedSemester;
-        console.log("semesterId", semesterId);
 
         const endpoint =
           endpoints["get-list-scores"] +
           `?lecturerId=${lecturerId}&semesterId=${semesterId}&subjectId=${subjectId}`;
 
         const response = await authApi().get(endpoint);
-        console.log("response", response.status);
 
         if (response.data) {
-          console.log(response.data);
           this.studentList = response.data;
           this.err = "";
           this.hasError = false;
-          console.log("response", this.studentList);
         }
       } catch (error) {
         console.error(error);
-        console.log("Status code:", error.response.status);
         this.err = "Không có dữ liệu";
         this.hasError = true;
       }
@@ -292,9 +284,7 @@ export default {
         });
 
         this.studentScores = studentScores;
-        console.log(studentScores);
         this.scoreColumns = scoreColumns;
-        console.log(studentScores);
       },
       deep: true,
     },
