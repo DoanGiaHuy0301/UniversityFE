@@ -6,9 +6,9 @@
         <table class="table">
           <thead>
             <tr class="table-title">
-              <th>{{ $t('message.name-post') }}</th>
-              <th>{{ $t('message.content') }}</th>
-              <th>{{ $t('message.time-post') }}</th>
+              <th>{{ $t("message.name-post") }}</th>
+              <th>{{ $t("message.content") }}</th>
+              <th>{{ $t("message.time-post") }}</th>
               <th></th>
             </tr>
           </thead>
@@ -35,16 +35,22 @@
                   ></textarea>
                   <div class="post-update-and-delete">
                     <ul>
-                      <li @click="updatePosted(p.id)" class="mr-3">{{ $t('message.save') }}</li>
-                      <li @click="exitHandleEdit">{{ $t('message.exit') }}</li>
+                      <li @click="updatePosted(p.id)" class="mr-3">
+                        {{ $t("message.save") }}
+                      </li>
+                      <li @click="exitHandleEdit">{{ $t("message.exit") }}</li>
                     </ul>
                   </div>
                 </div>
                 <div v-else>
                   <div class="post-update-and-delete">
                     <ul>
-                      <li @click="handleEdit(p)" class="mr-3">{{ $t('message.edit') }}</li>
-                      <li @click="confirmDelete(p.id)">{{ $t('message.delete') }}</li>
+                      <li @click="handleEdit(p)" class="mr-3">
+                        {{ $t("message.edit") }}
+                      </li>
+                      <li @click="confirmDelete(p.id)">
+                        {{ $t("message.delete") }}
+                      </li>
                     </ul>
                   </div>
                 </div>
@@ -82,8 +88,8 @@ export default {
   },
   created() {
     this.isLoading = true;
-    this.getListPostByUser().then(() => this.isLoading = false);
-
+    this.getListPostByUser().then(() => (this.isLoading = false));
+    this.deletePost();
   },
 
   methods: {
@@ -184,5 +190,4 @@ export default {
   background: #070758;
   color: #fff;
 }
-
 </style>

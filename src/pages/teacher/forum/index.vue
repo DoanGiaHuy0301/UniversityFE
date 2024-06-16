@@ -178,6 +178,7 @@ export default {
       isLoading: false,
       isBadWordsTitle: false,
       isBadWordsContent: false,
+      badWordsList: "tệ",
     };
   },
   computed: {
@@ -236,9 +237,9 @@ export default {
     },
     async handlePostSubmit() {
       try {
-        const badWordsList = "Rấttệ";
+       
         const filter = new Filter({
-          list: [...badWordsList],
+          list: [...this.badWordsList],
           exclude: [], 
           splitRegex: /\b/,
           placeHolder: "*",

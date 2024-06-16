@@ -101,13 +101,17 @@ export default {
     },
     async getListPostByUser() {
       try {
+        this.isLoading = true;
         const userId = this.getUser.id;
         const response = await authApi().get(
           endpoints["get-list-post-by-userId"].replace("{userId}", userId)
         );
         this.listPost = response.data;
+        this.isLoading = false;
       } catch (error) {
         console.error(error);
+        this.listPost = [];
+        this.isLoading = false;
       }
     },
 

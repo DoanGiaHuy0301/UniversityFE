@@ -131,7 +131,7 @@ export default {
       editedPost: null,
       isLoading: false,
       isBadWordsComment: false,
-      badWordsList: "Rấttệ",
+      badWordsList: "tệ",
     };
   },
   created() {
