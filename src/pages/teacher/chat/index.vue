@@ -195,6 +195,7 @@ export default {
           });
         }
       });
+      this.searchUsers = this.searchUsers.filter(user => user.name !== this.currentUserName)
     },
   },
   created() {

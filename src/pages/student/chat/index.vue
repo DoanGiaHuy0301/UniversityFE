@@ -1,21 +1,21 @@
 <template>
   <button class="contactButton menu-btn" @click="toggleSidebar">
-  {{  $t('message.list-chat') }}
-  <div class="iconButton">
-    <svg
-      height="24"
-      width="24"
-      viewBox="0 0 24 24"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path d="M0 0h24v24H0z" fill="none"></path>
-      <path
-        d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z"
-        fill="currentColor"
-      ></path>
-    </svg>
-  </div>
-</button>
+    {{ $t("message.list-chat") }}
+    <div class="iconButton">
+      <svg
+        height="24"
+        width="24"
+        viewBox="0 0 24 24"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path d="M0 0h24v24H0z" fill="none"></path>
+        <path
+          d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z"
+          fill="currentColor"
+        ></path>
+      </svg>
+    </div>
+  </button>
 
   <!-- <button class="menu-btn " >Menu</button> -->
   <div class="wrapper">
@@ -50,7 +50,7 @@
           </div>
         </div>
         <button type="button" class="btn btn-primary" @click="logout">
-          {{ $t('message.logout') }}
+          {{ $t("message.logout") }}
         </button>
       </div>
       <div style="height: 1px; border-bottom: 1px solid #00388b"></div>
@@ -109,9 +109,11 @@
           />
         </div>
         <div>
-          <h2 style="text-align: center">{{ $t('message.hi') }} {{ currentUserName }},</h2>
+          <h2 style="text-align: center">
+            {{ $t("message.hi") }} {{ currentUserName }},
+          </h2>
           <h3 style="text-align: center">
-            {{ $t('message.title-chat') }}
+            {{ $t("message.title-chat") }}
           </h3>
         </div>
       </div>
@@ -199,15 +201,15 @@ export default {
           });
         }
       });
+
+      this.searchUsers = this.searchUsers.filter(
+        (user) => user.name !== this.currentUserName
+      );
     },
   },
   created() {
     if (!localStorage.hasOwnProperty("id")) this.$router.push("/");
-    // this.isLoading = true;
-    this.getUserList()
-    // .then(() => {
-    //   this.isLoading = false;
-    // });
+    this.getUserList();
   },
 };
 </script>
@@ -280,7 +282,6 @@ export default {
   transform: translate(0.05em, 0.05em);
   box-shadow: 0.05em 0.05em #5566c2;
 }
-
 
 @media (max-width: 768px) {
   .contactButton {

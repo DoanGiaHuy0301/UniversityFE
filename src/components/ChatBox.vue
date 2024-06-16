@@ -1,10 +1,10 @@
 <template>
-  <div style="display: flex; flex-direction: column; height: 80vh;">
+  <div style="display: flex; flex-direction: column; height: 80vh">
     <header>
       <div style="height: 60px; background: lightgrey">
         <img
           :src="currentPeerUser.URL"
-         style="width: 40px; height: 40px; margin-left: 20px"
+          style="width: 40px; height: 40px; margin-left: 20px"
           class="br-50 header-image"
         />
         <div class="header-image" style="padding: 0 10px">
@@ -67,7 +67,6 @@
   </div>
 </template>
 
-
 <script>
 import { ref, onMounted, watch } from "vue";
 import {
@@ -95,6 +94,10 @@ export default {
     };
   },
   methods: {
+    sortMessages() {
+      this.listMessage.sort((a, b) => a.timestamp - b.timestamp);
+    },
+
     sendMessage(content) {
       if (content.trim() === "") {
         return;
@@ -143,8 +146,8 @@ export default {
           snapshot.docChanges().forEach((change) => {
             this.listMessage.push(change.doc.data());
           });
+          this.sortMessages();
         } else {
-          console.log("call cmng 1");
           this.groupChatId = `${this.currentUserId} + ${this.currentPeerUser.id}`;
           const newMessagesRef = collection(
             getFirestore(),
@@ -155,18 +158,20 @@ export default {
 
           const newUnsubscribe = onSnapshot(newMessagesRef, (newSnapshot) => {
             newSnapshot.docChanges().forEach((res) => {
-              console.log("res", res);
               if (res.type === "added") {
                 this.listMessage.push(res.doc.data());
               }
-            });
+              });
+            this.sortMessages();
           });
         }
       });
+      console.log("list", this.listMessage);
     },
   },
   mounted() {
     this.getMessages();
+    console.log("list", this.listMessage);
   },
   watch: {
     currentPeerUser(newVal, oldVal) {
@@ -232,13 +237,12 @@ export default {
   .content-chatbox {
     margin: 10px 0;
   }
-  
+
   .text-inner {
-  width: 45%;
-}
-.textFrom {
-  margin: 0% 0% 20px 50%;
-}
+    width: 45%;
+  }
+  .textFrom {
+    margin: 0% 0% 20px 50%;
+  }
 }
 </style>
-

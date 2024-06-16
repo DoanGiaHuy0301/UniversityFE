@@ -1,5 +1,5 @@
 <template>
-   <div v-if="isLoading"><Loading /></div>
+  <div v-if="isLoading"><Loading /></div>
   <div class="container-fluid" style="padding: 0 0 100px 0">
     <div class="row">
       <div
@@ -9,17 +9,19 @@
         <div class="row" style="padding: 20px 10px">
           <div class="col-8">
             <p class="postDetail">
-              <strong>{{ $t('message.title') }}: {{ post.title }}</strong>
+              <strong>{{ $t("message.title") }}: {{ post.title }}</strong>
             </p>
-            <p style="font-size: 18px">{{ $t('message.content') }}: {{ post.content }}</p>
+            <p style="font-size: 18px">
+              {{ $t("message.content") }}: {{ post.content }}
+            </p>
           </div>
           <div class="col-4" style="display: flex; justify-content: center">
             <p class="userDetail">
               <span style="font-size: 15px; display: block">
-                {{ $t('message.post-by') }}: {{ usernameHost }}
+                {{ $t("message.post-by") }}: {{ usernameHost }}
               </span>
               <span style="font-size: 15px; display: block">
-                {{ $t('message.time') }}: {{ formatDate(post.postTime) }}
+                {{ $t("message.time") }}: {{ formatDate(post.postTime) }}
               </span>
             </p>
           </div>
@@ -27,7 +29,7 @@
       </div>
 
       <div class="post-container" style="margin-top: 30px">
-        <label for="comment">{{ $t('message.comment') }}:</label>
+        <label for="comment">{{ $t("message.comment") }}:</label>
         <textarea
           class="form-control"
           rows="5"
@@ -36,17 +38,21 @@
           :placeholder="$t('message.input-comment')"
           v-model="content"
         ></textarea>
+        <div v-if="isBadWordsComment" style="font-size: 16px; color: red">
+          Có từ bị cấm trong bình luận
+        </div>
+        <div v-else></div>
         <Button
           class="btn-title btn btn-primary btn-submit-comment"
           @click="addComment"
-          >{{ $t('message.send') }}</Button
+          >{{ $t("message.send") }}</Button
         >
       </div>
     </div>
     <hr />
-    <h4>{{ $t('message.comment') }}</h4>
+    <h4>{{ $t("message.comment") }}</h4>
     <div v-if="!comment || comment.length === 0">
-      <p>{{ $t('message.no-comment') }}</p>
+      <p>{{ $t("message.no-comment") }}</p>
     </div>
     <div v-else>
       <div v-for="p in comment" :key="p.id" class="post-container-detail">
@@ -56,12 +62,13 @@
               >{{ p.userId.username }} - {{ formatDate(p.dateCreated) }}</strong
             >
           </p>
-          <p>{{ $t('message.content') }}: {{ p.content }}</p>
+          <p>{{ $t("message.content") }}: {{ p.content }}</p>
           <div
             v-if="
               isEditMode &&
               editedPost &&
               editedPost.id === p.id &&
+              getUser &&
               getUser.id === p.userId.id
             "
           >
@@ -75,19 +82,23 @@
             ></textarea>
             <div class="post-update-and-delete">
               <ul>
-                <li @click="updateComment(p.id)" class="mr-3">{{ $t('message.save') }}</li>
-                <li @click="exitHandleEdit">{{ $t('message.exit') }}</li>
+                <li v-if="p && p.id" @click="updateComment(p.id)" class="mr-3">
+                  {{ $t("message.save") }}
+                </li>
+                <li @click="exitHandleEdit">{{ $t("message.exit") }}</li>
               </ul>
             </div>
           </div>
           <div v-else>
             <div
               class="post-update-and-delete"
-              v-if="getUser.id === p.userId.id"
+              v-if="getUser && getUser.id === p.userId.id"
             >
               <ul>
-                <li @click="handleEdit(p)" class="mr-3">{{ $t('message.edit') }}</li>
-                <li @click="confirmDelete(p.id)">{{ $t('message.delete') }}</li>
+                <li @click="handleEdit(p)" class="mr-3">
+                  {{ $t("message.edit") }}
+                </li>
+                <li @click="confirmDelete(p.id)">{{ $t("message.delete") }}</li>
               </ul>
             </div>
           </div>
@@ -101,6 +112,7 @@
 import Apis, { authApi, endpoints } from "@/configs/Apis";
 import { mapGetters } from "vuex";
 import Loading from "../../../components/Loading.vue";
+import Filter from "bad-words";
 export default {
   computed: {
     ...mapGetters(["isAuth", "getUser"]),
@@ -120,15 +132,17 @@ export default {
       isEditMode: false,
       editedPost: null,
       isLoading: false,
+      isBadWordsComment: false,
+      badWordsList: "tệ",
     };
   },
   created() {
     this.isLoading = true;
+    this.postId = this.$route.params.id;
     this.loadUser();
     this.isLoading = false;
   },
   mounted() {
-    this.postId = this.$route.params.id;
     this.loadProduct();
     this.loadComment();
   },
@@ -150,7 +164,6 @@ export default {
     async loadProduct() {
       const { data } = await authApi().get(endpoints.details(this.postId));
       this.post = data;
-
       this.loadUser();
     },
     async loadUser() {
@@ -168,15 +181,43 @@ export default {
       this.comment = data;
     },
     async addComment() {
-      const { data } = await authApi().post(endpoints["add-comment"], {
-        content: this.content,
-        postId: this.post,
-      });
-      this.comment.push(data);
-      this.content = "";
+      try {
+        const filter = new Filter({
+          list: [...this.badWordsList],
+          exclude: [],
+          splitRegex: /\b/,
+          placeHolder: "*",
+          regex: /[^a-zA-Z0-9|\$|\@]|\^/g,
+          replaceRegex: /\w/g,
+        });
+        if (filter.isProfane(this.content)) {
+          this.isBadWordsComment = true;
+        } else {
+          this.isBadWordsComment = false;
+          const { data } = await authApi().post(endpoints["add-comment"], {
+            content: this.content,
+            postId: this.post,
+          });
+          this.comment.push(data);
+          this.content = "";
+        }
+      } catch (e) {
+        console.error(e);
+      }
     },
     async updateComment(commentId) {
       try {
+        const filter = new Filter({
+          list: [...this.badWordsList],
+          exclude: [],
+          splitRegex: /\b/,
+          placeHolder: "*",
+          regex: /[^a-zA-Z0-9|\$|\@]|\^/g,
+          replaceRegex: /\w/g,
+        });
+        if (filter.isProfane(this.content_comment)) {
+          alert("Không được bình luận từ cấm");
+        } else {
         const response = await authApi().put(
           endpoints["update-comment"].replace("{commentId}", commentId),
           {
@@ -187,6 +228,7 @@ export default {
         this.content = "";
         this.isEditMode = false;
         this.loadComment();
+        }
       } catch (error) {
         console.error("Error submitting post:", error);
       }
@@ -232,5 +274,3 @@ export default {
 <style scoped>
 /* Add your CSS styles here */
 </style>
-
-

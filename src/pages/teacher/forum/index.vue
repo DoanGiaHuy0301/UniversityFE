@@ -23,22 +23,26 @@
       <div class="post-container" v-if="isEditMode">
         <label for="comment">{{ $t('message.title') }}:</label>
         <textarea
-          class="form-control"
+          class="form-control mb-3"
           rows="1"
           id="comment"
           name="text"
           :placeholder="$t('message.input-title')"
           v-model="title"
         ></textarea>
+        <div v-if="isBadWordsTitle" style="font-size: 16px; color: red;">Có từ bị cấm trong tiêu đề</div>
+        <div v-else></div>
         <label for="comment">{{ $t('message.content') }}:</label>
         <textarea
-          class="form-control"
+          class="form-control mb-3"
           rows="5"
           id="comment"
           name="text"
           :placeholder="$t('message.input-content')"
           v-model="content"
         ></textarea>
+        <div v-if="isBadWordsContent" style="font-size: 16px; color: red;">Có từ bị cấm trong nội dung</div>
+        <div v-else></div>
         <div style="display: flex">
           <button
             style="display: inline-block"
@@ -151,6 +155,7 @@ import Apis, { authApi, endpoints } from "@/configs/Apis.js";
 import { useMenu } from "../../../stores/use-menu.js";
 import { mapGetters } from "vuex";
 import Loading from "../../../components/Loading.vue";
+import Filter from "bad-words";
 export default {
   setup() {
     useMenu().onSelectedKeys(["teacher-forum"]);
@@ -171,6 +176,8 @@ export default {
       postsPerPage: 4,
       searchKeyword: "",
       isLoading: false,
+      isBadWordsTitle: false,
+      isBadWordsContent: false,
     };
   },
   computed: {
@@ -229,13 +236,38 @@ export default {
     },
     async handlePostSubmit() {
       try {
-        const response = await authApi().post(endpoints["add-post"], {
-          title: this.title,
-          content: this.content,
+        const badWordsList = "Rấttệ";
+        const filter = new Filter({
+          list: [...badWordsList],
+          exclude: [], 
+          splitRegex: /\b/,
+          placeHolder: "*",
+          regex: /[^a-zA-Z0-9|\$|\@]|\^/g,
+          replaceRegex: /\w/g,
         });
-        this.post.push(response.data);
-        this.title = "";
-        this.content = "";
+        if (filter.isProfane(this.title)) {
+          this.isBadWordsTitle = true;
+          // console.log("this.isBadWordsContent",  this.isBadWordsTitle)
+          // alert("Your comment contains inappropriate language.");
+          return;
+        } else if(filter.isProfane(this.content)) {
+          this.isBadWordsTitle = false;
+          this.isBadWordsContent = true;
+          // console.log("this.isBadWordsContent",  this.isBadWordsTitle)
+          // console.log("this.isBadWordsContent", this.isBadWordsContent)
+          return;
+        } else {
+          this.isBadWordsTitle = false;
+          this.isBadWordsContent = false;
+          const response = await authApi().post(endpoints["add-post"], {
+            title: this.title,
+            content: this.content,
+          });
+          this.post.unshift(response.data);
+          this.title = "";
+          this.content = "";
+        }
+        
         this.isEditMode = false;
       } catch (error) {
         console.error("Error submitting post:", error);

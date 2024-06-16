@@ -112,6 +112,8 @@ export default {
         this.isLoading = false;
       } catch (error) {
         console.error(error);
+        this.listPost = [];
+        this.isLoading = false;
       }
     },
 
@@ -144,8 +146,8 @@ export default {
           endpoints["delete-post"].replace("{postId}", postId)
         );
 
-        this.isEditMode = false;
         this.getListPostByUser();
+        this.isEditMode = false;
       } catch (error) {
         console.error("Error submitting post:", error);
       }

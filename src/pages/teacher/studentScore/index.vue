@@ -343,6 +343,7 @@ export default {
       notFoundMessage: true,
       isEditMode: false,
       isDisapled: true,
+      isLoading: true,
       hasError: false,
       loading: false,
       selectedColumn: "option1",
@@ -412,7 +413,6 @@ export default {
     await this.fetchLecturerInfo();
     await this.getClasses();
     this.updateDisplayedItems();
-    this.isLoading = false;
     this.fetchLecturerInfo().then((lecturerInfo) => {
       if (lecturerInfo && lecturerInfo.id) {
         const lecturerId = lecturerInfo.id;
@@ -432,6 +432,7 @@ export default {
         this.handleSubmit(event);
       }
     }
+    this.isLoading = false;
   },
   methods: {
     previousPage() {
@@ -537,15 +538,19 @@ export default {
             lecturerId
           )
         );
-        this.subjectList = response.data;
+        if (response.data) {
+          this.subjectList = response.data;
+          const endpoint = endpoints["semester"] + `?lecturerId=${lecturerId}`;
 
-        const endpoint = endpoints["semester"] + `?lecturerId=${lecturerId}`;
-
-        const semesterResponse = await authApi().get(endpoint);
-        this.semesterList = semesterResponse.data;
+          const semesterResponse = await authApi().get(endpoint);
+          this.semesterList = semesterResponse.data;
+        } else {
+          this.subjectList = [];
+          this.isLoading = false;
+        }
       } catch (error) {
+        this.isLoading = false;
         console.error(error);
-        return null;
       }
     },
     async handleSubmit(event) {
