@@ -6,10 +6,10 @@
 ```
 - npm install
 ```
-```
+
 ## Bước 4: Chạy chương trình
 ```
 - npm run serve
 ```
-```
+
 ## Bước 5: Click vào đường link localhost mà chương trình chạy xong
