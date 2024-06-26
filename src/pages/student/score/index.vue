@@ -37,38 +37,30 @@
                   <td class="text-start">{{ score.subjectName }}</td>
                   <td>{{ score.credit }}</td>
                   <td>
-                    <span v-if="score.scoreDto && score.scoreDto.length > 0">
-                      <span
-                        v-if="score.scoreDto[0].scoreColumnName === 'Quá trình'"
-                      >
-                        {{ score.scoreDto[0].scoreValue || "-" }}
+                    <span v-if="score.scoreDto">
+                      <span>
+                        {{ getScoreValue(score.scoreDto, "Quá trình") }}
                       </span>
                     </span>
                   </td>
                   <td>
-                    <span v-if="score.scoreDto && score.scoreDto.length > 1">
-                      <span
-                        v-if="score.scoreDto[1].scoreColumnName === 'Giữa kì'"
-                      >
-                        {{ score.scoreDto[1].scoreValue || "-" }}
+                    <span v-if="score.scoreDto">
+                      <span>
+                        {{ getScoreValue(score.scoreDto, "Giữa kì") }}
                       </span>
                     </span>
                   </td>
                   <td>
-                    <span v-if="score.scoreDto && score.scoreDto.length > 2">
-                      <span
-                        v-if="score.scoreDto[2].scoreColumnName === 'Cuối kì'"
-                      >
-                        {{ score.scoreDto[2].scoreValue || "-" }}
+                    <span v-if="score.scoreDto">
+                      <span>
+                        {{ getScoreValue(score.scoreDto, "Cuối kì") }}
                       </span>
                     </span>
                   </td>
                   <td>
-                    <span v-if="score.scoreDto && score.scoreDto.length > 3">
-                      <span
-                        v-if="score.scoreDto[3].scoreColumnName === 'Điểm TK'"
-                      >
-                        {{ score.scoreDto[3].scoreValue || "-" }}
+                    <span v-if="score.scoreDto">
+                      <span>
+                        {{ getScoreValue(score.scoreDto, "Điểm TK") }}
                       </span>
                     </span>
                   </td>
@@ -78,14 +70,14 @@
           </div>
           <div>
             <p>
-              {{ $t('message.accumulate-score-of-semester') }}:
+              {{ $t("message.accumulate-score-of-semester") }}:
               {{ semester.accumulates.scoreValue }}
             </p>
           </div>
         </div>
       </div>
       <div v-else style="padding: 20px">
-        <span style="font-size: 25px">{{ $t('message.no-score') }}</span>
+        <span style="font-size: 25px">{{ $t("message.no-score") }}</span>
       </div>
     </div>
   </div>
@@ -162,14 +154,18 @@ export default {
 
         this.semesterData = semesterDataValue;
         this.isLoading = false;
-        // console.log("semesterData", this.semesterData);
       } catch (err) {
         this.isLoading = false;
         err.value = true;
       }
     },
+    getScoreValue(scoreDto, columnName) {
+      const score = scoreDto.find(
+        (item) => item.scoreColumnName === columnName
+      );
+      return score ? score.scoreValue : "";
+    },
   },
-  setup() {},
 };
 </script>
 
