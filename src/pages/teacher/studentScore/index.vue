@@ -478,8 +478,9 @@ export default {
     handleEdit() {
       this.isEditMode = true;
     },
-    exitHandleEdit() {
+    exitHandleEdit(event) {
       this.isEditMode = false;
+      this.handleSubmit(event);
     },
     handleSubjectChange(event) {
       this.selectedSubject = event.target.value;
@@ -613,25 +614,35 @@ export default {
         for (const student of this.studentList) {
           if (student.scoreDto.scoreValue1) {
             // Điểm của từng sinh viên tương ứng với cột được chọn
-            const score = parseFloat(student.scoreDto.scoreValue1 || 0);
+            const score = parseFloat(student.scoreDto.scoreValue1);
             columnScores[student.studentId] = score;
           }
           if (student.scoreDto.scoreValue2) {
             // Điểm của từng sinh viên tương ứng với cột được chọn
-            const score = parseFloat(student.scoreDto.scoreValue2 || 0);
+            const score = parseFloat(student.scoreDto.scoreValue2);
             columnScores[student.studentId] = score;
           }
           if (student.scoreDto.scoreValue3) {
             // Điểm của từng sinh viên tương ứng với cột được chọn
-            const score = parseFloat(student.scoreDto.scoreValue3 || 0);
+            const score = parseFloat(student.scoreDto.scoreValue3);
             columnScores[student.studentId] = score;
           } else {
             console.error(`Không tồn tại`);
           }
         }
 
+        this.studentListInput = this.studentList.filter(
+          (student) =>
+            (student.scoreDto.scoreValue1 != null &&
+              student.scoreDto.scoreValue1 !== 0) ||
+            (student.scoreDto.scoreValue2 != null &&
+              student.scoreDto.scoreValue2 !== 0) ||
+            (student.scoreDto.scoreValue3 != null &&
+              student.scoreDto.scoreValue3 !== 0)
+        );
+
         // Lưu điểm cho tất cả sinh viên
-        const promises = this.studentList.map(async (student) => {
+        const promises = this.studentListInput.map(async (student) => {
           const studentId = student.studentId;
           const requestData = [
             {
