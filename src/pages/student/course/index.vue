@@ -61,7 +61,6 @@
             label="label"
             track-by="value"
             width="100%"
-           
           ></multiselect>
         </div>
       </div>
@@ -295,6 +294,8 @@ export default {
       isLoading: false,
       selectedCourseOption: null,
       coursesOption: [],
+      userInfo: null,
+      formattedBirthday: "",
     };
   },
   watch: {
@@ -418,7 +419,9 @@ export default {
     async getSubjectById() {
       try {
         const subjectId = this.selectedCourseOption.value;
-        const res = await authApi().get(endpoints["get-subject-by-id"] + `?subjectId=${subjectId}`);
+        const res = await authApi().get(
+          endpoints["get-subject-by-id"] + `?subjectId=${subjectId}`
+        );
         this.courses.push(res.data);
       } catch (e) {
         console.log(e.error);
@@ -598,9 +601,38 @@ export default {
         console.log(error);
       }
     },
+    async fetchUserInfo() {
+      let endpoint = "";
+      const userRole = this.getUser.role;
+      if (userRole === "ROLE_SINHVIEN") {
+        endpoint = endpoints["get-student-by-username"];
+      } else if (userRole === "ROLE_GIANGVIEN") {
+        endpoint = endpoints["get-lecturer-by-username"];
+      }
+
+      const response = await authApi().get(
+        endpoint.replace("{username}", this.getUser.username)
+      );
+      this.userInfo = response.data;
+      if (response.data.birthday) {
+        const birthdayTimestamp = response.data.birthday;
+        const birthdayDate = new Date(birthdayTimestamp);
+
+        const formattedBirthday = `${birthdayDate.getDate()}/${
+          birthdayDate.getMonth() + 1
+        }/${birthdayDate.getFullYear()}`;
+        this.formattedBirthday = formattedBirthday;
+      }
+    },
     async exportToPDF() {
       const element = document.getElementById("table-course");
-      const header = `<h3 style="text-align: center;">Danh sách môn học đã đăng ký</h3>`;
+      const header = `<h3 style="text-align: center;">Danh sách môn học đã đăng ký</h3>
+        <ul>
+          <li>MSSV: ${this.getUser.username}</li>
+          <li>Tên sinh viên: ${this.userInfo.name}</li>
+          <li>Lớp: ${this.userInfo.classesId.id}</li>
+          <li>Chuyên ngành: ${this.userInfo.facultyId.name}</li>
+        </ul>`;
 
       // Thêm margin để làm cho header không chồng lên nội dung
       const options = {
@@ -625,6 +657,7 @@ export default {
   },
   async created() {
     this.isLoading = true;
+    this.fetchUserInfo();
     this.getAllSubject();
     this.getLatestSemester();
     this.getMajor();
