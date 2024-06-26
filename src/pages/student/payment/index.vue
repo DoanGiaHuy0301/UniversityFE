@@ -70,7 +70,10 @@
                 <div v-else>{{ formattedCurrency(0) }}</div>
               </td>
               <td style="width: 15%; vertical-align: middle" class="text-end">
-                {{ formattedCurrency(0) }}
+                <div v-if="!tuitionFee.done">
+                  {{ formattedCurrency(tuitionFee.tuitionFee) }}
+                </div>
+                <div v-else>{{ formattedCurrency(0) }}</div>
               </td>
               <td style="width: 15%">
                 <button

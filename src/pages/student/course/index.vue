@@ -420,7 +420,6 @@ export default {
         const subjectId = this.selectedCourseOption.value;
         const res = await authApi().get(endpoints["get-subject-by-id"] + `?subjectId=${subjectId}`);
         this.courses.push(res.data);
-        // console.log("courses", this.courses);
       } catch (e) {
         console.log(e.error);
       }

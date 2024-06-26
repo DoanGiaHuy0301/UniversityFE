@@ -35,7 +35,7 @@
                     {{ $t("message.collected-tuition-fees") }}
                   </th>
                   <th scope="col" class="text-center" style="width: 15%">
-                    {{ $t('message.still-in-debt') }}
+                    {{ $t("message.still-in-debt") }}
                   </th>
                 </tr>
               </thead>
@@ -84,7 +84,10 @@
                     style="width: 15%; vertical-align: middle"
                     class="text-end"
                   >
-                    {{ formattedCurrency(0) }}
+                    <div v-if="!tuitionFee.done">
+                      {{ formattedCurrency(tuitionFee.tuitionFee) }}
+                    </div>
+                    <div v-else>{{ formattedCurrency(0) }}</div>
                   </td>
                 </tr>
               </tbody>
