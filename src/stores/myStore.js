@@ -5,16 +5,14 @@ import createPersistedState from 'vuex-persistedstate';
 
 const state = {
     isAuth: false,
-    user: ""
+    user: "",
+    // isChecked: true,
 };
 
 const getters = {
     isAuth: state => state.isAuth,
     getUser: state => state.user,
-    // isTokenExpired: () => {
-    //     const expiresAt = JSON.parse(localStorage.getItem('expires_at'));
-    //     return new Date().getTime() > expiresAt;
-    // }
+    // isTokenExpired: state => state.isChecked,
 };
 
 const mutations = {

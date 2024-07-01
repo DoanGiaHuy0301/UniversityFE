@@ -10,7 +10,7 @@
         >
           <div class="semester">
             {{
-              `${semester.semesterInfo.name}-${semester.semesterInfo.schoolYear}`
+              `${semester.semesterInfo.name} - Năm học ${semester.semesterInfo.schoolYear}`
             }}
           </div>
           <div class="table-container">
@@ -123,8 +123,10 @@ export default {
         );
 
         this.semesters = semesterResponse.data.sort((a, b) => {
-          return new Date(b.fromDate) - new Date(a.fromDate);
+          return a.id < b.id;
         });
+
+        this.semesters.reverse();
 
         const semesterDataValue = [];
 
