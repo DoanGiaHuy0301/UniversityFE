@@ -6,7 +6,7 @@ import createPersistedState from 'vuex-persistedstate';
 const state = {
     isAuth: false,
     user: "",
-    // isChecked: true,
+    isChecked: true,
 };
 
 const getters = {
