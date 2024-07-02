@@ -124,7 +124,7 @@
               >
                 {{ subjectTuitionFee.subjectId }}
               </td>
-              <td style="width: 20%; vertical-align: middle" class="text-end">
+              <td style="width: 20%; vertical-align: middle" class="text-center">
                 {{ subjectTuitionFee.name }}
               </td>
               <td style="width: 20%; vertical-align: middle" class="text-end">
