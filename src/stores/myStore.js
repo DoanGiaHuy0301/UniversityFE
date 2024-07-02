@@ -12,7 +12,7 @@ const state = {
 const getters = {
     isAuth: state => state.isAuth,
     getUser: state => state.user,
-    // isTokenExpired: state => state.isChecked,
+    isTokenExpired: state => state.isChecked,
 };
 
 const mutations = {
@@ -35,11 +35,11 @@ const actions = {
         cookie.remove('token');
         cookie.remove('user');
     },
-    // checkToken({ getters, dispatch }) {
-    //     if (getters.isTokenExpired) {
-    //         dispatch('logout');
-    //     }
-    // }
+    checkToken({ getters, dispatch }) {
+        if (getters.isTokenExpired) {
+            dispatch('logout');
+        }
+    }
 };
 
 const store = new createStore({

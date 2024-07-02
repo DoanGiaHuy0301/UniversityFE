@@ -23,9 +23,10 @@
                   </th>
                   <th style="width: 10%">{{ $t("message.credit") }}</th>
                   <th style="width: 15%">{{ $t("message.process") }}</th>
-                  <th style="width: 15%">{{ $t("message.mid-term") }}</th>
-                  <th style="width: 15%">{{ $t("message.final-term") }}</th>
+                  <th style="width: 10%">{{ $t("message.mid-term") }}</th>
+                  <th style="width: 10%">{{ $t("message.final-term") }}</th>
                   <th style="width: 10%">TK</th>
+                  <th style="width: 10%">{{ $t("message.status") }}</th>
                 </tr>
               </thead>
               <tbody>
@@ -62,6 +63,14 @@
                       <span>
                         {{ getScoreValue(score.scoreDto, "Điểm TK") }}
                       </span>
+                    </span>
+                  </td>
+                  <td>
+                    <span v-if="score.scoreDto">
+                      <span v-if="score.status">
+                        <i class="fa-solid fa-check" style="color: green"></i>
+                      </span>
+                      <span v-else><i class="fa-solid fa-xmark" style="color: red"></i></span>
                     </span>
                   </td>
                 </tr>

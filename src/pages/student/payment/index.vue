@@ -197,6 +197,7 @@ export default {
         // console.log("tuition fee:", res.data);
         this.listTuitionFee = res.data;
         this.isTuitionFeeSuccess = true;
+        console.log("listTuitionFee", this.listTuitionFee);
       } catch (e) {
         console.log(e.error);
       }

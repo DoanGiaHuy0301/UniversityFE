@@ -99,13 +99,13 @@
             </div>
           </div>
           <div v-else>
-            <div class="input-studentScore d-flex">
+            <div class="input-studentScore d-flex" v-if="isDis">
               <button @click="handleEdit" class="btn btn-primary">
                 {{ $t("message.input-score") }}
               </button>
               <button
                 class="btn btn-primary"
-                style="margin-left: 10px"
+                style="margin-left: 10px; "
                 @click="handleSendMail"
                 :disabled="loading"
               >
@@ -114,6 +114,40 @@
               <button
                 class="btn btn-danger btnExportPDF"
                 @click="exportToPDF"
+                style="margin-left: 10px"
+              >
+                {{ $t("message.export") }} PDF
+              </button>
+              <div style="text-align: center; margin: 0 10px">
+                <div
+                  v-if="loading"
+                  class="spinner-border text-primary"
+                  role="status"
+                >
+                  <span class="visually-hidden"
+                    >{{ $t("message.loading") }}...</span
+                  >
+                </div>
+              </div>
+              <div
+                class="d-flex mt-3 align-items-center"
+                style="justify-content: center"
+              ></div>
+            </div>
+            <div v-else class="input-studentScore d-flex">
+              <button @click="handleEdit" class="btn btn-primary" disabled>
+                {{ $t("message.input-score") }}
+              </button>
+              <button
+                class="btn btn-primary"
+                style="margin-left: 10px"
+                disabled
+              >
+                {{ $t("message.send-email") }}
+              </button>
+              <button
+                class="btn btn-danger btnExportPDF"
+                disabled
                 style="margin-left: 10px"
               >
                 {{ $t("message.export") }} PDF
@@ -284,6 +318,40 @@
                 </tr>
               </tbody>
             </table>
+            <table
+              class="table table-striped table-bordered table-hover"
+              id="table-score-pdf"
+              style="display: none;"
+            >
+              <thead>
+                <tr class="table-title">
+                  <th class="text-center">{{ $t("message.student-id") }}</th>
+                  <th class="text-center">{{ $t("message.fullname") }}</th>
+                  <th class="text-center">{{ $t("message.date-of-birth") }}</th>
+                  <th class="text-center">{{ $t("message.process") }}</th>
+                  <th class="text-center">{{ $t("message.mid-term") }}</th>
+                  <th class="text-center">{{ $t("message.final-term") }}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="(student, index) in studentList" :key="index">
+                  <td class="text-center">{{ student.studentId }}</td>
+                  <td class="text-center">{{ student.studentName }}</td>
+                  <td class="text-center">
+                    {{ formatDate(student.studentBirthday) }}
+                  </td>
+                  <td class="text-center">
+                    {{ getScoreValue(student.scoreDto, "Quá trình") }}
+                  </td>
+                  <td class="text-center">
+                    {{ getScoreValue(student.scoreDto, "Giữa kì") }}
+                  </td>
+                  <td class="text-center">
+                    {{ getScoreValue(student.scoreDto, "Cuối kì") }}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
           <ul class="pagination">
             <li class="page-item">
@@ -342,7 +410,7 @@ export default {
       err: "",
       notFoundMessage: true,
       isEditMode: false,
-      isDisapled: true,
+      isDis: false,
       isLoading: true,
       hasError: false,
       loading: false,
@@ -583,11 +651,12 @@ export default {
           this.studentList = response.data;
           this.hasError = false;
           this.notFoundMessage = false;
-          this.isDisapled = false;
+          this.isDis = true;
         }
       } catch (error) {
         console.error(error);
         this.notFoundMessage = true;
+        this.isDis = false;
         this.errorMessage = "Không tìm thấy danh sách lớp học này";
       }
     },
@@ -766,7 +835,8 @@ export default {
       }
     },
     async exportToPDF() {
-      const element = document.getElementById("table-score");
+      const element = document.getElementById("table-score-pdf");
+      element.style.display = "table";
       const header = `<h3 style="text-align: center;">Bảng điểm sinh viên</h3>`;
 
       // Thêm margin để làm cho header không chồng lên nội dung
@@ -788,6 +858,8 @@ export default {
 
       // Thêm header vào HTML trước khi xuất PDF
       html2pdf().set(options).from(container).save();
+
+      element.style.display = "none";
     },
   },
 };
@@ -804,6 +876,11 @@ export default {
 .input-studentScore {
   margin-bottom: 10px;
 }
+
+.hover-cursor-no-allowed:hover {
+  cursor: not-allowed
+}
+
 @media (max-width: 768px) {
   .container {
     padding: 0;

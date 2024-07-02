@@ -156,6 +156,7 @@ const messages = {
       'forbidden-content': "There are forbidden words in the content!",
       'forbidden-comment': "There are forbidden words in the comment!",
       'forbidden-no-comment': "You must not comment bad words!",
+      status: "status",
     },
   },
   vi: {
@@ -310,7 +311,7 @@ const messages = {
       'forbidden-content': "Có từ bị cấm trong nội dung!",
       'forbidden-comment': "Có từ bị cấm trong bình luận!",
       'forbidden-no-comment': "Không được bình luận từ cấm!",
-
+      status: "Kết quả"
     },
   },
 };

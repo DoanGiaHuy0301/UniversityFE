@@ -1,21 +1,21 @@
 <template>
   <button class="contactButton menu-btn" @click="toggleSidebar">
-  Danh sách chat
-  <div class="iconButton">
-    <svg
-      height="24"
-      width="24"
-      viewBox="0 0 24 24"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path d="M0 0h24v24H0z" fill="none"></path>
-      <path
-        d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z"
-        fill="currentColor"
-      ></path>
-    </svg>
-  </div>
-</button>
+    Danh sách chat
+    <div class="iconButton">
+      <svg
+        height="24"
+        width="24"
+        viewBox="0 0 24 24"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path d="M0 0h24v24H0z" fill="none"></path>
+        <path
+          d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z"
+          fill="currentColor"
+        ></path>
+      </svg>
+    </div>
+  </button>
 
   <div class="wrapper">
     <!-- Sidebar  -->
@@ -53,11 +53,19 @@
         </button>
       </div>
       <div style="height: 1px; border-bottom: 1px solid #00388b"></div>
+      <div class="search-container">
+        <input
+          type="text"
+          v-model="searchQuery"
+          :placeholder="$t('message.search')"
+          class="form-control me-2"
+        />
+      </div>
       <ul class="list-unstyled components">
         <li
           class="action mb-3"
           @click="letsChat(item)"
-          v-for="item in searchUsers"
+          v-for="item in filteredUsers"
           :key="item.id"
           v-show="item.id !== currentUserId"
         >
@@ -142,7 +150,15 @@ export default {
       photoURL: localStorage.getItem("photoURL"),
       listStudents: [],
       showProfile: false,
+      searchQuery: "",
     };
+  },
+  computed: {
+    filteredUsers() {
+      return this.searchUsers.filter((user) => {
+        return user.name.toLowerCase().includes(this.searchQuery.toLowerCase());
+      });
+    },
   },
   methods: {
     toggleSidebar() {
@@ -195,7 +211,9 @@ export default {
           });
         }
       });
-      this.searchUsers = this.searchUsers.filter(user => user.name !== this.currentUserName)
+      this.searchUsers = this.searchUsers.filter(
+        (user) => user.name !== this.currentUserName
+      );
     },
   },
   created() {
@@ -274,6 +292,10 @@ export default {
   box-shadow: 0.05em 0.05em #5566c2;
 }
 
+.search-container {
+  margin-bottom: 10px;
+  padding: 10px;
+}
 
 @media (max-width: 768px) {
   .contactButton {

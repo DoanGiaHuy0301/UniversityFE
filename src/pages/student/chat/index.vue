@@ -54,11 +54,19 @@
         </button>
       </div>
       <div style="height: 1px; border-bottom: 1px solid #00388b"></div>
+      <div class="search-container">
+        <input
+          type="text"
+          v-model="searchQuery"
+          :placeholder="$t('message.search')"
+          class="form-control me-2"
+        />
+      </div>
       <ul class="list-unstyled components">
         <li
           class="action mb-3"
           @click="letsChat(item)"
-          v-for="item in searchUsers"
+          v-for="item in filteredUsers"
           :key="item.id"
           v-show="item.id !== currentUserId"
         >
@@ -148,7 +156,15 @@ export default {
       listStudents: [],
       showProfile: false,
       isLoading: false,
+      searchQuery: "",
     };
+  },
+  computed: {
+    filteredUsers() {
+      return this.searchUsers.filter((user) => {
+        return user.name.toLowerCase().includes(this.searchQuery.toLowerCase());
+      });
+    },
   },
   methods: {
     toggleSidebar() {
@@ -281,6 +297,11 @@ export default {
 .contactButton:active {
   transform: translate(0.05em, 0.05em);
   box-shadow: 0.05em 0.05em #5566c2;
+}
+
+.search-container {
+  margin-bottom: 10px;
+  padding: 10px;
 }
 
 @media (max-width: 768px) {

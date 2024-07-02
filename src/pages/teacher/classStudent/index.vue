@@ -1,9 +1,21 @@
 <template>
   <div v-if="isLoading"><Loading /></div>
-  <div>
-    <strong style="font-size: 20px; padding: 10px"
-      >{{ $t('message.class') }}: {{ extractedId }}
-    </strong>
+  <div class="row">
+    <div class="col-6">
+      <strong style="font-size: 20px; padding: 10px 10px 0"
+        >{{ $t("message.class") }}: {{ extractedId }}
+      </strong>
+    </div>
+    <div class="col-6 d-flex justify-content-end">
+      <form class="d-flex">
+        <input
+          class="form-control me-2"
+          type="search"
+          :placeholder="$t('message.search')"
+          v-model="searchKeyword"
+        />
+      </form>
+    </div>
   </div>
   <div class="table col-12">
     <div class="table-container">
@@ -19,7 +31,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="student in studentList" :key="student.id">
+            <tr v-for="student in currentStudentList" :key="student.id">
               <td style="text-align: center">{{ student.id }}</td>
               <td style="text-align: center">{{ student.name }}</td>
               <td style="text-align: center">
@@ -32,9 +44,44 @@
             </tr>
           </tbody>
         </table>
+        <ul class="pagination">
+          <li class="page-item">
+            <a
+              class="page-link"
+              href="#"
+              @click="previousPage"
+              :disabled="currentPage === 1"
+              >Previous</a
+            >
+          </li>
+          <li
+            class="page-item"
+            v-for="pageNumber in pageNumbers"
+            :key="pageNumber"
+          >
+            <a
+              class="page-link"
+              href="#"
+              @click="setCurrentPage(pageNumber)"
+              :class="{ active: currentPage === pageNumber }"
+              >{{ pageNumber }}</a
+            >
+          </li>
+          <li class="page-item">
+            <a
+              class="page-link"
+              href="#"
+              @click="nextPage"
+              :disabled="currentPage === pageNumbers.length"
+              >Next</a
+            >
+          </li>
+        </ul>
       </template>
       <template v-else>
-        <div class="text-hr-teacher">{{ $t('message.no-homeroom-teacher') }}</div>
+        <div class="text-hr-teacher">
+          {{ $t("message.no-homeroom-teacher") }}
+        </div>
       </template>
     </div>
   </div>
@@ -55,11 +102,41 @@ export default {
       }
       return "...";
     },
+
+    indexOfLastPost() {
+      return this.currentPage * this.studentsPerPage;
+    },
+    indexOfFirstPost() {
+      return this.indexOfLastPost - this.studentsPerPage;
+    },
+    currentStudentList() {
+      return this.studentList
+        .filter(
+          (p) =>
+            p.id.toLowerCase().includes(this.searchKeyword.toLowerCase()) ||
+            p.name.toLowerCase().includes(this.searchKeyword.toLowerCase())
+        )
+        .slice(this.indexOfFirstPost, this.indexOfLastPost);
+    },
+    pageNumbers() {
+      const pageNumbers = [];
+      for (
+        let i = 1;
+        i <= Math.ceil(this.studentList.length / this.studentsPerPage);
+        i++
+      ) {
+        pageNumbers.push(i);
+      }
+      return pageNumbers;
+    },
   },
   data() {
     return {
       studentList: [],
       isLoading: false,
+      currentPage: 1,
+      studentsPerPage: 10,
+      searchKeyword: "",
     };
   },
   components: {
@@ -70,6 +147,19 @@ export default {
     this.getStudent().then(() => (this.isLoading = false));
   },
   methods: {
+    previousPage() {
+      if (this.currentPage > 1) {
+        this.currentPage--;
+      }
+    },
+    nextPage() {
+      if (this.currentPage < this.pageNumbers.length) {
+        this.currentPage++;
+      }
+    },
+    setCurrentPage(page) {
+      this.currentPage = page;
+    },
     async getStudent() {
       try {
         const lecturerUsername = this.getUser.username;
