@@ -203,8 +203,6 @@ export default {
   created() {
     if (localStorage.getItem("id")) {
       this.$router.push("/student");
-    } else {
-      this.$router.push("/login");
     }
   },
   // watch: {
