@@ -2,9 +2,9 @@ import axios from "axios";
 import VueCookies from "vue-cookies";
 
 const SERVER_CONTEXT = "";
-// const SERVER = "http://localhost:8080";
+const SERVER = "http://localhost:8080";
 // const SERVER = "http://54.255.209.165";
-const SERVER = "https://snt.io.vn/";
+// const SERVER = "https://snt.io.vn/";
 
 
 export const endpoints = {
