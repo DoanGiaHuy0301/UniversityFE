@@ -181,7 +181,7 @@ export default {
       isLoading: false,
       isBadWordsTitle: false,
       isBadWordsContent: false,
-      badWordsList: "tệbmcccl",
+      badWordsList: "tệ",
     };
   },
   computed: {
