@@ -363,9 +363,6 @@ export default {
       this.$i18n.locale = savedLocale;
     }
   },
-  created() {
-    // this.changeLocale();
-  }
 };
 </script>
 

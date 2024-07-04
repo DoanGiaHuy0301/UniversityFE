@@ -133,17 +133,7 @@ export default {
           this.loading = false;
         } else {
           this.errorMessage = "";
-          VueCookies.set(
-            "token",
-            res.data.accessToken,
-            res.data.accessTokenExpiration
-          );
-          localStorage.setItem(
-            "expires_at",
-            JSON.stringify(
-              new Date().getTime() + res.data.accessTokenExpiration * 1
-            )
-          );
+          VueCookies.set("token", res.data.accessToken);
 
           // VueCookies.set("token", res.data.accessToken);
 
@@ -172,8 +162,6 @@ export default {
                 );
 
                 const querySnapshot = await getDocs(q);
-
-                // console.log("querySnapshot", querySnapshot);
 
                 if (!querySnapshot.empty) {
                   querySnapshot.forEach((doc) => {
@@ -213,13 +201,17 @@ export default {
     },
   },
   created() {
-    if (localStorage.getItem("id")) this.$router.push("/student");
+    if (localStorage.getItem("id")) {
+      this.$router.push("/student");
+    } else {
+      this.$router.push("/login");
+    }
   },
-  watch: {
-    errorMessage: function (newErrorMessage, oldErrorMessage) {
-      console.log(`Giá trị mới của user.errorMessage: ${newErrorMessage}`);
-      console.log(`Giá trị cũ của user.errorMessage: ${oldErrorMessage}`);
-    },
-  },
+  // watch: {
+  //   errorMessage: function (newErrorMessage, oldErrorMessage) {
+  //     console.log(`Giá trị mới của user.errorMessage: ${newErrorMessage}`);
+  //     console.log(`Giá trị cũ của user.errorMessage: ${oldErrorMessage}`);
+  //   },
+  // },
 };
 </script>
